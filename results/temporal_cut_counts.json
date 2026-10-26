@@ -21,8 +21,9 @@
   },
   "v1.1/minisweagent/qwen36_27b/scale-swe": {
     "issues_K3": 9904,
-    "pre_2023": 0,
-    "post_2023": 0
+    "pre_2023": null,
+    "post_2023": null,
+    "note": "no timestamps (Scale-SWE)"
   },
   "v1.1/minisweagent/qwen36_27b/swe-rebench-v2": {
     "issues_K3": 13980,
@@ -31,8 +32,9 @@
   },
   "v1.1/sweagent/qwen36_27b/scale-swe": {
     "issues_K3": 9537,
-    "pre_2023": 0,
-    "post_2023": 0
+    "pre_2023": null,
+    "post_2023": null,
+    "note": "no timestamps (Scale-SWE)"
   },
   "v1.1/sweagent/qwen36_27b/swe-rebench-v2": {
     "issues_K3": 6450,
@@ -41,8 +43,9 @@
   },
   "v1.2/minisweagent/qwen38_27b/scale-swe": {
     "issues_K3": 15509,
-    "pre_2023": 0,
-    "post_2023": 0
+    "pre_2023": null,
+    "post_2023": null,
+    "note": "no timestamps (Scale-SWE)"
   },
   "v1.2/minisweagent/qwen38_27b/swe-rebench-v2": {
     "issues_K3": 12279,

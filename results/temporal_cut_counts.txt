@@ -2,12 +2,12 @@ v1.0/openhands/minimax_m25/swe-rebench-v2 K3 issues 9661 pre-2023 5491 post-2023
 v1.0/openhands/qwen35_122b/swe-rebench-v2 K3 issues 7934 pre-2023 4553 post-2023 3381
 v1.0/sweagent/minimax_m25/swe-rebench-v2 K3 issues 11133 pre-2023 6358 post-2023 4775
 v1.0/sweagent/qwen35_122b/swe-rebench-v2 K3 issues 3477 pre-2023 1769 post-2023 1708
-v1.1/minisweagent/qwen36_27b/scale-swe K3 issues 9904 pre-2023 0 post-2023 0
+v1.1/minisweagent/qwen36_27b/scale-swe K3 issues 9904 no timestamps
 v1.1/minisweagent/qwen36_27b/swe-rebench-v2 K3 issues 13980 pre-2023 7772 post-2023 6208
-v1.1/sweagent/qwen36_27b/scale-swe K3 issues 9537 pre-2023 0 post-2023 0
+v1.1/sweagent/qwen36_27b/scale-swe K3 issues 9537 no timestamps
 v1.1/sweagent/qwen36_27b/swe-rebench-v2 K3 issues 6450 pre-2023 3519 post-2023 2931
-v1.2/minisweagent/qwen38_27b/scale-swe K3 issues 15509 pre-2023 0 post-2023 0
+v1.2/minisweagent/qwen38_27b/scale-swe K3 issues 15509 no timestamps
 v1.2/minisweagent/qwen38_27b/swe-rebench-v2 K3 issues 12279 pre-2023 6831 post-2023 5448
-nebius K>= 3 issues 6264 pre-2023 3969 post-2023 2295
-nebius K>= 5 issues 6148 pre-2023 3887 post-2023 2261
-nebius K>= 8 issues 4737 pre-2023 3173 post-2023 1564
+nebius K>=3 issues 6264 pre-2023 3969 post-2023 2295
+nebius K>=5 issues 6148 pre-2023 3887 post-2023 2261
+nebius K>=8 issues 4737 pre-2023 3173 post-2023 1564

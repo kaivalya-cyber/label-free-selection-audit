@@ -1,0 +1,289 @@
+{
+  "tag": "nvidia/AweAI-Team/Scale-SWE",
+  "rows": 319683,
+  "instances": 19466,
+  "repos": 1180,
+  "steps": {
+    "mean": 109.30812398532296,
+    "median": 98.0,
+    "p90": 185.0,
+    "max": 1141,
+    "min": 9
+  },
+  "resolved_counts": {
+    "1": 168219,
+    "0": 135955,
+    "-1": 15509
+  },
+  "share_resolved_minus1": 0.04851368386808182,
+  "share_resolved_1_known": 0.5530354336662568,
+  "traj_per_instance": {
+    "mean": 16.422634336792356,
+    "median": 18.0,
+    "p90": 21.0,
+    "p99": 22.0,
+    "max": 22,
+    "hist": {
+      "1": 15,
+      "2": 29,
+      "3": 66,
+      "4": 138,
+      "5": 238,
+      "6": 404,
+      "7": 602,
+      "8": 499,
+      "9": 561,
+      "10": 153,
+      "11": 229,
+      "12": 281,
+      "13": 447,
+      "14": 716,
+      "15": 1138,
+      "16": 1526,
+      "17": 2064,
+      "18": 2637,
+      "19": 2813,
+      "20": 2532,
+      "21": 1708,
+      "22": 670
+    }
+  },
+  "instances_ge_K": {
+    "1": 19466,
+    "2": 19451,
+    "3": 19422,
+    "5": 19218,
+    "8": 17974,
+    "10": 16914,
+    "16": 13950,
+    "32": 0
+  },
+  "rows_in_instances_ge_K": {
+    "1": 319683,
+    "2": 319668,
+    "3": 319610,
+    "5": 318860,
+    "8": 311032,
+    "10": 301991,
+    "16": 261665,
+    "32": 0
+  },
+  "label_mix": {
+    "instances_with_ge2_known": 17199,
+    "instances_mixed": 7398,
+    "share_mixed_of_ge2": 0.4301412872841444,
+    "instances_all_resolved": 4510,
+    "instances_all_unresolved": 5291,
+    "per_issue_resolve_rate_mean": 0.5390044930554116
+  },
+  "label_mix_by_K": {
+    "2": {
+      "instances": 17199,
+      "mixed": 7398,
+      "share_mixed": 0.4301412872841444
+    },
+    "3": {
+      "instances": 17194,
+      "mixed": 7398,
+      "share_mixed": 0.43026637199022916
+    },
+    "5": {
+      "instances": 17181,
+      "mixed": 7396,
+      "share_mixed": 0.43047552528956406
+    },
+    "8": {
+      "instances": 17104,
+      "mixed": 7377,
+      "share_mixed": 0.43130261927034613
+    },
+    "10": {
+      "instances": 16914,
+      "mixed": 7314,
+      "share_mixed": 0.43242284498048955
+    },
+    "16": {
+      "instances": 13950,
+      "mixed": 6174,
+      "share_mixed": 0.4425806451612903
+    },
+    "32": {
+      "instances": 0,
+      "mixed": 0,
+      "share_mixed": null
+    }
+  },
+  "issues_per_repo": {
+    "mean": 16.496610169491525,
+    "median": 6.0,
+    "max": 596,
+    "repos_ge_5": 638,
+    "repos_ge_10": 416,
+    "repos_ge_20": 248,
+    "share_instances_top10_repos": 0.13608342751464092,
+    "top10": {
+      "app-sre/qontract-reconcile": 596,
+      "fonttools/fonttools": 287,
+      "canonical/operator": 259,
+      "python-poetry/poetry-core": 245,
+      "globus/globus-sdk-python": 237,
+      "google/flatbuffers": 227,
+      "beetbox/beets": 214,
+      "more-itertools/more-itertools": 211,
+      "esphome/aioesphomeapi": 188,
+      "mongodb/mongo-python-driver": 185
+    }
+  },
+  "hf_dataset_name": "AweAI-Team/Scale-SWE"
+}
+------------------------------------------------------------
+  sources: AweAI-Team/Scale-SWE
+{
+  "tag": "nvidia/nebius/SWE-rebench-V2",
+  "rows": 498977,
+  "instances": 23079,
+  "repos": 2677,
+  "steps": {
+    "mean": 143.88005058349384,
+    "median": 133.0,
+    "p90": 239.0,
+    "max": 1114,
+    "min": 9
+  },
+  "resolved_counts": {
+    "0": 275574,
+    "1": 176091,
+    "-1": 47312
+  },
+  "share_resolved_minus1": 0.09481799762313693,
+  "share_resolved_1_known": 0.3898708113314071,
+  "traj_per_instance": {
+    "mean": 21.620390831491832,
+    "median": 22.0,
+    "p90": 29.0,
+    "p99": 32.0,
+    "max": 34,
+    "hist": {
+      "1": 22,
+      "2": 33,
+      "3": 55,
+      "4": 79,
+      "5": 83,
+      "6": 106,
+      "7": 144,
+      "8": 193,
+      "9": 210,
+      "10": 261,
+      "11": 357,
+      "12": 467,
+      "13": 461,
+      "14": 585,
+      "15": 699,
+      "16": 797,
+      "17": 936,
+      "18": 992,
+      "19": 1103,
+      "20": 1246,
+      "21": 1321,
+      "22": 1463,
+      "23": 1517,
+      "24": 1592,
+      "25": 1542,
+      "26": 1498,
+      "27": 1438,
+      "28": 1253,
+      "29": 1000,
+      "30": 718
+    }
+  },
+  "instances_ge_K": {
+    "1": 23079,
+    "2": 23057,
+    "3": 23024,
+    "5": 22890,
+    "8": 22557,
+    "10": 22154,
+    "16": 19324,
+    "32": 398
+  },
+  "rows_in_instances_ge_K": {
+    "1": 498977,
+    "2": 498955,
+    "3": 498889,
+    "5": 498408,
+    "8": 496349,
+    "10": 492915,
+    "16": 456106,
+    "32": 12925
+  },
+  "label_mix": {
+    "instances_with_ge2_known": 23042,
+    "instances_mixed": 10492,
+    "share_mixed_of_ge2": 0.4553424181928652,
+    "instances_all_resolved": 2212,
+    "instances_all_unresolved": 10338,
+    "per_issue_resolve_rate_mean": 0.3386370073985182
+  },
+  "label_mix_by_K": {
+    "2": {
+      "instances": 23042,
+      "mixed": 10492,
+      "share_mixed": 0.4553424181928652
+    },
+    "3": {
+      "instances": 22986,
+      "mixed": 10490,
+      "share_mixed": 0.45636474375706954
+    },
+    "5": {
+      "instances": 22809,
+      "mixed": 10464,
+      "share_mixed": 0.45876627646981455
+    },
+    "8": {
+      "instances": 22255,
+      "mixed": 10388,
+      "share_mixed": 0.46677151201977085
+    },
+    "10": {
+      "instances": 21472,
+      "mixed": 10253,
+      "share_mixed": 0.4775055886736215
+    },
+    "16": {
+      "instances": 16687,
+      "mixed": 8911,
+      "share_mixed": 0.5340085096182657
+    },
+    "32": {
+      "instances": 301,
+      "mixed": 147,
+      "share_mixed": 0.4883720930232558
+    }
+  },
+  "issues_per_repo": {
+    "mean": 8.621217781098244,
+    "median": 4.0,
+    "max": 410,
+    "repos_ge_5": 1282,
+    "repos_ge_10": 656,
+    "repos_ge_20": 238,
+    "share_instances_top10_repos": 0.09333160015598596,
+    "top10": {
+      "swc-project/swc": 410,
+      "vaskoz/dailycodingproblem-go": 355,
+      "getmoto/moto": 249,
+      "pandas-dev/pandas": 207,
+      "eslint/eslint": 196,
+      "FHIR/sushi": 189,
+      "platers/obsidian-linter": 143,
+      "helm/helm": 138,
+      "PennyLaneAI/pennylane": 135,
+      "kestra-io/kestra": 132
+    }
+  },
+  "hf_dataset_name": "nebius/SWE-rebench-V2"
+}
+------------------------------------------------------------
+  sources: nebius/SWE-rebench-V2
+wrote out/recon_nvidia.json  configs=['AweAI-Team/Scale-SWE', 'nebius/SWE-rebench-V2']

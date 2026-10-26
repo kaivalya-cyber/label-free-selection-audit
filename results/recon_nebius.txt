@@ -1,0 +1,179 @@
+{
+  "tag": "nebius/openhands+Qwen3-Coder-480B-A35B(v0.54.0)",
+  "rows": 67074,
+  "instances": 6306,
+  "repos": 1823,
+  "steps": {
+    "mean": 129.7242299549751,
+    "median": 123.0,
+    "p90": 195.0,
+    "max": 201,
+    "min": 23
+  },
+  "resolved_counts": {
+    "0": 34913,
+    "1": 32161
+  },
+  "share_resolved_minus1": 0.0,
+  "share_resolved_1_known": 0.4794853445448311,
+  "traj_per_instance": {
+    "mean": 10.636536631779258,
+    "median": 10.0,
+    "p90": 15.0,
+    "p99": 24.0,
+    "max": 34,
+    "hist": {
+      "1": 24,
+      "2": 18,
+      "3": 39,
+      "4": 77,
+      "5": 124,
+      "6": 321,
+      "7": 966,
+      "8": 602,
+      "9": 595,
+      "10": 580,
+      "11": 654,
+      "12": 650,
+      "13": 501,
+      "14": 403,
+      "15": 123,
+      "16": 90,
+      "17": 110,
+      "18": 66,
+      "19": 88,
+      "20": 97,
+      "21": 49,
+      "22": 34,
+      "23": 23,
+      "24": 21,
+      "25": 16,
+      "26": 6,
+      "27": 8,
+      "28": 8,
+      "29": 4,
+      "30": 4
+    }
+  },
+  "instances_ge_K": {
+    "1": 6306,
+    "2": 6282,
+    "3": 6264,
+    "5": 6148,
+    "8": 4737,
+    "10": 3540,
+    "16": 629,
+    "32": 5
+  },
+  "rows_in_instances_ge_K": {
+    "1": 67074,
+    "2": 67050,
+    "3": 67014,
+    "5": 66589,
+    "8": 57281,
+    "10": 47110,
+    "16": 12316,
+    "32": 164
+  },
+  "label_mix": {
+    "instances_with_ge2_known": 6282,
+    "instances_mixed": 1741,
+    "share_mixed_of_ge2": 0.27714103788602357,
+    "instances_all_resolved": 2041,
+    "instances_all_unresolved": 2500,
+    "per_issue_resolve_rate_mean": 0.4757621302491274
+  },
+  "label_mix_by_K": {
+    "2": {
+      "instances": 6282,
+      "mixed": 1741,
+      "share_mixed": 0.27714103788602357
+    },
+    "3": {
+      "instances": 6264,
+      "mixed": 1739,
+      "share_mixed": 0.27761813537675606
+    },
+    "5": {
+      "instances": 6148,
+      "mixed": 1717,
+      "share_mixed": 0.2792778139232271
+    },
+    "8": {
+      "instances": 4737,
+      "mixed": 1382,
+      "share_mixed": 0.2917458306945324
+    },
+    "10": {
+      "instances": 3540,
+      "mixed": 1085,
+      "share_mixed": 0.3064971751412429
+    },
+    "16": {
+      "instances": 629,
+      "mixed": 216,
+      "share_mixed": 0.34340222575516693
+    },
+    "32": {
+      "instances": 5,
+      "mixed": 4,
+      "share_mixed": 0.8
+    }
+  },
+  "issues_per_repo": {
+    "mean": 3.4591332967635764,
+    "median": 1.0,
+    "max": 275,
+    "repos_ge_5": 302,
+    "repos_ge_10": 123,
+    "repos_ge_20": 43,
+    "share_instances_top10_repos": 0.1384395813510942,
+    "top10": {
+      "tobymao/sqlglot": 275,
+      "python-pillow/Pillow": 126,
+      "iterative/dvc": 68,
+      "conan-io/conan": 67,
+      "streamlink/streamlink": 67,
+      "PennyLaneAI/pennylane": 65,
+      "dask/dask": 56,
+      "tox-dev/tox": 54,
+      "pytorch/ignite": 49,
+      "Textualize/textual": 46
+    }
+  },
+  "exit_status": {
+    "submit": 60739,
+    "RuntimeError: Agent reached maximum iteration. Current iteration: 100, max iteration: 100": 6003,
+    "AgentStuckInLoopError: Agent got stuck in a loop": 252,
+    "Timeout: litellm.Timeout: APITimeoutError - Request timed out. Error_str: Request timed out.": 36,
+    "RuntimeError: There was an unexpected error while running the agent: ServiceUnavailableError. You can refresh the page or ask the agent to try again.": 29,
+    "unknown": 10,
+    "AttributeError: 'str' object has no attribute 'get'": 5
+  },
+  "gen_tests_correct": {
+    "null_share": 0.5310701613143692,
+    "nonzero_share": 0.1409040760950592,
+    "top": {
+      "-999.0": 35621,
+      "0.0": 22002,
+      "1.0": 9451
+    }
+  },
+  "pred_passes_gen_tests": {
+    "null_share": 0.5320243313355398,
+    "nonzero_share": 0.33755255389569727,
+    "top": {
+      "-999.0": 35685,
+      "1.0": 22641,
+      "0.0": 8748
+    }
+  },
+  "model_patch": {
+    "empty_or_null_share": 0.0008348987685243164,
+    "mean_chars": 10716.28110743358,
+    "p90_chars": 27430.40000000001
+  },
+  "hf_dataset_name": "openhands+Qwen3-Coder-480B-A35B(v0.54.0)"
+}
+------------------------------------------------------------
+wrote out/recon_nebius.json  configs=['openhands+Qwen3-Coder-480B-A35B(v0.54.0)']

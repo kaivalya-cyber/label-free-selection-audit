@@ -154,7 +154,8 @@ def main():
                       "metadata.reference_patch.num_modified_lines"]:
                 if c in df.columns:
                     key[c.replace("metadata.", "")] = aux_values(df, c)
-    cfg_cols = [c for c in key.columns if c.startswith("_")] + [c for c in key.columns if c.startswith("model_patch.") or c.startswith("reference_patch.")]
+    cfg_cols = [c for c in key.columns if c.startswith("_") and c != "_src_path"] + [
+        c for c in key.columns if c.startswith("model_patch.") or c.startswith("reference_patch.")]
     for cfg, sub in key.groupby("_cfg"):
         sub = sub.drop(columns=["_cfg"])
         out, per, ipr = summarize(sub, f"{which}/{cfg}", cfg_cols=cfg_cols)
