@@ -1,0 +1,123 @@
+{
+  "nebius": {
+    "rows": 67074,
+    "instances_casefold": 6306,
+    "repos_casefold": 1823,
+    "dup_instance_trajectoryid": 0,
+    "dup_trajectory_id": 0
+  },
+  "nvidia": {
+    "rows": 818660,
+    "instances_casefold": 42545,
+    "repos_casefold": 3787,
+    "dup_instance_trajectoryid": 0,
+    "dup_trajectory_id": 0
+  },
+  "nvidia_by_source": {
+    "AweAI-Team/Scale-SWE": {
+      "rows": 319683,
+      "instances_casefold": 19466,
+      "repos_casefold": 1180,
+      "dup_instance_trajectoryid": 0
+    },
+    "nebius/SWE-rebench-V2": {
+      "rows": 498977,
+      "instances_casefold": 23079,
+      "repos_casefold": 2676,
+      "dup_instance_trajectoryid": 0
+    }
+  },
+  "swerebench_v1_v2": {
+    "v1_instances": 21336,
+    "v2_instances": 32079,
+    "intersection_casefold": 642
+  },
+  "cross_corpus": {
+    "nebius_instances": 6306,
+    "nvidia_instances": 42545,
+    "intersection": 204,
+    "share_of_nebius_instances": 0.0324,
+    "share_of_nvidia_instances": 0.0048,
+    "nebius_rows_on_shared_issues": 2202,
+    "nvidia_rows_on_shared_issues": 4692,
+    "note": "overlap only exists after case-folding instance_id (nvidia lowercases the owner)"
+  },
+  "cross_corpus_by_source": {
+    "AweAI-Team/Scale-SWE": {
+      "nvidia_instances": 19466,
+      "intersection_with_nebius": 0,
+      "nvidia_rows_on_shared": 0
+    },
+    "nebius/SWE-rebench-V2": {
+      "nvidia_instances": 23079,
+      "intersection_with_nebius": 204,
+      "nvidia_rows_on_shared": 4692
+    }
+  },
+  "shared_key_repo_agreement": {
+    "shared_keys": 204,
+    "same_repo_casefold": 204,
+    "examples": [
+      {
+        "key": "cs-si__eodag-249",
+        "repo_neb": "CS-SI/eodag",
+        "repo_nvi": "CS-SI/eodag",
+        "same_repo": true
+      },
+      {
+        "key": "pycqa__pyflakes-420",
+        "repo_neb": "PyCQA/pyflakes",
+        "repo_nvi": "PyCQA/pyflakes",
+        "same_repo": true
+      },
+      {
+        "key": "stingraysoftware__stingray-874",
+        "repo_neb": "StingraySoftware/stingray",
+        "repo_nvi": "StingraySoftware/stingray",
+        "same_repo": true
+      },
+      {
+        "key": "stfc__psyclone-2309",
+        "repo_neb": "stfc/PSyclone",
+        "repo_nvi": "stfc/PSyclone",
+        "same_repo": true
+      },
+      {
+        "key": "pennylaneai__pennylane-5851",
+        "repo_neb": "PennyLaneAI/pennylane",
+        "repo_nvi": "PennyLaneAI/pennylane",
+        "same_repo": true
+      }
+    ]
+  },
+  "nebius_k_coverage_excl_shared": {
+    "3": 6063,
+    "5": 5950,
+    "8": 4580
+  },
+  "nebius_k_coverage_all": {
+    "3": 6264,
+    "5": 6148,
+    "8": 4737
+  },
+  "nvidia_k_coverage": {
+    "3": 42446,
+    "5": 42108,
+    "8": 40531
+  },
+  "nvidia_v2_k_coverage": {
+    "3": 23024,
+    "5": 22890,
+    "8": 22557
+  },
+  "nvidia_v2_k_coverage_excl_shared": {
+    "3": 22820,
+    "5": 22687,
+    "8": 22354
+  },
+  "nvidia_scale_k_coverage": {
+    "3": 19422,
+    "5": 19218,
+    "8": 17974
+  }
+}

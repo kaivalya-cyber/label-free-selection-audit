@@ -1,0 +1,8 @@
+# Free/free-only stack: all data comes from public HF datasets via range reads.
+datasets>=2.19
+huggingface_hub>=0.23
+pyarrow
+pandas
+numpy
+scipy
+pytest

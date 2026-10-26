@@ -1,0 +1,147 @@
+{
+  "v1.0/swe-rebench-v2": {
+    "agents": {
+      "openhands": 21101,
+      "sweagent": 20412
+    },
+    "union": 22038,
+    "intersection": 19475,
+    "repos_union": 2648,
+    "repos_intersection": 2559,
+    "pairwise_jaccard": {
+      "openhands|sweagent": 0.8837
+    }
+  },
+  "v1.1/scale-swe": {
+    "agents": {
+      "minisweagent": 18699,
+      "openhands": 16793,
+      "sweagent": 16997
+    },
+    "union": 19370,
+    "intersection": 14494,
+    "repos_union": 1179,
+    "repos_intersection": 1083,
+    "pairwise_jaccard": {
+      "minisweagent|openhands": 0.8409,
+      "minisweagent|sweagent": 0.863,
+      "openhands|sweagent": 0.7856
+    }
+  },
+  "v1.1/swe-rebench-v2": {
+    "agents": {
+      "minisweagent": 20841,
+      "openhands": 19832,
+      "sweagent": 17396
+    },
+    "union": 22510,
+    "intersection": 14918,
+    "repos_union": 2662,
+    "repos_intersection": 2394,
+    "pairwise_jaccard": {
+      "minisweagent|openhands": 0.8203,
+      "minisweagent|sweagent": 0.7795,
+      "openhands|sweagent": 0.7054
+    }
+  },
+  "v1.2/scale-swe": {
+    "agents": {
+      "claudecode": 15081,
+      "minisweagent": 19352,
+      "opencode": 15562,
+      "openhands": 12541,
+      "sweagent": 15727
+    },
+    "union": 19443,
+    "intersection": 9954,
+    "repos_union": 1179,
+    "repos_intersection": 982,
+    "pairwise_jaccard": {
+      "claudecode|minisweagent": 0.7736,
+      "claudecode|opencode": 0.8281,
+      "claudecode|openhands": 0.6838,
+      "claudecode|sweagent": 0.8301,
+      "minisweagent|opencode": 0.7987,
+      "minisweagent|openhands": 0.6429,
+      "minisweagent|sweagent": 0.8063,
+      "opencode|openhands": 0.7014,
+      "opencode|sweagent": 0.8586,
+      "openhands|sweagent": 0.7183
+    }
+  },
+  "v1.2/swe-rebench-v2": {
+    "agents": {
+      "claudecode": 18930,
+      "minisweagent": 22053,
+      "opencode": 19742,
+      "openhands": 13058,
+      "sweagent": 17483
+    },
+    "union": 22965,
+    "intersection": 8451,
+    "repos_union": 2676,
+    "repos_intersection": 1957,
+    "pairwise_jaccard": {
+      "claudecode|minisweagent": 0.8061,
+      "claudecode|opencode": 0.777,
+      "claudecode|openhands": 0.5497,
+      "claudecode|sweagent": 0.695,
+      "minisweagent|opencode": 0.8398,
+      "minisweagent|openhands": 0.5629,
+      "minisweagent|sweagent": 0.7465,
+      "opencode|openhands": 0.561,
+      "opencode|sweagent": 0.7215,
+      "openhands|sweagent": 0.5279
+    }
+  },
+  "v2.0/scale-swe": {
+    "agents": {
+      "claudecode": 15382,
+      "minisweagent": 16063,
+      "opencode": 16171,
+      "openhands": 13271,
+      "sweagent": 15593
+    },
+    "union": 17179,
+    "intersection": 10371,
+    "repos_union": 1125,
+    "repos_intersection": 990,
+    "pairwise_jaccard": {
+      "claudecode|minisweagent": 0.8513,
+      "claudecode|opencode": 0.8562,
+      "claudecode|openhands": 0.727,
+      "claudecode|sweagent": 0.8338,
+      "minisweagent|opencode": 0.8911,
+      "minisweagent|openhands": 0.7485,
+      "minisweagent|sweagent": 0.865,
+      "opencode|openhands": 0.7533,
+      "opencode|sweagent": 0.8716,
+      "openhands|sweagent": 0.7493
+    }
+  },
+  "v2.0/swe-rebench-v2": {
+    "agents": {
+      "claudecode": 19552,
+      "minisweagent": 20514,
+      "opencode": 20427,
+      "openhands": 12756,
+      "sweagent": 19095
+    },
+    "union": 22564,
+    "intersection": 8907,
+    "repos_union": 2652,
+    "repos_intersection": 2043,
+    "pairwise_jaccard": {
+      "claudecode|minisweagent": 0.8173,
+      "claudecode|opencode": 0.8176,
+      "claudecode|openhands": 0.5425,
+      "claudecode|sweagent": 0.7692,
+      "minisweagent|opencode": 0.8474,
+      "minisweagent|openhands": 0.5513,
+      "minisweagent|sweagent": 0.7964,
+      "opencode|openhands": 0.5532,
+      "opencode|sweagent": 0.7956,
+      "openhands|sweagent": 0.5423
+    }
+  }
+}

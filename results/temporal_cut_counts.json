@@ -1,0 +1,67 @@
+{
+  "v1.0/openhands/minimax_m25/swe-rebench-v2": {
+    "issues_K3": 9661,
+    "pre_2023": 5491,
+    "post_2023": 4170
+  },
+  "v1.0/openhands/qwen35_122b/swe-rebench-v2": {
+    "issues_K3": 7934,
+    "pre_2023": 4553,
+    "post_2023": 3381
+  },
+  "v1.0/sweagent/minimax_m25/swe-rebench-v2": {
+    "issues_K3": 11133,
+    "pre_2023": 6358,
+    "post_2023": 4775
+  },
+  "v1.0/sweagent/qwen35_122b/swe-rebench-v2": {
+    "issues_K3": 3477,
+    "pre_2023": 1769,
+    "post_2023": 1708
+  },
+  "v1.1/minisweagent/qwen36_27b/scale-swe": {
+    "issues_K3": 9904,
+    "pre_2023": 0,
+    "post_2023": 0
+  },
+  "v1.1/minisweagent/qwen36_27b/swe-rebench-v2": {
+    "issues_K3": 13980,
+    "pre_2023": 7772,
+    "post_2023": 6208
+  },
+  "v1.1/sweagent/qwen36_27b/scale-swe": {
+    "issues_K3": 9537,
+    "pre_2023": 0,
+    "post_2023": 0
+  },
+  "v1.1/sweagent/qwen36_27b/swe-rebench-v2": {
+    "issues_K3": 6450,
+    "pre_2023": 3519,
+    "post_2023": 2931
+  },
+  "v1.2/minisweagent/qwen38_27b/scale-swe": {
+    "issues_K3": 15509,
+    "pre_2023": 0,
+    "post_2023": 0
+  },
+  "v1.2/minisweagent/qwen38_27b/swe-rebench-v2": {
+    "issues_K3": 12279,
+    "pre_2023": 6831,
+    "post_2023": 5448
+  },
+  "nebius_K3": {
+    "issues": 6264,
+    "pre_2023": 3969,
+    "post_2023": 2295
+  },
+  "nebius_K5": {
+    "issues": 6148,
+    "pre_2023": 3887,
+    "post_2023": 2261
+  },
+  "nebius_K8": {
+    "issues": 4737,
+    "pre_2023": 3173,
+    "post_2023": 1564
+  }
+}
