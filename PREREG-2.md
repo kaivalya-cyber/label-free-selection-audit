@@ -1,7 +1,7 @@
 # PREREG-2 — four pre-registered analyses on the frozen frames
 
-Status: **frozen at the commit that adds this file.** At freeze time **none of B1–B4 has been
-computed**. The only numbers produced before this file are (a) the Part-A reporting fixes
+Status: **frozen at commit `f9558d9`** (the commit that adds this file; any later change is a
+`DEVIATIONS.md` entry). At freeze time **none of B1–B4 has been computed**. The only numbers produced before this file are (a) the Part-A reporting fixes
 ([DEVIATIONS.md](DEVIATIONS.md) D6/D7), which change how `KILL_TEST.md` reports the *already-run*
 endpoint and touch no primary number, and (b) a **label-blind** availability probe
 ([scripts/b4_cost_probe.py](scripts/b4_cost_probe.py) → [results/b4_cost_probe.json](results/b4_cost_probe.json))
