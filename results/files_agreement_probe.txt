@@ -1,0 +1,11 @@
+nebius_openhands {"units": 6063, "files_unanimous": 0.1331, "files_any_pair": 0.4377, "files_all_distinct": 0.5623, "mean": 0.5236}
+v1.0_openhands_minimax_m25_swe-rebench-v2 {"units": 7463, "files_unanimous": 0.704, "files_any_pair": 0.9378, "files_all_distinct": 0.0622, "mean": 0.8806}
+v1.0_openhands_qwen35_122b_swe-rebench-v2 {"units": 5959, "files_unanimous": 0.3588, "files_any_pair": 0.6848, "files_all_distinct": 0.3152, "mean": 0.6812}
+v1.0_sweagent_minimax_m25_swe-rebench-v2 {"units": 8466, "files_unanimous": 0.6912, "files_any_pair": 0.9256, "files_all_distinct": 0.0744, "mean": 0.8723}
+v1.0_sweagent_qwen35_122b_swe-rebench-v2 {"units": 2490, "files_unanimous": 0.5542, "files_any_pair": 0.8554, "files_all_distinct": 0.1446, "mean": 0.8032}
+v1.1_minisweagent_qwen36_27b_scale-swe {"units": 8783, "files_unanimous": 0.6736, "files_any_pair": 0.9123, "files_all_distinct": 0.0877, "mean": 0.862}
+v1.1_minisweagent_qwen36_27b_swe-rebench-v2 {"units": 12073, "files_unanimous": 0.6875, "files_any_pair": 0.9279, "files_all_distinct": 0.0721, "mean": 0.8718}
+v1.1_sweagent_qwen36_27b_scale-swe {"units": 8520, "files_unanimous": 0.7217, "files_any_pair": 0.9297, "files_all_distinct": 0.0703, "mean": 0.8838}
+v1.1_sweagent_qwen36_27b_swe-rebench-v2 {"units": 5580, "files_unanimous": 0.6032, "files_any_pair": 0.8746, "files_all_distinct": 0.1254, "mean": 0.8259}
+v1.2_minisweagent_qwen38_27b_scale-swe {"units": 13801, "files_unanimous": 0.6679, "files_any_pair": 0.9123, "files_all_distinct": 0.0877, "mean": 0.8601}
+v1.2_minisweagent_qwen38_27b_swe-rebench-v2 {"units": 10563, "files_unanimous": 0.6195, "files_any_pair": 0.8962, "files_all_distinct": 0.1038, "mean": 0.8386}
