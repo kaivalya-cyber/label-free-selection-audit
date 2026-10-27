@@ -33,10 +33,18 @@ def shared_issue_keys() -> set[str]:
 
 
 # ---------------------------------------------------------------- unit construction
-def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = False) -> pd.DataFrame:
-    """One row per issue: K sampled trajectories -> agreement signals + submitted-label."""
+def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = False,
+                source: str = "strict") -> pd.DataFrame:
+    """One row per issue: K sampled trajectories -> agreement signals + submitted-label.
+
+    source="f1" is the DEVIATIONS D4 sensitivity: same sampling seed and pool, F1 canonical form.
+    """
     tag = cfg["tag"]
-    df = pd.read_parquet(BASE / f"{tag}.parquet")
+    if source == "f1":
+        df = pd.read_parquet(BASE.parent / "signals_f1" / f"{tag}.parquet")
+        df = df.rename(columns={"f1": "canonical", "f1_files": "files", "f1_lines": "changed_lines"})
+    else:
+        df = pd.read_parquet(BASE / f"{tag}.parquet")
     if minus1_as_failure:
         df.loc[df.resolved == -1, "resolved"] = 0
     df = df[df.resolved.isin([0, 1])]
@@ -183,6 +191,28 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
                           "ci": {"lower": boot["lower"], "upper": boot["upper"]},
                           "verdict": breaks_verdict(boot, a)}
     res["baselines"]["always_submit"] = always
+
+    # DEVIATIONS D4 sensitivity: F1 canonical form, evaluated AT the primary tau (no recalibration)
+    f1 = build_units(cfg, k, shared, source="f1")
+    assert set(f1.key) == set(units.key), "F1 frame must cover the same issues"
+    m = units[["key", "label"]].merge(f1[["key", "label"]], on="key", suffixes=("", "_f1"))
+    assert (m.label == m.label_f1).all(), "F1 sampling must select the same trajectories"
+    res["f1_sensitivity"] = {"agreement_levels": {str(a): int(v) for a, v in f1.agreement.value_counts().items()},
+                             "alpha": {}}
+    for alpha in ALPHAS:
+        tau = res["splits"]["heldout_repo"]["alpha"][str(alpha)]["tau"]
+        if tau is None:
+            res["f1_sensitivity"]["alpha"][str(alpha)] = {"tau": None, "coverage": 0.0, "risk": None,
+                                                          "n_submitted": 0}
+            continue
+        ev_f1 = f1.set_index("key").loc[units.key].reset_index()
+        side_vals = side.to_numpy()
+        sub = ev_f1[side_vals == EVAL]
+        m2 = sub.agreement.to_numpy() >= tau
+        res["f1_sensitivity"]["alpha"][str(alpha)] = {
+            "tau": tau, "n_submitted": int(m2.sum()),
+            "coverage": float(m2.mean()) if len(sub) else None,
+            "risk": float((1 - sub.label.to_numpy()[m2]).mean()) if m2.any() else None}
 
     # label-noise / truncation checks
     if cfg["dataset"] == "nebius":

@@ -88,6 +88,16 @@ for tag, c in list(J["configs"].items()) + [("nebius@K8", J["k8_arm"] or {})]:
                 tau = r.get("tau")
                 L.append(f"| {name} | {a} | {('—' if tau is None else f'{tau:.2f}')} | "
                          f"{pct(r.get('coverage'))} | {pct(r.get('risk'))} | {r.get('verdict')} |")
+    if c.get("f1_sensitivity"):
+        L.append("\n**Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**\n")
+        L.append(f"F1 agreement levels: `{json.dumps(c['f1_sensitivity'].get('agreement_levels'))}`\n")
+        L.append("| α | τ | submitted | coverage | risk |")
+        L.append("|---|---|---|---|---|")
+        for a in ALPHAS:
+            r = c["f1_sensitivity"]["alpha"][a]
+            tau = r.get("tau")
+            L.append(f"| {a} | {('—' if tau is None else f'{tau:.3f}')} | {r.get('n_submitted')} | "
+                     f"{pct(r.get('coverage'))} | {pct(r.get('risk'))} |")
     if c.get("minus1_sensitivity"):
         L.append("\n**Sensitivity — `resolved=-1` counted as failure, at the primary τ**\n")
         L.append("| α | τ | coverage | risk |")

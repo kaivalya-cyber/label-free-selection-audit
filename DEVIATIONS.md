@@ -29,6 +29,27 @@ PREREG §4 lists a temporal split for corpora with `created_at`. Recon showed Aw
 no timestamps at all, so the 4 Scale-SWE configs report `n/a` for that split instead of a number.
 This is a data availability fact from Phase 0 (DATA_RECON §4), not a choice made after seeing results.
 
+## D4 — F1 sensitivity (new-file sections dropped) added after normalizer sign-off (2026-10-26) **[pre-evaluation]**
+
+Context: the pre-evaluation signal probe (label-blind) showed strict patch identity is rare at K=3
+(all three identical in 2.1% of nebius units and 3.4%–7.9% of nvidia units), and 64.8% of nebius
+trajectories change canonical form when sections that create a new file are dropped. The human gate
+review (NORMALIZER_REVIEW.md, 26 content vs 24 file-set differences) signed off the frozen normalizer
+and asked for the F1 variant as a **declared sensitivity**, not as the primary signal.
+
+What is added, before any outcome number is computed:
+
+- F1 canonical form = PREREG §2.1 with one extra rule: sections that create a file
+  (`new file mode` present or `--- /dev/null`) are dropped before comparison. Implemented in
+  `src/sensitivity.py`; the primary path (`src/normalize.py`) is untouched.
+- F1 is evaluated **only at the primary τ** (from the strict signal, per config/split/α) on the
+  held-out-repo split — no recalibration, so it cannot become a second selection procedure.
+- The headline remains the frozen strict signal. F1 appears in KILL_TEST.md as a sensitivity table
+  with the same coverage/risk/CI columns.
+
+No label-aware computation preceded this entry; the decision was made from patch-vs-patch statistics
+and the human review of 100 pairs.
+
 ## D3 — the 204 cross-corpus shared issues are excluded everywhere (2026-10-26) **[pre-evaluation]**
 
 PREREG §1 already says they are excluded from all primary analyses; recorded here so the exclusion
