@@ -29,6 +29,22 @@ PREREG §4 lists a temporal split for corpora with `created_at`. Recon showed Aw
 no timestamps at all, so the 4 Scale-SWE configs report `n/a` for that split instead of a number.
 This is a data availability fact from Phase 0 (DATA_RECON §4), not a choice made after seeing results.
 
+## D5 — post-hoc descriptive diagnostics after the kill test (2026-10-26) **[post-evaluation]**
+
+Reason: the pre-registered procedure certified almost nothing (2 of 12 cells at α=0.20, 0 at α≤0.10),
+so the pre-registered endpoint alone cannot say whether agreement carries information at all. Two
+descriptive tables were added in `scripts/posthoc_diagnostics.py` → `results/posthoc_diagnostics.json`,
+rendered at the end of KILL_TEST.md:
+
+1. error rate by agreement level (1/3, 2/3, 1) per config, all units;
+2. within units whose three samples contain exactly two successes, error at agreement 1/3 vs 2/3.
+
+Both are **post-hoc and descriptive**: no threshold, split, α, or verdict was re-computed from them,
+and they are not used to select anything. They are reported because the pre-registered test was
+underpowered, and a paper that reported only `NO-COVERAGE` would hide the informative structure.
+Also fixed in this commit: the rendered sanity-gate table previously labelled `NO-COVERAGE` cells as
+"NO" (a formatting bug); they now read `n/a (no certified τ)`. No number changed.
+
 ## D4 — F1 sensitivity (new-file sections dropped) added after normalizer sign-off (2026-10-26) **[pre-evaluation]**
 
 Context: the pre-evaluation signal probe (label-blind) showed strict patch identity is rare at K=3

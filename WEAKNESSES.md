@@ -60,6 +60,31 @@ result), and the check that mitigates it or the fact that it does not.
     δ=0.05 calibration guarantee; a handful of BREAKS/HOLDS cells will look extreme by chance. The
     per-config verdict pattern is the evidence, not any single cell. No config or α is dropped.
 
+## What the kill test could not do (added after the run)
+
+17. **`NO-COVERAGE` dominates: 10 of 12 arms certify nothing at any α.** The pre-registered rule can
+    only report a calibrated guarantee when the most conservative τ passes on the calibration split.
+    `0 BREAKS` therefore does **not** mean "the guarantee holds under repo shift"; it means the test
+    had almost no power. Reading the null result as evidence *for* agreement-based abstention would be
+    a serious error.
+18. **The two cells that certify are the two easiest configs.** Base error 40.6% and 43.6%, versus
+    49.0%–68.8% for every arm that failed to certify. Certification tracks how good the policy already
+    is, which is itself consistent with "agreement is difficulty in disguise" at the config level, and
+    means the two HOLDS verdicts are weak evidence of robustness (2 replications, both favourable).
+19. **The certified coverage is tiny.** 5.6%–7.1% of issues at α=0.20, i.e. the rule answers "may I
+    submit?" for about one issue in fifteen. A practitioner cannot use this to gate a pipeline.
+20. **The difficulty baseline is a ceiling, not a competitor.** It needs the K samples' own success
+    labels, which in deployment requires running the tests — at which point abstention is moot. Its
+    11/11 certification at 33%–66% coverage bounds what any honest signal could achieve here, and the
+    gap between it and agreement (7% coverage) is the paper's central negative result.
+21. **The conditional diagnostic is confounded with D1.** Choosing the largest cluster's
+    representative means that when two of three samples resolved, the agreeing pair is often the
+    resolved pair; part of the apparent "agreement adds information beyond the success count" is
+    mechanical. It is reported as a descriptive probe, not as a test.
+22. **Certification power depends on the config's size and its τ=1 error, and both vary 3–4× across
+    configs.** With 11 configs, the distribution of verdicts is coarse; no meta-analytic combination
+    was pre-registered (and pooling across configs was explicitly forbidden).
+
 ## Pipeline risks
 
 14. **Signal and label live in different columns from the same row.** A join bug would silently

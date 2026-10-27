@@ -75,6 +75,7 @@ def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = F
             "steps": float(np.median(s.steps.to_numpy())),
             "rate": float(s.resolved.mean()),
             "label": lab,
+            "picked": "|".join(sorted(str(x) for x in picked)),
             "n_resolved": int(s.resolved.sum()),
             "cluster_size": int(top),
             "same_cluster_disagreement": int(
@@ -197,8 +198,8 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
     # DEVIATIONS D4 sensitivity: F1 canonical form, evaluated AT the primary tau (no recalibration)
     f1 = build_units(cfg, k, shared, source="f1")
     assert set(f1.key) == set(units.key), "F1 frame must cover the same issues"
-    m = units[["key", "label"]].merge(f1[["key", "label"]], on="key", suffixes=("", "_f1"))
-    assert (m.label == m.label_f1).all(), "F1 sampling must select the same trajectories"
+    m = units[["key", "picked"]].merge(f1[["key", "picked"]], on="key", suffixes=("", "_f1"))
+    assert (m.picked == m.picked_f1).all(), "F1 sampling must select the same trajectories"
     res["f1_sensitivity"] = {"agreement_levels": {str(a): int(v) for a, v in f1.agreement.value_counts().items()},
                              "alpha": {}}
     for alpha in ALPHAS:
