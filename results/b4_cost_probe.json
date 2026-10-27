@@ -1,0 +1,75 @@
+{
+ "costs": {
+  "nebius_openhands@K3": {
+   "issues": 6063,
+   "mean_cost_seq_first2": 2.959096157017978,
+   "mean_cost_seq_any1st": 2.959096157017978
+  },
+  "v1.0_openhands_minimax_m25_swe-rebench-v2@K3": {
+   "issues": 9570,
+   "mean_cost_seq_first2": 2.886415882967607,
+   "mean_cost_seq_any1st": 2.886415882967607
+  },
+  "v1.0_openhands_qwen35_122b_swe-rebench-v2@K3": {
+   "issues": 7880,
+   "mean_cost_seq_first2": 2.944289340101523,
+   "mean_cost_seq_any1st": 2.944289340101523
+  },
+  "v1.0_sweagent_minimax_m25_swe-rebench-v2@K3": {
+   "issues": 11020,
+   "mean_cost_seq_first2": 2.886932849364791,
+   "mean_cost_seq_any1st": 2.886932849364791
+  },
+  "v1.0_sweagent_qwen35_122b_swe-rebench-v2@K3": {
+   "issues": 3430,
+   "mean_cost_seq_first2": 2.9393586005830903,
+   "mean_cost_seq_any1st": 2.9393586005830903
+  },
+  "v1.1_minisweagent_qwen36_27b_scale-swe@K3": {
+   "issues": 9904,
+   "mean_cost_seq_first2": 2.9323505654281097,
+   "mean_cost_seq_any1st": 2.9323505654281097
+  },
+  "v1.1_minisweagent_qwen36_27b_swe-rebench-v2@K3": {
+   "issues": 13849,
+   "mean_cost_seq_first2": 2.899992779262041,
+   "mean_cost_seq_any1st": 2.899992779262041
+  },
+  "v1.1_sweagent_qwen36_27b_scale-swe@K3": {
+   "issues": 9537,
+   "mean_cost_seq_first2": 2.8919995805808956,
+   "mean_cost_seq_any1st": 2.8919995805808956
+  },
+  "v1.1_sweagent_qwen36_27b_swe-rebench-v2@K3": {
+   "issues": 6377,
+   "mean_cost_seq_first2": 2.91469342951231,
+   "mean_cost_seq_any1st": 2.91469342951231
+  },
+  "v1.2_minisweagent_qwen38_27b_scale-swe@K3": {
+   "issues": 15509,
+   "mean_cost_seq_first2": 2.9235282739054744,
+   "mean_cost_seq_any1st": 2.9235282739054744
+  },
+  "v1.2_minisweagent_qwen38_27b_swe-rebench-v2@K3": {
+   "issues": 12151,
+   "mean_cost_seq_first2": 2.918936713027734,
+   "mean_cost_seq_any1st": 2.918936713027734
+  },
+  "nebius_openhands@K8": {
+   "issues": 4580,
+   "mean_cost_seq_first2": 7.748471615720524,
+   "mean_cost_seq_any1st": 7.170524017467249
+  }
+ },
+ "b2_availability": {
+  "nebius_openhands@K8": {
+   "issues_with_geK": 4580,
+   "mixed_label_issues": 1338,
+   "mixed_issues_with_an_eligible_pair": 943,
+   "eligible_pairs": 11611,
+   "attempts": 55368,
+   "attempts_with_nonnull_signal": 25760
+  }
+ },
+ "note": "Pre-registration probe for PREREG-2 (Part B). Label-blind or availability-only."
+}
