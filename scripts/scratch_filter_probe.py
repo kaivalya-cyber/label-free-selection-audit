@@ -82,8 +82,8 @@ def main():
                 n_rows += 1
                 changed_f1 += (s != f1)
                 changed_f2 += (s != f2)
-                rows.append((key_of[tid], s, f1, f2))
-        df = pd.DataFrame(rows, columns=["key", "strict", "F1", "F2"])
+                rows.append((key_of[tid], tid, s, f1, f2))
+        df = pd.DataFrame(rows, columns=["key", "trajectory_id", "strict", "F1", "F2"])
         rec = {"rows": n_rows,
                "trajectories_changed_by_F1": changed_f1 / max(n_rows, 1),
                "trajectories_changed_by_F2": changed_f2 / max(n_rows, 1)}
@@ -91,10 +91,13 @@ def main():
         eligible = set(sizes[sizes >= 3].index)
         for name in ("strict", "F1", "F2"):
             agree = []
-            for key, g in df[df.key.isin(eligible)].groupby("key", sort=False):
+            sub = df[df.key.isin(eligible)].reset_index(drop=True)
+            for key, g in sub.groupby("key", sort=True):
+                ids = np.array(sorted(g.trajectory_id.astype(str).tolist()))
                 rng = seeded_rng(tag, key)
-                idx = np.sort(rng.choice(len(g), size=3, replace=False))
-                agree.append(share_largest([tuple(x) for x in g.iloc[idx][name].to_numpy()]))
+                picked = rng.choice(ids, size=3, replace=False)
+                vals = g.set_index("trajectory_id").loc[picked][name].to_numpy()
+                agree.append(share_largest([tuple(x) for x in vals]))
             agree = np.array(agree)
             rec[name] = {"units": int(len(agree)),
                          "share_all_three_identical": float(np.mean(agree == 1.0)),

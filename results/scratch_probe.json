@@ -5,24 +5,24 @@
     "trajectories_changed_by_F2": 0.6476279929629961,
     "strict": {
       "units": 6264,
-      "share_all_three_identical": 0.020753512132822477,
-      "share_any_pair": 0.08365261813537675,
-      "share_all_distinct": 0.9163473818646233,
-      "mean_agreement": 0.3681353767560664
+      "share_all_three_identical": 0.019636015325670497,
+      "share_any_pair": 0.0913154533844189,
+      "share_all_distinct": 0.9086845466155811,
+      "mean_agreement": 0.3703171562366964
     },
     "F1": {
       "units": 6264,
-      "share_all_three_identical": 0.09307151979565773,
-      "share_any_pair": 0.21455938697318008,
-      "share_all_distinct": 0.7854406130268199,
-      "mean_agreement": 0.43587696892294586
+      "share_all_three_identical": 0.09402937420178799,
+      "share_any_pair": 0.2247765006385696,
+      "share_all_distinct": 0.7752234993614304,
+      "mean_agreement": 0.4396019582801191
     },
     "F2": {
       "units": 6264,
-      "share_all_three_identical": 0.09307151979565773,
-      "share_any_pair": 0.21455938697318008,
-      "share_all_distinct": 0.7854406130268199,
-      "mean_agreement": 0.43587696892294586
+      "share_all_three_identical": 0.09402937420178799,
+      "share_any_pair": 0.2247765006385696,
+      "share_all_distinct": 0.7752234993614304,
+      "mean_agreement": 0.4396019582801191
     }
   },
   "v1.0_openhands_minimax_m25_swe-rebench-v2": {
@@ -34,21 +34,21 @@
       "share_all_three_identical": 0.07856329572508022,
       "share_any_pair": 0.1886968222751268,
       "share_all_distinct": 0.8113031777248731,
-      "mean_agreement": 0.42242003933340233
+      "mean_agreement": 0.4224200393334024
     },
     "F1": {
       "units": 9661,
       "share_all_three_identical": 0.11044405341062002,
       "share_any_pair": 0.2355863782217162,
       "share_all_distinct": 0.7644136217782839,
-      "mean_agreement": 0.448676810544112
+      "mean_agreement": 0.44867681054411207
     },
     "F2": {
       "units": 9661,
       "share_all_three_identical": 0.11044405341062002,
       "share_any_pair": 0.2355863782217162,
       "share_all_distinct": 0.7644136217782839,
-      "mean_agreement": 0.448676810544112
+      "mean_agreement": 0.44867681054411207
     }
   },
   "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
@@ -93,14 +93,14 @@
       "share_all_three_identical": 0.09925446869666757,
       "share_any_pair": 0.22743195904068983,
       "share_all_distinct": 0.7725680409593102,
-      "mean_agreement": 0.44222880924578584
+      "mean_agreement": 0.4422288092457858
     },
     "F2": {
       "units": 11133,
       "share_all_three_identical": 0.09934429174526184,
       "share_any_pair": 0.22743195904068983,
       "share_all_distinct": 0.7725680409593102,
-      "mean_agreement": 0.4422587502619839
+      "mean_agreement": 0.44225875026198386
     }
   },
   "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
@@ -112,21 +112,21 @@
       "share_all_three_identical": 0.04026459591601956,
       "share_any_pair": 0.10296232384239287,
       "share_all_distinct": 0.8970376761576071,
-      "mean_agreement": 0.38107563991947074
+      "mean_agreement": 0.3810756399194708
     },
     "F1": {
       "units": 3477,
       "share_all_three_identical": 0.04055220017256255,
       "share_any_pair": 0.10698878343399482,
       "share_all_distinct": 0.8930112165660051,
-      "mean_agreement": 0.3825136612021858
+      "mean_agreement": 0.3825136612021857
     },
     "F2": {
       "units": 3477,
       "share_all_three_identical": 0.04055220017256255,
       "share_any_pair": 0.10698878343399482,
       "share_all_distinct": 0.8930112165660051,
-      "mean_agreement": 0.3825136612021858
+      "mean_agreement": 0.3825136612021857
     }
   },
   "v1.1_minisweagent_qwen36_27b_scale-swe": {
@@ -138,7 +138,7 @@
       "share_all_three_identical": 0.03897415185783522,
       "share_any_pair": 0.12661550888529888,
       "share_all_distinct": 0.8733844911147012,
-      "mean_agreement": 0.388529886914378
+      "mean_agreement": 0.38852988691437806
     },
     "F1": {
       "units": 9904,
@@ -190,7 +190,7 @@
       "share_all_three_identical": 0.07790709866834435,
       "share_any_pair": 0.16944531823424558,
       "share_all_distinct": 0.8305546817657544,
-      "mean_agreement": 0.4157841389675299
+      "mean_agreement": 0.41578413896752997
     },
     "F1": {
       "units": 9537,
@@ -275,14 +275,14 @@
       "share_all_three_identical": 0.09137551917908625,
       "share_any_pair": 0.1771316882482287,
       "share_all_distinct": 0.8228683117517713,
-      "mean_agreement": 0.4228357358091049
+      "mean_agreement": 0.422835735809105
     },
     "F2": {
       "units": 12279,
       "share_all_three_identical": 0.09137551917908625,
       "share_any_pair": 0.1771316882482287,
       "share_all_distinct": 0.8228683117517713,
-      "mean_agreement": 0.4228357358091049
+      "mean_agreement": 0.422835735809105
     }
   }
 }

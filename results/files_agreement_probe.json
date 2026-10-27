@@ -1,10 +1,10 @@
 {
   "nebius_openhands": {
     "units": 6063,
-    "files_unanimous": 0.1331,
-    "files_any_pair": 0.4377,
-    "files_all_distinct": 0.5623,
-    "mean": 0.5236
+    "files_unanimous": 0.1303,
+    "files_any_pair": 0.4399,
+    "files_all_distinct": 0.5601,
+    "mean": 0.5234
   },
   "v1.0_openhands_minimax_m25_swe-rebench-v2": {
     "units": 7463,

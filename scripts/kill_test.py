@@ -51,11 +51,13 @@ def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = F
     df = df[~df.key.isin(shared)]
     rows = []
     for key, g in df.groupby("key", sort=True):
-        if len(g) < k:
+        ids = np.array(sorted(g.trajectory_id.astype(str).tolist()))
+        if len(ids) < k:
             continue
         rng = seeded_rng(tag, key)
-        idx = np.sort(rng.choice(len(g), size=k, replace=False))
-        s = g.iloc[idx]
+        # PREREG §1 verbatim: rng.choice(sorted(trajectory_ids), size=K, replace=False)
+        picked = rng.choice(ids, size=k, replace=False)
+        s = g.set_index("trajectory_id").loc[picked].reset_index()
         resumes = {}
         for tid, can in zip(s.trajectory_id, s.canonical):
             resumes.setdefault(can, []).append(tid)
