@@ -18,15 +18,23 @@ bash scripts/fetch_all_patches.sh
 
 echo "== canonicalise patches / per-trajectory signals =="
 $PY scripts/build_signals.py
+$PY scripts/build_signals_f1.py          # DEVIATIONS D4 sensitivity cache
+$PY scripts/make_exclusions.py           # DEVIATIONS D3 shared-issue list
 
 echo "== normalizer validation gate (100 pairs) =="
 $PY scripts/make_validation_pairs.py
+$PY scripts/render_validation_review.py
+
+echo "== signal-only probes (pre-evaluation) =="
+$PY scripts/scratch_filter_probe.py
+$PY scripts/files_agreement_probe.py
 
 echo "== unit tests =="
 $PY -m pytest tests -q
 
 echo "== kill test (single shot) =="
 $PY scripts/kill_test.py
+$PY scripts/posthoc_diagnostics.py       # DEVIATIONS D5 (post-hoc, descriptive only)
 
 echo "== render KILL_TEST.md =="
 $PY scripts/render_kill_test.py
