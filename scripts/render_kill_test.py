@@ -56,6 +56,18 @@ if cert["0.2"]:
     risks = [r["risk"] for _, r in cert["0.2"]]
     L.append(f"- At α=0.20 the certified cells have coverage {pct(min(covs))}–{pct(max(covs))} and "
              f"held-out-repo risk {pct(min(risks))}–{pct(max(risks))} vs α=20%.")
+# -1-as-failure sensitivity on the certified cells (label-convention fragility)
+frag = []
+for t, r in cert["0.2"]:
+    c = J["configs"].get(t) or J["k8_arm"]
+    m = c.get("minus1_sensitivity", {}).get("0.2", {})
+    if r.get("verdict") == "HOLDS" and m.get("risk") is not None:
+        frag.append((t, r["risk"], m["risk"]))
+if frag:
+    txt = "; ".join(f"`{t}` {pct(a)} → {pct(b)}" for t, a, b in frag)
+    L.append(f"- **Label-convention fragility:** re-scoring `resolved=-1` as failure at the same τ "
+             f"raises held-out risk above α=20% in every certified cell ({txt}). The two HOLDS verdicts "
+             f"depend on dropping unknown labels, which PREREG §1 fixed as the primary convention.")
 L.append("- The binding constraint is power, not calibration breakage: exact patch identity is rare "
          "(see DATA_RECON/claims C35–C38), so the unanimous subset is small and its error is only "
          "sometimes low enough for Clopper–Pearson to certify α. `NO-COVERAGE` cells carry no risk "
@@ -191,6 +203,31 @@ if PH:
     L.append("\nNote: this conditional table is confounded with DEVIATIONS D1 — when the labels are "
              "known, the agreeing pair is often the resolved pair, so part of the separation is "
              "mechanical rather than evidence that agreement is independent of difficulty.\n")
+
+# ---- leak checks (PREREG §8)
+try:
+    OV = json.loads(Path("results/overlap_check.json").read_text())
+except FileNotFoundError:
+    OV = None
+if OV:
+    L.append("\n## Leak checks (PREREG §8)\n")
+    L.append("| check | result | source |")
+    L.append("|---|---|---|")
+    L.append(f"| duplicate (issue, trajectory) rows, nebius / nvidia | "
+             f"{OV['nebius']['dup_instance_trajectoryid']} / {OV['nvidia']['dup_instance_trajectoryid']} | results/overlap_check.json |")
+    L.append(f"| duplicate trajectory_id, nebius / nvidia | "
+             f"{OV['nebius']['dup_trajectory_id']} / {OV['nvidia']['dup_trajectory_id']} | results/overlap_check.json |")
+    L.append(f"| casefolded issue overlap between corpora | {OV['cross_corpus']['intersection']} issues "
+             f"({OV['cross_corpus']['nebius_rows_on_shared_issues']} nebius rows / "
+             f"{OV['cross_corpus']['nvidia_rows_on_shared_issues']} nvidia rows) — excluded everywhere (D3) | "
+             f"results/overlap_check.json |")
+    L.append(f"| issue overlap SWE-rebench V1 ∩ V2 (casefolded, same created_at) | "
+             f"{OV['swerebench_v1_v2']['intersection_casefold']} | results/overlap_check.json |")
+    L.append(f"| excluded shared-issue list | {J['excluded_shared_issues']} keys | results/excluded_shared_issues.csv |")
+    L.append("| repo overlap across calibration/evaluation | 0 by construction; asserted for every config/split in "
+             "`scripts/kill_test.py::run_config` (`assert_no_repo_leak`) | scripts/kill_test.py |")
+    L.append("| issue on both sides of any split | 0; asserted (`assert_single_side`) | scripts/kill_test.py |")
+    L.append("")
 
 Path("KILL_TEST.md").write_text("\n".join(L) + "\n")
 print("wrote KILL_TEST.md", len(L), "lines")

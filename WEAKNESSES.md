@@ -21,8 +21,10 @@ result), and the check that mitigates it or the fact that it does not.
    rule rather than on policy stochasticity. Direction: unknown. Mitigation: per-config replication,
    and the nebius corpus (fixed ~10 attempts) is unaffected.
 4. **`-1` unknown labels are not missing at random** (0%–25.8% by config, concentrated in v1.0 and
-   minisweagent configs). Dropping them can bias risk in either direction; the pre-registered
-   sensitivity run (treat `-1` as failure) brackets it.
+   minisweagent configs), and the label convention decides the verdict: re-scoring `-1` as failure at
+   the certified τ raises held-out risk from 15.8%→**24.0%** and 16.4%→**27.1%**, i.e. both HOLDS
+   verdicts stop holding at α=0.20. The pre-registered primary convention (drop `-1`) is one of two
+   defensible choices; the paper must present both and cannot claim robustness without it.
 
 ## Signal definition
 

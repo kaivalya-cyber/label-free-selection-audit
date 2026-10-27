@@ -10,6 +10,7 @@ Command: `.venv/bin/python scripts/kill_test.py` · raw numbers: [results/kill_t
 - α=0.2: 2/12 configs certified a τ; BREAKS verdicts: 0.
 - BREAKS total across every config, split and α: **0**.
 - At α=0.20 the certified cells have coverage 5.6%–7.1% and held-out-repo risk 15.8%–16.4% vs α=20%.
+- **Label-convention fragility:** re-scoring `resolved=-1` as failure at the same τ raises held-out risk above α=20% in every certified cell (`v1.1_sweagent_qwen36_27b_scale-swe` 15.8% → 24.0%; `v1.2_minisweagent_qwen38_27b_scale-swe` 16.4% → 27.1%). The two HOLDS verdicts depend on dropping unknown labels, which PREREG §1 fixed as the primary convention.
 - The binding constraint is power, not calibration breakage: exact patch identity is rare (see DATA_RECON/claims C35–C38), so the unanimous subset is small and its error is only sometimes low enough for Clopper–Pearson to certify α. `NO-COVERAGE` cells carry no risk estimate and are reported as such, not as passes.
 
 ## Verdicts (headline split = held-out-repo, per config)
@@ -1129,4 +1130,17 @@ Error rate by agreement level over all units of each config (1 = failed), i.e. w
 | v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 35.0% (n=665) | 13.0% (n=54) |
 
 Note: this conditional table is confounded with DEVIATIONS D1 — when the labels are known, the agreeing pair is often the resolved pair, so part of the separation is mechanical rather than evidence that agreement is independent of difficulty.
+
+
+## Leak checks (PREREG §8)
+
+| check | result | source |
+|---|---|---|
+| duplicate (issue, trajectory) rows, nebius / nvidia | 0 / 0 | results/overlap_check.json |
+| duplicate trajectory_id, nebius / nvidia | 0 / 0 | results/overlap_check.json |
+| casefolded issue overlap between corpora | 204 issues (2202 nebius rows / 4692 nvidia rows) — excluded everywhere (D3) | results/overlap_check.json |
+| issue overlap SWE-rebench V1 ∩ V2 (casefolded, same created_at) | 642 | results/overlap_check.json |
+| excluded shared-issue list | 204 keys | results/excluded_shared_issues.csv |
+| repo overlap across calibration/evaluation | 0 by construction; asserted for every config/split in `scripts/kill_test.py::run_config` (`assert_no_repo_leak`) | scripts/kill_test.py |
+| issue on both sides of any split | 0; asserted (`assert_single_side`) | scripts/kill_test.py |
 
