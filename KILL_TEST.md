@@ -1,41 +1,45 @@
 # KILL_TEST — pre-registered agreement-based abstention, calibrated → held-out
 
-Command: `.venv/bin/python scripts/kill_test.py` · raw numbers: [results/kill_test.json](results/kill_test.json) · rules: [PREREG.md](PREREG.md), [DEVIATIONS.md](DEVIATIONS.md)
+Command: `.venv/bin/python scripts/kill_test.py` · raw numbers: [results/kill_test.json](results/kill_test.json) · rules: [PREREG.md](PREREG.md), [DEVIATIONS.md](DEVIATIONS.md) (D6/D7 fix how this file reports)
+
+Label convention: `resolved = -1` (unknown, nvidia only) is shown **both ways** — dropped from the pool before sampling, and counted as failure — for every arm. The two columns are two complete pipelines (they differ in pool eligibility as well as in labelling), each with its own τ, interval and verdict. Neither is primary here.
 
 
 ## Bottom line
 
-- α=0.05: 0/12 configs certified a τ; BREAKS verdicts: 0.
-- α=0.1: 0/12 configs certified a τ; BREAKS verdicts: 0.
-- α=0.2: 2/12 configs certified a τ; BREAKS verdicts: 0.
-- BREAKS total across every config, split and α: **0**.
-- At α=0.20 the certified cells have coverage 5.6%–7.1% and held-out-repo risk 15.8%–16.4% vs α=20%.
-- **Label-convention fragility:** re-scoring `resolved=-1` as failure at the same τ raises held-out risk above α=20% in every certified cell (`v1.1_sweagent_qwen36_27b_scale-swe` 15.8% → 24.0%; `v1.2_minisweagent_qwen38_27b_scale-swe` 16.4% → 27.1%). The two HOLDS verdicts depend on dropping unknown labels, which PREREG §1 fixed as the primary convention.
+- **0 BREAKS; 2 arms testable; sensitive to the `-1` convention.** (0 BREAKS in 198 pre-registered cells = arms × splits × α × label conventions; "testable" counts arms that certify a τ at any α, all of them at α=0.20 only; `NO-COVERAGE` is not a pass.)
+- α=0.05: drop-`-1` 0/12 arms certify a τ, 0 BREAKS; `-1`-as-failure 0/12 arms certify a τ, 0 BREAKS.
+- α=0.1: drop-`-1` 0/12 arms certify a τ, 0 BREAKS; `-1`-as-failure 0/12 arms certify a τ, 0 BREAKS.
+- α=0.2: drop-`-1` 2/12 arms certify a τ, 0 BREAKS; `-1`-as-failure 0/12 arms certify a τ, 0 BREAKS.
+- At α=0.20 (drop-`-1`) the certified cells have coverage 5.6%–7.1% and held-out-repo risk 15.8%–16.4% vs α=20%.
+- **Same τ, other label set:** re-scoring the certified rule with `resolved=-1` as failure (confounded with the sampling change — different pool, see below) raises held-out risk above α=20% in every certified cell (`v1.1_sweagent_qwen36_27b_scale-swe` 15.8% → 24.0%; `v1.2_minisweagent_qwen38_27b_scale-swe` 16.4% → 27.1%). The guarantee therefore depends on which convention you accept as correct.
+- difficulty_cross_fit at α=0.20: certifies in 12/12 arms, coverage 27.1%–63.9%, held-out risk 4.4%–15.2%. It needs the labels of the other K−1 attempts, which in deployment means running the tests on those attempts first.
+- difficulty_plugin_rate (oracle) at α=0.20: certifies in 12/12 arms, coverage 33.1%–65.5%, held-out risk 3.9%–14.6%. This row includes the scored label, so its coverage and risk are not achievable by any deployable signal; it is reported only as a ceiling.
 - The binding constraint is power, not calibration breakage: exact patch identity is rare (see DATA_RECON/claims C35–C38), so the unanimous subset is small and its error is only sometimes low enough for Clopper–Pearson to certify α. `NO-COVERAGE` cells carry no risk estimate and are reported as such, not as passes.
 
-## Verdicts (headline split = held-out-repo, per config)
+## Verdicts (headline split = held-out-repo, per config, both label conventions)
 
-| config | issues | base error | α=0.05 | α=0.1 | α=0.2 |
-|---|---|---|---|---|---|
-| nebius_openhands | 6063 | 53.0% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.0_openhands_minimax_m25_swe-rebench-v2 | 7463 | 54.2% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.0_openhands_qwen35_122b_swe-rebench-v2 | 5959 | 68.8% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.0_sweagent_minimax_m25_swe-rebench-v2 | 8466 | 50.5% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | 2490 | 49.0% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.1_minisweagent_qwen36_27b_scale-swe | 8783 | 60.9% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | 12073 | 62.2% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.1_sweagent_qwen36_27b_scale-swe | 8520 | 43.6% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | HOLDS (7.1%, 15.8%) |
-| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | 5580 | 58.0% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| v1.2_minisweagent_qwen38_27b_scale-swe | 13801 | 40.6% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | HOLDS (5.6%, 16.4%) |
-| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 10563 | 49.1% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
-| nebius@K8 | 4580 | 52.8% | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) | NO-COVERAGE (0.0%, —) |
+| config | issues (drop / −1=fail) | base error (drop / −1=fail) | α=0.05 drop | α=0.05 −1=fail | α=0.1 drop | α=0.1 −1=fail | α=0.2 drop | α=0.2 −1=fail |
+|---|---|---|---|---|---|---|---|---|
+| nebius_openhands | 6063 / 6063 | 53.0% / 53.0% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | 7463 / 9570 | 54.2% / 64.0% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | 5959 / 7880 | 68.8% / 76.3% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | 8466 / 11020 | 50.5% / 61.8% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | 2490 / 3430 | 49.0% / 62.7% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | 8783 / 9904 | 60.9% / 65.3% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | 12073 / 13849 | 62.2% / 66.2% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.1_sweagent_qwen36_27b_scale-swe | 8520 / 9537 | 43.6% / 49.6% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | HOLDS (7.1%, 15.8%) | NO-COVERAGE (—, —) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | 5580 / 6377 | 58.0% / 62.1% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | 13801 / 15509 | 40.6% / 47.1% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | HOLDS (5.6%, 16.4%) | NO-COVERAGE (—, —) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 10563 / 12151 | 49.1% / 54.1% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
+| nebius@K8 | 4580 / 4580 | 52.8% / 52.8% | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) | NO-COVERAGE (—, —) |
 
-Cells are `VERDICT (coverage, selective risk)`. BREAKS = repo-clustered lower CI bound > α + 0.05; HOLDS = otherwise; NO-COVERAGE = no τ certified on calibration.
+Cells are `VERDICT (coverage, selective risk)`. BREAKS = repo-clustered lower CI bound > α + 0.05; HOLDS = otherwise; NO-COVERAGE = no τ certified on calibration (not a pass). The `−1`-as-failure columns are separate certifications on a larger pool, not re-scores of the drop-`-1` rule; the re-score is reported per config below.
 
 
 ## nebius_openhands
 
-`nebius OpenHands v0.54.0 + Qwen3-Coder-480B` · K=3 · issues 6063 · repos 1809 · resolved rate 47.0% · agreement levels {"0.3333333333333333": 5504, "0.6666666666666666": 438, "1.0": 121} · same-cluster label disagreement 0.0%
+`nebius OpenHands v0.54.0 + Qwen3-Coder-480B` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 6063 · repos 1809 · resolved rate 47.0% · agreement levels {"0.3333333333333333": 5504, "0.6666666666666666": 438, "1.0": 121} · same-cluster label disagreement 0.0%
 
 Truncation: max-iteration rows 8.9%, non-submit rows 9.4%.
 
@@ -92,18 +96,21 @@ Truncation: max-iteration rows 8.9%, non-submit rows 9.4%.
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 53.5% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 53.5% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 53.5% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 39.3% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 47.3% | 6.8% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 54.3% | 14.4% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 53.5% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 53.5% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 53.5% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 42.5% | 7.6% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 51.9% | 15.1% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 39.3% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 47.3% | 6.8% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 54.3% | 14.4% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -115,7 +122,7 @@ F1 agreement levels: `{"0.3333333333333333": 4691, "0.6666666666666666": 800, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -123,9 +130,19 @@ F1 agreement levels: `{"0.3333333333333333": 4691, "0.6666666666666666": 800, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 6063 · repos 1809 · base error 53.0% · agreement levels {"0.3333333333333333": 5504, "0.6666666666666666": 438, "1.0": 121}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.0_openhands_minimax_m25_swe-rebench-v2
 
-`v1.0 openhands minimax_m25 swe-rebench-v2` · K=3 · issues 7463 · repos 1846 · resolved rate 45.8% · agreement levels {"0.3333333333333333": 6071, "0.6666666666666666": 825, "1.0": 567} · same-cluster label disagreement 0.0%
+`v1.0 openhands minimax_m25 swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 7463 · repos 1846 · resolved rate 45.8% · agreement levels {"0.3333333333333333": 6071, "0.6666666666666666": 825, "1.0": 567} · same-cluster label disagreement 0.0%
 
 
 **random_issue** (calib 3788 / eval 3675)
@@ -180,18 +197,21 @@ F1 agreement levels: `{"0.3333333333333333": 4691, "0.6666666666666666": 800, "1
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 54.7% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 54.7% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 54.7% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 39.1% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 46.6% | 6.3% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 52.3% | 13.3% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 54.7% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 54.7% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 54.7% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 42.1% | 7.0% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 50.5% | 13.7% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 39.1% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 46.6% | 6.3% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 52.3% | 13.3% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -203,7 +223,7 @@ F1 agreement levels: `{"0.3333333333333333": 5717, "0.6666666666666666": 937, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -211,9 +231,19 @@ F1 agreement levels: `{"0.3333333333333333": 5717, "0.6666666666666666": 937, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 9570 · repos 2145 · base error 64.0% · agreement levels {"0.3333333333333333": 7770, "0.6666666666666666": 1052, "1.0": 748}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.0_openhands_qwen35_122b_swe-rebench-v2
 
-`v1.0 openhands qwen35_122b swe-rebench-v2` · K=3 · issues 5959 · repos 1669 · resolved rate 31.2% · agreement levels {"0.3333333333333333": 5343, "0.6666666666666666": 400, "1.0": 216} · same-cluster label disagreement 0.0%
+`v1.0 openhands qwen35_122b swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 5959 · repos 1669 · resolved rate 31.2% · agreement levels {"0.3333333333333333": 5343, "0.6666666666666666": 400, "1.0": 216} · same-cluster label disagreement 0.0%
 
 
 **random_issue** (calib 3046 / eval 2913)
@@ -268,18 +298,21 @@ F1 agreement levels: `{"0.3333333333333333": 5717, "0.6666666666666666": 937, "1
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 68.2% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 68.2% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 68.2% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 23.4% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 1.00 | 23.4% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.67 | 33.1% | 11.2% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 68.2% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 68.2% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 68.2% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.667 | 27.1% | 13.6% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 23.4% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 1.000 | 23.4% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.667 | 33.1% | 11.2% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -291,7 +324,7 @@ F1 agreement levels: `{"0.3333333333333333": 4987, "0.6666666666666666": 527, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -299,9 +332,19 @@ F1 agreement levels: `{"0.3333333333333333": 4987, "0.6666666666666666": 527, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 7880 · repos 1961 · base error 76.3% · agreement levels {"0.3333333333333333": 7110, "0.6666666666666666": 509, "1.0": 261}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.0_sweagent_minimax_m25_swe-rebench-v2
 
-`v1.0 sweagent minimax_m25 swe-rebench-v2` · K=3 · issues 8466 · repos 1859 · resolved rate 49.5% · agreement levels {"0.3333333333333333": 6888, "0.6666666666666666": 968, "1.0": 610} · same-cluster label disagreement 0.1%
+`v1.0 sweagent minimax_m25 swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 8466 · repos 1859 · resolved rate 49.5% · agreement levels {"0.3333333333333333": 6888, "0.6666666666666666": 968, "1.0": 610} · same-cluster label disagreement 0.1%
 
 
 **random_issue** (calib 4247 / eval 4219)
@@ -356,18 +399,21 @@ F1 agreement levels: `{"0.3333333333333333": 4987, "0.6666666666666666": 527, "1
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 50.2% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 50.2% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 50.2% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 41.9% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 51.0% | 6.6% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 57.6% | 13.6% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 50.2% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 50.2% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 50.2% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 45.3% | 7.5% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 55.5% | 14.1% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 41.9% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 51.0% | 6.6% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 57.6% | 13.6% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -379,7 +425,7 @@ F1 agreement levels: `{"0.3333333333333333": 6554, "0.6666666666666666": 1087, "
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -387,9 +433,19 @@ F1 agreement levels: `{"0.3333333333333333": 6554, "0.6666666666666666": 1087, "
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 11020 · repos 2157 · base error 61.8% · agreement levels {"0.3333333333333333": 8955, "0.6666666666666666": 1251, "1.0": 814}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.0_sweagent_qwen35_122b_swe-rebench-v2
 
-`v1.0 sweagent qwen35_122b swe-rebench-v2` · K=3 · issues 2490 · repos 984 · resolved rate 51.0% · agreement levels {"0.3333333333333333": 2229, "0.6666666666666666": 155, "1.0": 106} · same-cluster label disagreement 0.1%
+`v1.0 sweagent qwen35_122b swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 2490 · repos 984 · resolved rate 51.0% · agreement levels {"0.3333333333333333": 2229, "0.6666666666666666": 155, "1.0": 106} · same-cluster label disagreement 0.1%
 
 
 **random_issue** (calib 1218 / eval 1272)
@@ -444,18 +500,21 @@ F1 agreement levels: `{"0.3333333333333333": 6554, "0.6666666666666666": 1087, "
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 49.6% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 49.6% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 49.6% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 41.8% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 51.3% | 5.9% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 58.9% | 14.3% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 49.6% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 49.6% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 49.6% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 44.9% | 6.8% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 56.7% | 14.9% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 41.8% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 51.3% | 5.9% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 58.9% | 14.3% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -467,7 +526,7 @@ F1 agreement levels: `{"0.3333333333333333": 2221, "0.6666666666666666": 162, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -475,9 +534,19 @@ F1 agreement levels: `{"0.3333333333333333": 2221, "0.6666666666666666": 162, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 3430 · repos 1223 · base error 62.7% · agreement levels {"0.3333333333333333": 3079, "0.6666666666666666": 214, "1.0": 137}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.1_minisweagent_qwen36_27b_scale-swe
 
-`v1.1 minisweagent qwen36_27b scale-swe` · K=3 · issues 8783 · repos 963 · resolved rate 39.1% · agreement levels {"0.3333333333333333": 7651, "0.6666666666666666": 780, "1.0": 352} · same-cluster label disagreement 0.2%
+`v1.1 minisweagent qwen36_27b scale-swe` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 8783 · repos 963 · resolved rate 39.1% · agreement levels {"0.3333333333333333": 7651, "0.6666666666666666": 780, "1.0": 352} · same-cluster label disagreement 0.2%
 
 Temporal split not applicable for 8783 issues (no timestamps).
 
@@ -518,18 +587,21 @@ Temporal split not applicable for 8783 issues (no timestamps).
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 60.4% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 60.4% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 60.4% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 28.8% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 34.1% | 3.9% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.67 | 34.1% | 3.9% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 60.4% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 60.4% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 60.4% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 30.1% | 4.4% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.667 | 30.1% | 4.4% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 28.8% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 34.1% | 3.9% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.667 | 34.1% | 3.9% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -541,7 +613,7 @@ F1 agreement levels: `{"0.3333333333333333": 7447, "0.6666666666666666": 875, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -549,9 +621,19 @@ F1 agreement levels: `{"0.3333333333333333": 7447, "0.6666666666666666": 875, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 9904 · repos 1009 · base error 65.3% · agreement levels {"0.3333333333333333": 8650, "0.6666666666666666": 868, "1.0": 386}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.1_minisweagent_qwen36_27b_swe-rebench-v2
 
-`v1.1 minisweagent qwen36_27b swe-rebench-v2` · K=3 · issues 12073 · repos 2278 · resolved rate 37.8% · agreement levels {"0.3333333333333333": 10052, "0.6666666666666666": 1169, "1.0": 852} · same-cluster label disagreement 0.7%
+`v1.1 minisweagent qwen36_27b swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 12073 · repos 2278 · resolved rate 37.8% · agreement levels {"0.3333333333333333": 10052, "0.6666666666666666": 1169, "1.0": 852} · same-cluster label disagreement 0.7%
 
 
 **random_issue** (calib 6047 / eval 6026)
@@ -606,18 +688,21 @@ F1 agreement levels: `{"0.3333333333333333": 7447, "0.6666666666666666": 875, "1
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 61.1% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 61.1% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 61.1% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 32.1% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 39.5% | 6.4% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 45.5% | 14.6% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 61.1% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 61.1% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 61.1% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 34.7% | 7.3% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 43.6% | 15.2% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 32.1% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 39.5% | 6.4% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 45.5% | 14.6% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -629,7 +714,7 @@ F1 agreement levels: `{"0.3333333333333333": 9465, "0.6666666666666666": 1338, "
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -637,9 +722,19 @@ F1 agreement levels: `{"0.3333333333333333": 9465, "0.6666666666666666": 1338, "
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 13849 · repos 2367 · base error 66.2% · agreement levels {"0.3333333333333333": 11539, "0.6666666666666666": 1355, "1.0": 955}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.1_sweagent_qwen36_27b_scale-swe
 
-`v1.1 sweagent qwen36_27b scale-swe` · K=3 · issues 8520 · repos 961 · resolved rate 56.4% · agreement levels {"0.3333333333333333": 7042, "0.6666666666666666": 802, "1.0": 676} · same-cluster label disagreement 0.0%
+`v1.1 sweagent qwen36_27b scale-swe` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 8520 · repos 961 · resolved rate 56.4% · agreement levels {"0.3333333333333333": 7042, "0.6666666666666666": 802, "1.0": 676} · same-cluster label disagreement 0.0%
 
 Temporal split not applicable for 8520 issues (no timestamps).
 
@@ -680,18 +775,21 @@ Temporal split not applicable for 8520 issues (no timestamps).
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 44.6% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 44.6% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 44.6% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 0.67 | 55.9% | 3.9% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.33 | 60.3% | 8.1% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 60.3% | 8.1% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 44.6% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 44.6% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 44.6% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | 0.667 | 52.1% | 4.2% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.333 | 58.6% | 8.3% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 58.6% | 8.3% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 0.667 | 55.9% | 3.9% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.333 | 60.3% | 8.1% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 60.3% | 8.1% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -703,7 +801,7 @@ F1 agreement levels: `{"0.3333333333333333": 6813, "0.6666666666666666": 908, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | 1.000 | 362 | 8.5% | 22.4% |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -711,9 +809,19 @@ F1 agreement levels: `{"0.3333333333333333": 6813, "0.6666666666666666": 908, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | 1.000 | 7.9% | 24.0% |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 9537 · repos 1009 · base error 49.6% · agreement levels {"0.3333333333333333": 7921, "0.6666666666666666": 873, "1.0": 743}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.1_sweagent_qwen36_27b_swe-rebench-v2
 
-`v1.1 sweagent qwen36_27b swe-rebench-v2` · K=3 · issues 5580 · repos 1719 · resolved rate 42.0% · agreement levels {"0.3333333333333333": 4733, "0.6666666666666666": 541, "1.0": 306} · same-cluster label disagreement 0.8%
+`v1.1 sweagent qwen36_27b swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 5580 · repos 1719 · resolved rate 42.0% · agreement levels {"0.3333333333333333": 4733, "0.6666666666666666": 541, "1.0": 306} · same-cluster label disagreement 0.8%
 
 
 **random_issue** (calib 2796 / eval 2784)
@@ -768,18 +876,21 @@ F1 agreement levels: `{"0.3333333333333333": 6813, "0.6666666666666666": 908, "1
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 57.7% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 57.7% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 57.7% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 34.9% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 42.7% | 6.0% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 48.5% | 12.9% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 57.7% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 57.7% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 57.7% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 37.5% | 6.9% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 46.3% | 13.5% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 34.9% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 42.7% | 6.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 48.5% | 12.9% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -791,7 +902,7 @@ F1 agreement levels: `{"0.3333333333333333": 4528, "0.6666666666666666": 600, "1
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -799,9 +910,19 @@ F1 agreement levels: `{"0.3333333333333333": 4528, "0.6666666666666666": 600, "1
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 6377 · repos 1812 · base error 62.1% · agreement levels {"0.3333333333333333": 5443, "0.6666666666666666": 597, "1.0": 337}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.2_minisweagent_qwen38_27b_scale-swe
 
-`v1.2 minisweagent qwen38_27b scale-swe` · K=3 · issues 13801 · repos 1081 · resolved rate 59.4% · agreement levels {"0.3333333333333333": 12059, "0.6666666666666666": 995, "1.0": 747} · same-cluster label disagreement 0.0%
+`v1.2 minisweagent qwen38_27b scale-swe` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 13801 · repos 1081 · resolved rate 59.4% · agreement levels {"0.3333333333333333": 12059, "0.6666666666666666": 995, "1.0": 747} · same-cluster label disagreement 0.0%
 
 Temporal split not applicable for 13801 issues (no timestamps).
 
@@ -842,18 +963,21 @@ Temporal split not applicable for 13801 issues (no timestamps).
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 39.4% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 39.4% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 39.4% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 0.67 | 60.8% | 3.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.33 | 65.5% | 7.5% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 65.5% | 7.5% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 39.4% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 39.4% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 39.4% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | 0.667 | 57.4% | 3.2% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.333 | 63.9% | 7.7% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 63.9% | 7.7% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 0.667 | 60.8% | 3.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.333 | 65.5% | 7.5% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 65.5% | 7.5% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -865,7 +989,7 @@ F1 agreement levels: `{"0.3333333333333333": 11850, "0.6666666666666666": 1090, 
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | 1.000 | 423 | 6.1% | 20.1% |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -873,9 +997,19 @@ F1 agreement levels: `{"0.3333333333333333": 11850, "0.6666666666666666": 1090, 
 | 0.1 | — | 0.0% | — |
 | 0.2 | 1.000 | 5.4% | 27.1% |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 15509 · repos 1131 · base error 47.1% · agreement levels {"0.3333333333333333": 13577, "0.6666666666666666": 1101, "1.0": 831}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## v1.2_minisweagent_qwen38_27b_swe-rebench-v2
 
-`v1.2 minisweagent qwen38_27b swe-rebench-v2` · K=3 · issues 10563 · repos 2180 · resolved rate 50.9% · agreement levels {"0.3333333333333333": 9204, "0.6666666666666666": 757, "1.0": 602} · same-cluster label disagreement 0.6%
+`v1.2 minisweagent qwen38_27b swe-rebench-v2` · K=3 · convention `resolved=-1 dropped (PREREG primary)` · issues 10563 · repos 2180 · resolved rate 50.9% · agreement levels {"0.3333333333333333": 9204, "0.6666666666666666": 757, "1.0": 602} · same-cluster label disagreement 0.6%
 
 
 **random_issue** (calib 5274 / eval 5289)
@@ -930,18 +1064,21 @@ F1 agreement levels: `{"0.3333333333333333": 11850, "0.6666666666666666": 1090, 
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 50.8% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 50.8% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 50.8% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 1.00 | 42.5% | 0.0% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.67 | 49.4% | 4.7% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.33 | 55.2% | 10.9% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 50.8% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 50.8% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 50.8% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | — | 0.0% | — | NO-COVERAGE |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.667 | 44.8% | 5.2% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.333 | 53.2% | 11.3% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 1.000 | 42.5% | 0.0% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.667 | 49.4% | 4.7% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.333 | 55.2% | 10.9% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -953,7 +1090,7 @@ F1 agreement levels: `{"0.3333333333333333": 8669, "1.0": 1004, "0.6666666666666
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -961,9 +1098,19 @@ F1 agreement levels: `{"0.3333333333333333": 8669, "1.0": 1004, "0.6666666666666
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 12151 · repos 2285 · base error 54.1% · agreement levels {"0.3333333333333333": 10569, "0.6666666666666666": 892, "1.0": 690}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## nebius@K8
 
-`nebius OpenHands v0.54.0 + Qwen3-Coder-480B` · K=8 · issues 4580 · repos 1544 · resolved rate 47.2% · agreement levels {"0.125": 3478, "0.25": 446, "0.375": 242, "0.5": 172, "0.625": 120, "0.75": 91, "0.875": 20, "1.0": 11} · same-cluster label disagreement 0.0%
+`nebius OpenHands v0.54.0 + Qwen3-Coder-480B` · K=8 · convention `resolved=-1 dropped (PREREG primary)` · issues 4580 · repos 1544 · resolved rate 47.2% · agreement levels {"0.125": 3478, "0.25": 446, "0.375": 242, "0.5": 172, "0.625": 120, "0.75": 91, "0.875": 20, "1.0": 11} · same-cluster label disagreement 0.0%
 
 Truncation: max-iteration rows 8.9%, non-submit rows 9.4%.
 
@@ -1020,18 +1167,21 @@ Truncation: max-iteration rows 8.9%, non-submit rows 9.4%.
 
 | method | α | τ | coverage | risk | verdict |
 |---|---|---|---|---|---|
+| always_submit | 0.05 | — | 100.0% | 52.3% | BREAKS |
+| always_submit | 0.1 | — | 100.0% | 52.3% | BREAKS |
+| always_submit | 0.2 | — | 100.0% | 52.3% | BREAKS |
 | patch_size | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | patch_size | 0.2 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.05 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.1 | — | 0.0% | — | NO-COVERAGE |
 | step_count | 0.2 | — | 0.0% | — | NO-COVERAGE |
-| difficulty_plugin_rate | 0.05 | 0.88 | 41.5% | 2.8% | HOLDS |
-| difficulty_plugin_rate | 0.1 | 0.75 | 45.4% | 5.7% | HOLDS |
-| difficulty_plugin_rate | 0.2 | 0.50 | 51.0% | 10.3% | HOLDS |
-| always_submit | 0.05 | — | 100.0% | 52.3% | BREAKS |
-| always_submit | 0.1 | — | 100.0% | 52.3% | BREAKS |
-| always_submit | 0.2 | — | 100.0% | 52.3% | BREAKS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.05 | 0.875 | 36.6% | 3.2% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.1 | 0.750 | 42.9% | 6.0% | HOLDS |
+| difficulty_cross_fit — HONEST (rate of the other K−1 attempts) | 0.2 | 0.500 | 49.8% | 10.5% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.05 | 0.875 | 41.5% | 2.8% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.1 | 0.750 | 45.4% | 5.7% | HOLDS |
+| difficulty_plugin_rate — ORACLE CEILING (includes the scored label) | 0.2 | 0.500 | 51.0% | 10.3% | HOLDS |
 
 **Sensitivity — F1 canonicalisation (new-file sections dropped), at the primary τ**
 
@@ -1043,7 +1193,7 @@ F1 agreement levels: `{"0.125": 2728, "0.25": 544, "0.375": 315, "0.5": 247, "1.
 | 0.1 | — | 0 | 0.0% | — |
 | 0.2 | — | 0 | 0.0% | — |
 
-**Sensitivity — `resolved=-1` counted as failure, at the primary τ**
+**Sensitivity — `resolved=-1` counted as failure, at the primary τ (same rule re-scored, different sample pool)**
 
 | α | τ | coverage | risk |
 |---|---|---|---|
@@ -1051,46 +1201,92 @@ F1 agreement levels: `{"0.125": 2728, "0.25": 544, "0.375": 315, "0.5": 247, "1.
 | 0.1 | — | 0.0% | — |
 | 0.2 | — | 0.0% | — |
 
+**Alternative convention (`resolved=-1` as failure) — full certification, held-out-repo split**
+
+own pool: issues 4580 · repos 1544 · base error 52.8% · agreement levels {"0.125": 3478, "0.25": 446, "0.375": 242, "0.5": 172, "0.625": 120, "0.75": 91, "0.875": 20, "1.0": 11}. Its other splits and `always_submit` numbers are in results/kill_test.json.
+
+| α | τ | submitted | coverage | risk | 95% CI | verdict |
+|---|---|---|---|---|---|---|
+| 0.05 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.1 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+| 0.2 | — | 0 | 0.0% | — | — | NO-COVERAGE |
+
 ## Sanity gate (in-distribution split must hold risk ≤ α)
 
-| config | α | random-issue risk | ≤ α? |
-|---|---|---|---|
-| nebius_openhands | 0.05 | — | n/a (no certified τ) |
-| nebius_openhands | 0.1 | — | n/a (no certified τ) |
-| nebius_openhands | 0.2 | — | n/a (no certified τ) |
-| v1.0_openhands_minimax_m25_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.0_openhands_minimax_m25_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.0_openhands_minimax_m25_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.0_openhands_qwen35_122b_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.0_openhands_qwen35_122b_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.0_openhands_qwen35_122b_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.0_sweagent_minimax_m25_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.0_sweagent_minimax_m25_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.0_sweagent_minimax_m25_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_scale-swe | 0.05 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_scale-swe | 0.1 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_scale-swe | 0.2 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.1_sweagent_qwen36_27b_scale-swe | 0.05 | — | n/a (no certified τ) |
-| v1.1_sweagent_qwen36_27b_scale-swe | 0.1 | — | n/a (no certified τ) |
-| v1.1_sweagent_qwen36_27b_scale-swe | 0.2 | 14.0% | yes (risk ≤ α) |
-| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_scale-swe | 0.05 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_scale-swe | 0.1 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_scale-swe | 0.2 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 0.05 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 0.1 | — | n/a (no certified τ) |
-| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | 0.2 | — | n/a (no certified τ) |
-| nebius@K8 | 0.05 | — | n/a (no certified τ) |
-| nebius@K8 | 0.1 | — | n/a (no certified τ) |
-| nebius@K8 | 0.2 | — | n/a (no certified τ) |
+| config | convention | α | random-issue risk | ≤ α? |
+|---|---|---|---|---|
+| nebius_openhands | drop | 0.05 | — | n/a (no certified τ) |
+| nebius_openhands | drop | 0.1 | — | n/a (no certified τ) |
+| nebius_openhands | drop | 0.2 | — | n/a (no certified τ) |
+| nebius_openhands | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| nebius_openhands | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| nebius_openhands | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.0_openhands_minimax_m25_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.0_openhands_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.0_sweagent_minimax_m25_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.0_sweagent_qwen35_122b_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | drop | 0.05 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | drop | 0.1 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | drop | 0.2 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_scale-swe | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.1_minisweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_scale-swe | drop | 0.05 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_scale-swe | drop | 0.1 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_scale-swe | drop | 0.2 | 14.0% | yes (risk ≤ α (τ=1.000)) |
+| v1.1_sweagent_qwen36_27b_scale-swe | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_scale-swe | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_scale-swe | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.1_sweagent_qwen36_27b_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | drop | 0.05 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | drop | 0.1 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | drop | 0.2 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_scale-swe | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | drop | 0.05 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | drop | 0.1 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | drop | 0.2 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| v1.2_minisweagent_qwen38_27b_swe-rebench-v2 | minus1_failure | 0.2 | — | n/a (no certified τ) |
+| nebius@K8 | drop | 0.05 | — | n/a (no certified τ) |
+| nebius@K8 | drop | 0.1 | — | n/a (no certified τ) |
+| nebius@K8 | drop | 0.2 | — | n/a (no certified τ) |
+| nebius@K8 | minus1_failure | 0.05 | — | n/a (no certified τ) |
+| nebius@K8 | minus1_failure | 0.1 | — | n/a (no certified τ) |
+| nebius@K8 | minus1_failure | 0.2 | — | n/a (no certified τ) |
 
 Failures: 0 of the cells that could be checked. Any failure would mark the pipeline suspect before held-out verdicts are trusted; cells with no certified τ are untestable, not passes.
 
@@ -1141,6 +1337,7 @@ Note: this conditional table is confounded with DEVIATIONS D1 — when the label
 | casefolded issue overlap between corpora | 204 issues (2202 nebius rows / 4692 nvidia rows) — excluded everywhere (D3) | results/overlap_check.json |
 | issue overlap SWE-rebench V1 ∩ V2 (casefolded, same created_at) | 642 | results/overlap_check.json |
 | excluded shared-issue list | 204 keys | results/excluded_shared_issues.csv |
-| repo overlap across calibration/evaluation | 0 by construction; asserted for every config/split in `scripts/kill_test.py::run_config` (`assert_no_repo_leak`) | scripts/kill_test.py |
+| repo overlap across calibration/evaluation | 0 by construction; asserted for every config/split/convention in `scripts/kill_test.py::run_config` (`assert_no_repo_leak`) | scripts/kill_test.py |
 | issue on both sides of any split | 0; asserted (`assert_single_side`) | scripts/kill_test.py |
+| signal never touches labels | the agreement/files signals and both tie-breaks are computed before any label column is read; `rate_loo` (Part A3) excludes the scored attempt's own label by construction | scripts/kill_test.py::build_units |
 

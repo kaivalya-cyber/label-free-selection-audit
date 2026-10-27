@@ -45,6 +45,50 @@ underpowered, and a paper that reported only `NO-COVERAGE` would hide the inform
 Also fixed in this commit: the rendered sanity-gate table previously labelled `NO-COVERAGE` cells as
 "NO" (a formatting bug); they now read `n/a (no certified τ)`. No number changed.
 
+## D6 — both label conventions are reported side by side (2026-10-27) **[post-evaluation, reporting only + rerun]**
+
+Reason: Part A of the follow-up instruction to the kill test's write-up, and WEAKNESSES #4 — the
+`-1` convention decides the verdict, so the paper may not report one convention as if it were the
+result. What changed, in `scripts/kill_test.py`:
+
+- `run_config(..., convention=...)` now runs the **complete** certification pipeline twice: once on
+  the PREREG primary frame (`resolved=-1` rows dropped before sampling; identical to every previously
+  reported number) and once with `resolved=-1` scored as **failure** (a larger pool: eligibility and
+  labels both change, so the two columns are separate pipelines, not re-scores of one rule).
+- The same-rule re-score already reported (C57; `minus1_sensitivity`, which isolates the label change
+  at the *primary τ* on the frozen pool) is kept, so the reader sees both decompositions.
+- `KILL_TEST.md` now carries both conventions in every headline cell and in every per-config table;
+  neither is labelled primary.
+
+No primary number was recomputed under a different rule: the drop-`-1` half of the rerun reproduces
+the previous run **field-by-field** (units, repos, base error, resolved rate, agreement levels, every
+split × α cell incl. τ, coverage, risk, interval, verdict, the secondary files-touched signal and the
+K=8 arm) with **0 differences**. Post-evaluation, but this entry documents a reporting change and a
+deterministic re-execution, not a new choice of analysis.
+
+## D7 — the honest (cross-fit) difficulty baseline replaces the oracle version as the headline (2026-10-27) **[post-evaluation]**
+
+Reason: Part A item 3 of the follow-up instruction, and WEAKNESSES #20. `difficulty_plugin_rate`
+uses all K sampled labels, **including the label of the attempt being scored**, so it partly leaks the
+answer; it is now labelled an **ORACLE CEILING** wherever it appears and keeps no headline role.
+
+Added in `scripts/kill_test.py::build_units`:
+`rate_loo = (Σ_i resolved_i − resolved_rep) / (K − 1)` — the issue's resolve rate estimated from the
+**other K−1 sampled attempts**, so the scored attempt's own label is excluded by construction. It is
+calibrated and evaluated with exactly the identical machinery (same splits, τ grid, δ = 0.05,
+n_min = 30, repo-clustered bootstrap, BREAKS rule) and reported per config.
+
+Consequence, stated before any further analysis: the honest cross-fit difficulty signal certifies a τ
+in **2/11** configs at α=0.05, **10/11** at α=0.10 and **11/11** at α=0.20 (coverage 27.1%–63.9%,
+held-out risk 4.4%–15.2%); the **K=8 arm** certifies at every α as well (τ=0.875/0.75/0.5, coverage
+36.6%/42.9%/49.8%), and these counts are for that arm's convention as well. Agreement's counts are
+0/11, 0/11, 2/11 (K=8 arm NO-COVERAGE at every α). So the correct negative statement is
+**not** "the oracle is better than agreement and the gap is the result" (that claim is removed from
+WEAKNESSES #20); it is that a signal derived from the outcomes of sibling attempts certifies broadly
+where patch agreement barely certifies at all. The cross-fit rule is still not free: it needs the
+labels of the K−1 other attempts, which in deployment means evaluating them first — the same cost
+objection that applied to the plug-in version, minus the leak.
+
 ## D4 — F1 sensitivity (new-file sections dropped) added after normalizer sign-off (2026-10-26) **[pre-evaluation]**
 
 Context: the pre-evaluation signal probe (label-blind) showed strict patch identity is rare at K=3

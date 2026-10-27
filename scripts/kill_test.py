@@ -19,6 +19,7 @@ from src.splits import (EVAL, CALIB, assert_no_repo_leak, assert_single_side, he
                         random_by_issue, temporal)
 
 BASE = Path("out/signals")
+_UNIT_CACHE: dict = {}   # (tag, k, minus1_as_failure, source) -> units frame
 
 
 # ---------------------------------------------------------------- shared-issue exclusion (D3)
@@ -40,6 +41,9 @@ def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = F
     source="f1" is the DEVIATIONS D4 sensitivity: same sampling seed and pool, F1 canonical form.
     """
     tag = cfg["tag"]
+    ckey = (tag, k, minus1_as_failure, source)
+    if ckey in _UNIT_CACHE:
+        return _UNIT_CACHE[ckey].copy()
     if source == "f1":
         df = pd.read_parquet(BASE.parent / "signals_f1" / f"{tag}.parquet")
         df = df.rename(columns={"f1": "canonical", "f1_files": "files", "f1_lines": "changed_lines"})
@@ -74,6 +78,9 @@ def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = F
             "patch_size": float(np.median(s.changed_lines.to_numpy())),
             "steps": float(np.median(s.steps.to_numpy())),
             "rate": float(s.resolved.mean()),
+            # Part A3 / PREREG-2 B3: cross-fit (leave-one-out) difficulty. The estimate is built
+            # from the OTHER K-1 attempts, so it never contains the label it is used to score.
+            "rate_loo": float((s.resolved.sum() - lab) / (k - 1)),
             "label": lab,
             "picked": "|".join(sorted(str(x) for x in picked)),
             "n_resolved": int(s.resolved.sum()),
@@ -83,7 +90,8 @@ def build_units(cfg: dict, k: int, shared: set[str], minus1_as_failure: bool = F
         })
     out = pd.DataFrame(rows)
     assert len(out) == out.key.nunique()
-    return out
+    _UNIT_CACHE[ckey] = out
+    return out.copy()
 
 
 def attach_created_at(cfg: dict, units: pd.DataFrame) -> pd.Series:
@@ -132,10 +140,16 @@ def evaluate(units: pd.DataFrame, side: pd.Series, signal: str, taus, alpha: flo
     return rec
 
 
-def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
+def run_config(cfg: dict, k: int, shared: set[str], convention: str = "drop",
+               full: bool = True) -> dict:
+    """convention="drop" is the PREREG primary (resolved=-1 rows dropped before sampling);
+    convention="minus1_failure" is the alternative label convention (resolved=-1 -> failure),
+    reported symmetrically per DEVIATIONS D6 (the two are separate pipelines: they differ in pool
+    eligibility and in labels). full=False skips baselines/F1/truncation, used for that pass."""
+    assert convention in ("drop", "minus1_failure")
     tag = cfg["tag"]
     ktag = f"{tag}@K{k}"
-    units = build_units(cfg, k, shared)
+    units = build_units(cfg, k, shared, minus1_as_failure=(convention == "minus1_failure"))
     cats = attach_created_at(cfg, units)
     sides = {"random_issue": pd.Series([random_by_issue(ktag, kk) for kk in units.key], index=units.index),
              "heldout_repo": pd.Series(heldout_repo(ktag, dict(zip(units.key, units.repo)))).reindex(units.key)}
@@ -149,7 +163,7 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
         sides["temporal"] = pd.Series(temporal(dict(zip(units.key, cats)))).reindex(units.key).set_axis(units.index)
 
     taus = TAUS_K8 if k == 8 else TAUS_K3
-    res = {"config": tag, "display": cfg["display"], "k": k,
+    res = {"config": tag, "display": cfg["display"], "k": k, "convention": convention,
            "units": int(len(units)), "repos": int(units.repo.nunique()),
            "base_error": float((1 - units.label).mean()),
            "resolved_rate": float(units.label.mean()),
@@ -167,23 +181,8 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
             str(a): evaluate(units, side, "files_agreement", taus, a, ktag, split, True)
             for a in ALPHAS}
 
-    # baselines: calibrated with the identical procedure on the held-out-repo split (headline)
+    # always-submit reference on the held-out-repo eval side (reported for both conventions)
     side = sides["heldout_repo"]
-    calib = units[side == CALIB]
-    for name, col, hib in [("patch_size", "patch_size", False),
-                           ("step_count", "steps", False),
-                           ("difficulty_plugin_rate", "rate", True)]:
-        vals = calib[col].to_numpy()
-        if col == "rate":
-            grid = list(taus)
-        else:
-            qs = np.quantile(vals, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
-            grid = list(-qs) if not hib else list(qs)
-        grid = sorted(grid, reverse=True)  # most conservative first
-        res["baselines"][name] = {str(a): evaluate(units, side, col, grid, a, ktag,
-                                                   "heldout_repo_baseline", hib)
-                                  for a in ALPHAS}
-    # always-submit reference on the held-out-repo eval side
     ev = units[side == EVAL]
     err = (1 - ev.label).to_numpy(dtype=float)
     always = {}
@@ -194,6 +193,28 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
                           "ci": {"lower": boot["lower"], "upper": boot["upper"]},
                           "verdict": breaks_verdict(boot, a)}
     res["baselines"]["always_submit"] = always
+    if not full:
+        return res
+
+    # baselines: calibrated with the identical procedure on the held-out-repo split (headline).
+    # "difficulty_cross_fit" (Part A3) is the honest difficulty signal: the unit's own label is
+    # excluded from its score. "difficulty_plugin_rate" keeps all K labels, including the scored
+    # one, so it is an oracle-adjacent ceiling, not a deployable rule.
+    calib = units[side == CALIB]
+    for name, col, hib in [("patch_size", "patch_size", False),
+                           ("step_count", "steps", False),
+                           ("difficulty_cross_fit", "rate_loo", True),
+                           ("difficulty_plugin_rate", "rate", True)]:
+        vals = calib[col].to_numpy()
+        if col in ("rate", "rate_loo"):
+            grid = list(taus)
+        else:
+            qs = np.quantile(vals, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
+            grid = list(-qs) if not hib else list(qs)
+        grid = sorted(grid, reverse=True)  # most conservative first
+        res["baselines"][name] = {str(a): evaluate(units, side, col, grid, a, ktag,
+                                                   "heldout_repo_baseline", hib)
+                                  for a in ALPHAS}
 
     # DEVIATIONS D4 sensitivity: F1 canonical form, evaluated AT the primary tau (no recalibration)
     f1 = build_units(cfg, k, shared, source="f1")
@@ -247,7 +268,8 @@ def run_config(cfg: dict, k: int, shared: set[str]) -> dict:
 def main():
     shared = shared_issue_keys()
     out = {"alphas": ALPHAS, "delta": DELTA, "n_min": N_MIN, "b_boot": B_BOOT,
-           "excluded_shared_issues": len(shared), "configs": {}, "k8_arm": None}
+           "excluded_shared_issues": len(shared), "configs": {}, "k8_arm": None,
+           "configs_minus1_failure": {}, "k8_arm_minus1_failure": None}
     for cfg in CONFIGS:
         if not (BASE / f"{cfg['tag']}.parquet").exists():
             print(f"SKIP missing signals: {cfg['tag']}", flush=True)
@@ -259,6 +281,17 @@ def main():
     neb = next(c for c in CONFIGS if c["tag"] == "nebius_openhands")
     print("running nebius K=8 arm ...", flush=True)
     out["k8_arm"] = run_config(neb, 8, shared)
+    # DEVIATIONS D6 / Part A2: the same pipelines under the alternative label convention
+    # (resolved=-1 as failure). Each is a full certification (own tau, own interval, own verdict);
+    # neither convention is primary in the paper.
+    print("running -1-as-failure pipelines ...", flush=True)
+    for cfg in CONFIGS:
+        if cfg["tag"] in out["configs"]:
+            out["configs_minus1_failure"][cfg["tag"]] = run_config(
+                cfg, 3, shared, convention="minus1_failure", full=False)
+    out["k8_arm_minus1_failure"] = run_config(neb, 8, shared, convention="minus1_failure",
+                                              full=False)
+    print("done -1-as-failure pipelines", flush=True)
     Path("results").mkdir(exist_ok=True)
     with open("results/kill_test.json", "w") as fh:
         json.dump(out, fh, indent=1)

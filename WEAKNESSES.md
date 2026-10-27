@@ -21,10 +21,13 @@ result), and the check that mitigates it or the fact that it does not.
    rule rather than on policy stochasticity. Direction: unknown. Mitigation: per-config replication,
    and the nebius corpus (fixed ~10 attempts) is unaffected.
 4. **`-1` unknown labels are not missing at random** (0%–25.8% by config, concentrated in v1.0 and
-   minisweagent configs), and the label convention decides the verdict: re-scoring `-1` as failure at
-   the certified τ raises held-out risk from 15.8%→**24.0%** and 16.4%→**27.1%**, i.e. both HOLDS
-   verdicts stop holding at α=0.20. The pre-registered primary convention (drop `-1`) is one of two
-   defensible choices; the paper must present both and cannot claim robustness without it.
+   minisweagent configs), and the label convention decides the verdict. Two decompositions are now
+   reported side by side (DEVIATIONS D6): (a) re-scoring the certified rule with `-1` as failure at
+   the same τ raises held-out risk from 15.8%→**24.0%** and 16.4%→**27.1%**, i.e. both HOLDS verdicts
+   stop holding at α=0.20; (b) running the **whole pipeline** under `-1`-as-failure (pool and labels
+   both change) certifies **0/11** configs at every α, versus 2/11 under drop-`-1`. The pre-registered
+   convention (drop `-1`) is one of two defensible choices; both are in the headline table and no
+   robustness claim is made without them.
 
 ## Signal definition
 
@@ -75,10 +78,16 @@ result), and the check that mitigates it or the fact that it does not.
     means the two HOLDS verdicts are weak evidence of robustness (2 replications, both favourable).
 19. **The certified coverage is tiny.** 5.6%–7.1% of issues at α=0.20, i.e. the rule answers "may I
     submit?" for about one issue in fifteen. A practitioner cannot use this to gate a pipeline.
-20. **The difficulty baseline is a ceiling, not a competitor.** It needs the K samples' own success
-    labels, which in deployment requires running the tests — at which point abstention is moot. Its
-    11/11 certification at 33%–66% coverage bounds what any honest signal could achieve here, and the
-    gap between it and agreement (7% coverage) is the paper's central negative result.
+20. **Neither difficulty baseline is a deployable rule, but the honest one is strong.**
+    `difficulty_plugin_rate` includes the scored attempt's own label, so it is only an oracle ceiling
+    (11/11 certification at 33%–66% coverage). The honest cross-fit version (the other K−1 attempts'
+    labels, DEVIATIONS D7) still needs those siblings evaluated, but it certifies in 2/11 configs at
+    α=0.05, 10/11 at α=0.10 and 11/11 at α=0.20 (coverage 27%–64%), and on the K=8 arm at every α.
+    The paper's negative result is
+    therefore *not* a gap against an oracle: it is that agreement certifies in 2/11 configs at
+    α=0.20 only, while a label-count signal from sibling attempts certifies nearly everywhere. The
+    earlier framing ("oracle gap = central result") is withdrawn; the comparison of agreement against
+    the cross-fit signal is what B3 in PREREG-2 formalizes.
 21. **The conditional diagnostic is confounded with D1.** Choosing the largest cluster's
     representative means that when two of three samples resolved, the agreeing pair is often the
     resolved pair; part of the apparent "agreement adds information beyond the success count" is
