@@ -1,6 +1,6 @@
 # PREREG — agreement-based abstention, calibrated → held-out
 
-Status: **frozen at commit `PREREG_COMMIT`** (the commit that adds this file). Any later change is a
+Status: **frozen at commit `4b09dc0`** (the commit that adds this file). Any later change is a
 `DEVIATIONS.md` entry. No held-out evaluation has been run at freeze time; only structure
 (DATA_RECON.md) and the normalizer unit tests exist.
 
