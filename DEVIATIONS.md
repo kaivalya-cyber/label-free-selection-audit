@@ -115,3 +115,51 @@ and the human review of 100 pairs.
 PREREG §1 already says they are excluded from all primary analyses; recorded here so the exclusion
 list is auditable: `results/excluded_shared_issues.csv` (casefolded instance ids, 204 rows). A
 sensitivity run with them retained in nebius only is reported as a footnote, never as a primary number.
+
+## D8 — Part-C addendum for B1–B4 (2026-10-27) **[pre-evaluation]**
+
+Committed before any B1–B4 quantity was computed. The only numbers that exist before this entry are
+the label-blind availability probe (`results/b4_cost_probe.json`) and the Part-A outputs (D6/D7). No
+primary quantity, frame, seed, α, split or verdict threshold changes.
+
+1. **Correction to PREREG-2 §9, bullet 2 — the "consistent with difficulty" reading is withdrawn.**
+   `lift(x) = selected(x) − random-K(x)` and `random-K(x)` is the *issue's own* sampled resolve rate.
+   On a non-mixed issue both terms are that issue's single label, so `lift(x) = 0` exactly, by
+   construction; the mean lift therefore comes only from mixed-label issues and equals
+   `share_mixed × mean_mixed_lift`. A positive B1 lift is not a restatement of issue difficulty: it
+   says the agreeing cluster's representative resolves more often than a uniform draw from the same
+   issue's sample, i.e. agreement carries information *within* an issue. The bullet in PREREG-2 §9 is
+   corrected in place and marked as corrected here; the pre-correction wording is at commit `f9558d9`.
+
+2. **B2 verdict rule (single-test family).** B2 has one arm, so Holm over one test is the identity.
+   The verdict is `SIGNIFICANT+` iff the two-sided repo-clustered bootstrap p < 0.05 **and** the 95%
+   CI excludes 0.5; `SIGNIFICANT−` iff p < 0.05 and the estimate lies below 0.5; otherwise
+   `NOT SIGNIFICANT`.
+
+3. **EXPLORATORY E1–E3.** Reported, never replacing a primary, and in no Holm family:
+   - **E1:** B2's AUROC computed separately on pairs where both attempts ended `submit` and where both
+     ended at max-iteration; plus the AUROC of the exit reason alone (`submit` = 1, max-iteration = 0)
+     as a comparison signal on the full pair set.
+   - **E2:** B2's own-test selection lift with a null signal scored **0** instead of −1.
+   - **E3:** B1 with a seeded uniform draw among the chosen cluster's members instead of the smallest
+     `trajectory_id` (`seeded_rng("selectrep", ktag, key)` over the cluster's `trajectory_id`s sorted).
+
+4. **EXPLORATORY B5 (nebius@K8 only).** Sequential rule: draw in the same label-blind order as B4;
+   stop at the first drawn attempt whose own-test signal is 1 (a null never stops); if none passes,
+   continue to `K_max = 8` and submit the D1 representative. Report the resolve rate against the
+   fixed-k curve at matched mean attempts (same `f_interp` and repo-clustered bootstrap as B4, seed
+   `seeded_rng("boot2", ktag, "b5")`) and the full cost curve.
+
+Two under-specified details are fixed here, before running, and neither is a quantity change:
+
+- for B4's `seq_any1st` variant, the submitted representative when a repeat triggers the stop is the
+  smallest `trajectory_id` among the **drawn** attempts sharing the repeated canonical form (for
+  `seq_first2` this is the registered "smaller `trajectory_id`");
+- B5's draw order is B4's `seeded_rng("seq", ktag, key)` permutation;
+- B2's own-test pick (and E2's variant) breaks ties among attempts with equal signal by a seeded
+  uniform draw over those attempts sorted by `trajectory_id` (`seeded_rng("selectb2", ktag, key)`),
+  the same tie-break PREREG-2 §4 already registers for the combined rule.
+
+Also fixed: B2's paired differences evaluate both signals on the same resampled pairs (seed
+`seeded_rng("boot2", ktag, "auroc", pair_tag)`), while each marginal AUROC keeps its pre-registered
+per-signal seed.

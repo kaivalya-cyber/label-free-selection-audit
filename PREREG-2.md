@@ -250,8 +250,12 @@ matched-cost test is tight by construction; the curve is where a real difference
 
 - **B1 no effect** while B2's own-test AUROC is well above 0.5 → "the information is in the execution
   outcome, not in sibling agreement".
-- **B1 effect with the lift concentrated in mixed-label issues** → agreement is separating *difficulty*
-  (mixed issues are the discriminating ones), consistent with the standing hypothesis.
+- **B1 effect** → agreement is separating attempts *within* an issue: `random-K(x)` is the issue's
+  own sampled resolve rate and the lift is 0 by construction on non-mixed issues, so a positive mean
+  lift (necessarily from mixed-label issues, `share_mixed × mean_mixed_lift`) means the agreeing
+  cluster's representative resolves more often than a uniform draw from the same issue — information
+  beyond issue difficulty. (Corrected by [DEVIATIONS.md](DEVIATIONS.md) D8; the earlier "consistent
+  with difficulty" reading was wrong.)
 - **B4 no effect** at matched cost → adaptive stopping buys nothing at K≤3 (and K=8) — the signal is
   too coarse for early stopping to be a free lunch.
 - **B3 recounts agreement's story:** if the cross-fit signal certifies in more arms than agreement, the
