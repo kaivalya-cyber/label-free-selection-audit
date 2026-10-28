@@ -163,3 +163,38 @@ Two under-specified details are fixed here, before running, and neither is a qua
 Also fixed: B2's paired differences evaluate both signals on the same resampled pairs (seed
 `seeded_rng("boot2", ktag, "auroc", pair_tag)`), while each marginal AUROC keeps its pre-registered
 per-signal seed.
+
+## D9 — Part-C reporting notes: three discrepancies found while running B1–B4 (2026-10-27) **[post-evaluation, reporting only]**
+
+Written after the single B1–B4 run. None of these changes a quantity, threshold, frame, seed or
+verdict; each is a mismatch between a pre-registration sentence and what the code or arithmetic
+actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §6.
+
+1. **B2's pair frame is not the frame its own table describes.** PREREG-2 §4 cites 11,611 pairs over
+   943 issues. Those numbers reproduce exactly, but only because `scripts/b4_cost_probe.py`
+   (a) counted pos×neg over each issue's **full pool** of attempts rather than the frozen K=8 sample
+   §4 defines, and (b) used its last argument column, **`gen_tests_correct`**, not the primary
+   `pred_passes_gen_tests`. Measured: full pool / gen = 11,611 pairs / 943 issues; full pool /
+   own-test = 11,614 / 942; frozen K=8 sample / own-test = **4,226 pairs / 754 issues**. B2 follows
+   §4's definition, so its power is lower than the table implies (95% CI half-width ≈ 0.016 AUROC).
+   The `gen_tests_correct` count is also the gold-patch-dependent signal §4 itself says is not
+   deployable.
+
+2. **D1's cluster tie-break is not the one `kill_test.py` implements.** DEVIATIONS D1 says equal-size
+   clusters are broken by the **smallest `trajectory_id` in the cluster**;
+   `scripts/kill_test.py::build_units` instead takes `min(canonical form)` among the top clusters and
+   then the smallest id inside it. The two rules pick a different representative in 18.2–20.3% of
+   K=3 issues and 8.4% of the nebius K=8 issues; the arm-level full-budget resolve rate moves by
+   −1.83 to +1.08pp (nebius K=3 +0.48pp; nebius K=8 +1.09pp; both rules are label-blind and fixed in
+   advance). B4 uses the **documented** rule, so its `f(K)` is not the kill test's `resolved_rate`.
+   The kill test's frozen numbers are unchanged and remain what KILL_TEST.md reports; re-running that
+   endpoint under the documented tie-break is **not** done here and is not claimed. B4 was executed
+   twice because of this: the first execution stopped at a sanity assertion that assumed `f(K)`
+   equalled the kill test's `resolved_rate`, before it wrote any output and before any B4 quantity was
+   read. The analysis code and seeds were unchanged; the reported run is the second, and the
+   assertion is now the tie-break audit in `results/b4_adaptive_stopping.json`.
+
+3. **Sign-test arithmetic in PREREG-2 §10 bullet 7.** The sentence says a sign test over 11 pairs
+   "cannot reach p < 0.05 unless the split is at least 9–2". Exact two-sided values:
+   2·P(Bin(11,½) ≤ 2) = 0.0654 for 9–2, and 2·P(Bin(11,½) ≤ 1) = 0.0117 for 10–1. The threshold is
+   **10–1**. §7's formula is unchanged and is what B1–B4 use; only the illustrative sentence is wrong.

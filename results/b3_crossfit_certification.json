@@ -1,0 +1,3919 @@
+{
+ "analysis": "B3 cross-fit difficulty certification",
+ "prereg": "PREREG-2 \u00a75",
+ "signal": "rate_loo = (sum resolved - resolved_rep)/(K-1)",
+ "alphas": [
+  0.05,
+  0.1,
+  0.2
+ ],
+ "primary": {
+  "nebius_openhands": {
+   "units": 6063,
+   "repos": 1809,
+   "splits": {
+    "random_issue": {
+     "n_calib": 3019,
+     "n_eval": 3044,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1313,
+       "coverage": 0.43134034165571616,
+       "risk": 0.07235338918507235,
+       "ci": {
+        "lower": 0.05921488482032953,
+        "upper": 0.08569704612867864,
+        "n_clusters": 743
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1607,
+       "coverage": 0.5279237844940867,
+       "risk": 0.15432482887367766,
+       "ci": {
+        "lower": 0.1355026805103149,
+        "upper": 0.17232766505199687,
+        "n_clusters": 854
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 3032,
+     "n_eval": 3031,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1288,
+       "coverage": 0.42494226327944573,
+       "risk": 0.07608695652173914,
+       "ci": {
+        "lower": 0.06254767435559065,
+        "upper": 0.08996233981715872,
+        "n_clusters": 568
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1574,
+       "coverage": 0.5193005608709996,
+       "risk": 0.150571791613723,
+       "ci": {
+        "lower": 0.13279105111334172,
+        "upper": 0.16897130647130645,
+        "n_clusters": 642
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 3856,
+     "n_eval": 2207,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 829,
+       "coverage": 0.37562301767104667,
+       "risk": 0.07478890229191798,
+       "ci": {
+        "lower": 0.05555555555555555,
+        "upper": 0.09276793287179673,
+        "n_clusters": 414
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1027,
+       "coverage": 0.4653375623017671,
+       "risk": 0.1596884128529698,
+       "ci": {
+        "lower": 0.13899660716440634,
+        "upper": 0.18146647121202666,
+        "n_clusters": 474
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_openhands_minimax_m25_swe-rebench-v2": {
+   "units": 7463,
+   "repos": 1846,
+   "splits": {
+    "random_issue": {
+     "n_calib": 3788,
+     "n_eval": 3675,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1545,
+       "coverage": 0.4204081632653061,
+       "risk": 0.06472491909385113,
+       "ci": {
+        "lower": 0.052211240539553797,
+        "upper": 0.07728204272810786,
+        "n_clusters": 822
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1898,
+       "coverage": 0.5164625850340137,
+       "risk": 0.1327713382507903,
+       "ci": {
+        "lower": 0.11626607161390763,
+        "upper": 0.14982002344359094,
+        "n_clusters": 934
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 3732,
+     "n_eval": 3731,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1569,
+       "coverage": 0.42053068882337175,
+       "risk": 0.07010834926704908,
+       "ci": {
+        "lower": 0.05719870980353827,
+        "upper": 0.08399861382739672,
+        "n_clusters": 594
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1886,
+       "coverage": 0.5054945054945055,
+       "risk": 0.13732767762460232,
+       "ci": {
+        "lower": 0.12135313838011418,
+        "upper": 0.15672106244182715,
+        "n_clusters": 656
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 4376,
+     "n_eval": 3087,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1326,
+       "coverage": 0.4295432458697765,
+       "risk": 0.07164404223227752,
+       "ci": {
+        "lower": 0.05801284262276878,
+        "upper": 0.08680625740624254,
+        "n_clusters": 621
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1626,
+       "coverage": 0.5267249757045676,
+       "risk": 0.13345633456334563,
+       "ci": {
+        "lower": 0.1172410443094515,
+        "upper": 0.15118664807895296,
+        "n_clusters": 705
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
+   "units": 5959,
+   "repos": 1669,
+   "splits": {
+    "random_issue": {
+     "n_calib": 3046,
+     "n_eval": 2913,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 736,
+       "coverage": 0.2526604874699622,
+       "risk": 0.12907608695652173,
+       "ci": {
+        "lower": 0.104589944042133,
+        "upper": 0.15546371164744968,
+        "n_clusters": 462
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 2980,
+     "n_eval": 2979,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 808,
+       "coverage": 0.27123195703256125,
+       "risk": 0.13613861386138615,
+       "ci": {
+        "lower": 0.11007906549683738,
+        "upper": 0.1640096273199196,
+        "n_clusters": 385
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 3541,
+     "n_eval": 2418,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 700,
+       "coverage": 0.2894954507857734,
+       "risk": 0.10857142857142857,
+       "ci": {
+        "lower": 0.08474405412793877,
+        "upper": 0.13636363636363635,
+        "n_clusters": 394
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 1,
+   "agreement_count": 0,
+   "count_difference": 1,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_sweagent_minimax_m25_swe-rebench-v2": {
+   "units": 8466,
+   "repos": 1859,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4247,
+     "n_eval": 4219,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1875,
+       "coverage": 0.44441810855652997,
+       "risk": 0.07626666666666666,
+       "ci": {
+        "lower": 0.06467257410269017,
+        "upper": 0.08880056120572838,
+        "n_clusters": 920
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2313,
+       "coverage": 0.5482341787153354,
+       "risk": 0.15088629485516644,
+       "ci": {
+        "lower": 0.1339250283446712,
+        "upper": 0.16778256753855952,
+        "n_clusters": 1051
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4233,
+     "n_eval": 4233,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1917,
+       "coverage": 0.4528703047484054,
+       "risk": 0.07459572248304643,
+       "ci": {
+        "lower": 0.06277053684217077,
+        "upper": 0.08808108500006374,
+        "n_clusters": 649
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2348,
+       "coverage": 0.5546893456177652,
+       "risk": 0.141396933560477,
+       "ci": {
+        "lower": 0.12575487356177076,
+        "upper": 0.1580772943468264,
+        "n_clusters": 717
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 4973,
+     "n_eval": 3493,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1567,
+       "coverage": 0.4486115087317492,
+       "risk": 0.07466496490108487,
+       "ci": {
+        "lower": 0.06179044186922932,
+        "upper": 0.08837217207088992,
+        "n_clusters": 670
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1935,
+       "coverage": 0.5539650730031491,
+       "risk": 0.14573643410852713,
+       "ci": {
+        "lower": 0.12864967897271268,
+        "upper": 0.1623589146805414,
+        "n_clusters": 766
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
+   "units": 2490,
+   "repos": 984,
+   "splits": {
+    "random_issue": {
+     "n_calib": 1218,
+     "n_eval": 1272,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 570,
+       "coverage": 0.4481132075471698,
+       "risk": 0.06842105263157895,
+       "ci": {
+        "lower": 0.048210851648351656,
+        "upper": 0.09043823836695329,
+        "n_clusters": 362
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 700,
+       "coverage": 0.550314465408805,
+       "risk": 0.14142857142857143,
+       "ci": {
+        "lower": 0.11479289670426089,
+        "upper": 0.17014468614769496,
+        "n_clusters": 425
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 1245,
+     "n_eval": 1245,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 559,
+       "coverage": 0.44899598393574297,
+       "risk": 0.06797853309481217,
+       "ci": {
+        "lower": 0.045538640676211835,
+        "upper": 0.09022556390977443,
+        "n_clusters": 300
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 706,
+       "coverage": 0.5670682730923695,
+       "risk": 0.14872521246458922,
+       "ci": {
+        "lower": 0.12157731103717412,
+        "upper": 0.17606233698487214,
+        "n_clusters": 353
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 1264,
+     "n_eval": 1226,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 573,
+       "coverage": 0.46737357259380097,
+       "risk": 0.07329842931937172,
+       "ci": {
+        "lower": 0.05282286425363848,
+        "upper": 0.09705653281316876,
+        "n_clusters": 313
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 693,
+       "coverage": 0.5652528548123981,
+       "risk": 0.1370851370851371,
+       "ci": {
+        "lower": 0.10980550489235656,
+        "upper": 0.16572237960339944,
+        "n_clusters": 366
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_minisweagent_qwen36_27b_scale-swe": {
+   "units": 8783,
+   "repos": 963,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4393,
+     "n_eval": 4390,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1292,
+       "coverage": 0.29430523917995444,
+       "risk": 0.047987616099071206,
+       "ci": {
+        "lower": 0.03624885468686614,
+        "upper": 0.06143604815020701,
+        "n_clusters": 518
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1292,
+       "coverage": 0.29430523917995444,
+       "risk": 0.047987616099071206,
+       "ci": {
+        "lower": 0.036523295085036364,
+        "upper": 0.06037743652168485,
+        "n_clusters": 518
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4392,
+     "n_eval": 4391,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1322,
+       "coverage": 0.3010703712138465,
+       "risk": 0.04387291981845688,
+       "ci": {
+        "lower": 0.03363274901420923,
+        "upper": 0.05471858143093402,
+        "n_clusters": 331
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1322,
+       "coverage": 0.3010703712138465,
+       "risk": 0.04387291981845688,
+       "ci": {
+        "lower": 0.03320015912525842,
+        "upper": 0.05455824159541179,
+        "n_clusters": 331
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 8783,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": {
+   "units": 12073,
+   "repos": 2278,
+   "splits": {
+    "random_issue": {
+     "n_calib": 6047,
+     "n_eval": 6026,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2034,
+       "coverage": 0.33753733820112847,
+       "risk": 0.0727630285152409,
+       "ci": {
+        "lower": 0.061576171234853566,
+        "upper": 0.08468146780671068,
+        "n_clusters": 938
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2573,
+       "coverage": 0.4269830733488218,
+       "risk": 0.1550719005052468,
+       "ci": {
+        "lower": 0.14053410617055884,
+        "upper": 0.17030112427693875,
+        "n_clusters": 1100
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 6037,
+     "n_eval": 6036,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2092,
+       "coverage": 0.3465871438038436,
+       "risk": 0.0731357552581262,
+       "ci": {
+        "lower": 0.060635919579830645,
+        "upper": 0.08600252091907241,
+        "n_clusters": 677
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2632,
+       "coverage": 0.43605036447978796,
+       "risk": 0.15235562310030396,
+       "ci": {
+        "lower": 0.1375346864175631,
+        "upper": 0.1677134360735887,
+        "n_clusters": 764
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 6785,
+     "n_eval": 5288,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1646,
+       "coverage": 0.31127080181543115,
+       "risk": 0.07229647630619684,
+       "ci": {
+        "lower": 0.05978528066432332,
+        "upper": 0.08616717985328996,
+        "n_clusters": 693
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2110,
+       "coverage": 0.39901664145234494,
+       "risk": 0.16255924170616115,
+       "ci": {
+        "lower": 0.14339559041763833,
+        "upper": 0.18194602975715393,
+        "n_clusters": 815
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_sweagent_qwen36_27b_scale-swe": {
+   "units": 8520,
+   "repos": 961,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4247,
+     "n_eval": 4273,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2215,
+       "coverage": 0.5183711677978001,
+       "risk": 0.03747178329571106,
+       "ci": {
+        "lower": 0.029270308610414974,
+        "upper": 0.04608596288400129,
+        "n_clusters": 631
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2492,
+       "coverage": 0.5831968172244325,
+       "risk": 0.07945425361155699,
+       "ci": {
+        "lower": 0.06888818122347165,
+        "upper": 0.08981642464377067,
+        "n_clusters": 663
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2492,
+       "coverage": 0.5831968172244325,
+       "risk": 0.07945425361155699,
+       "ci": {
+        "lower": 0.06834929872455403,
+        "upper": 0.08985908662950821,
+        "n_clusters": 663
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4260,
+     "n_eval": 4260,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2219,
+       "coverage": 0.5208920187793428,
+       "risk": 0.0423614240648941,
+       "ci": {
+        "lower": 0.034820060286237096,
+        "upper": 0.0506218088899075,
+        "n_clusters": 405
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2495,
+       "coverage": 0.5856807511737089,
+       "risk": 0.08336673346693386,
+       "ci": {
+        "lower": 0.07418262950210318,
+        "upper": 0.09334657106661658,
+        "n_clusters": 424
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2495,
+       "coverage": 0.5856807511737089,
+       "risk": 0.08336673346693386,
+       "ci": {
+        "lower": 0.07405443193915433,
+        "upper": 0.093310317458162,
+        "n_clusters": 424
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 8520,
+   "count": 3,
+   "agreement_count": 1,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_sweagent_qwen36_27b_swe-rebench-v2": {
+   "units": 5580,
+   "repos": 1719,
+   "splits": {
+    "random_issue": {
+     "n_calib": 2796,
+     "n_eval": 2784,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1024,
+       "coverage": 0.367816091954023,
+       "risk": 0.0615234375,
+       "ci": {
+        "lower": 0.045922774881352574,
+        "upper": 0.07794681680803354,
+        "n_clusters": 587
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1287,
+       "coverage": 0.46228448275862066,
+       "risk": 0.1414141414141414,
+       "ci": {
+        "lower": 0.12095514838882562,
+        "upper": 0.16185480020166468,
+        "n_clusters": 705
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 2790,
+     "n_eval": 2790,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1045,
+       "coverage": 0.37455197132616486,
+       "risk": 0.06889952153110047,
+       "ci": {
+        "lower": 0.05189597220653033,
+        "upper": 0.0870496449577911,
+        "n_clusters": 460
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1293,
+       "coverage": 0.46344086021505376,
+       "risk": 0.1345707656612529,
+       "ci": {
+        "lower": 0.11404236655468458,
+        "upper": 0.1569315213155451,
+        "n_clusters": 535
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 3058,
+     "n_eval": 2522,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 905,
+       "coverage": 0.35884218873909596,
+       "risk": 0.06961325966850829,
+       "ci": {
+        "lower": 0.05087949038843249,
+        "upper": 0.09040350222945027,
+        "n_clusters": 446
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1116,
+       "coverage": 0.4425059476605868,
+       "risk": 0.1335125448028674,
+       "ci": {
+        "lower": 0.11226488811137839,
+        "upper": 0.15582094349280415,
+        "n_clusters": 526
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.2_minisweagent_qwen38_27b_scale-swe": {
+   "units": 13801,
+   "repos": 1081,
+   "splits": {
+    "random_issue": {
+     "n_calib": 6909,
+     "n_eval": 6892,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 3842,
+       "coverage": 0.557457922228671,
+       "risk": 0.03357626236335242,
+       "ci": {
+        "lower": 0.027992853777944103,
+        "upper": 0.039467753836708114,
+        "n_clusters": 760
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4300,
+       "coverage": 0.6239117817759722,
+       "risk": 0.08372093023255814,
+       "ci": {
+        "lower": 0.07495010445422666,
+        "upper": 0.09257950941011017,
+        "n_clusters": 793
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4300,
+       "coverage": 0.6239117817759722,
+       "risk": 0.08372093023255814,
+       "ci": {
+        "lower": 0.07521219859611047,
+        "upper": 0.09219144369890009,
+        "n_clusters": 793
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 6901,
+     "n_eval": 6900,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 3959,
+       "coverage": 0.573768115942029,
+       "risk": 0.031826218742106595,
+       "ci": {
+        "lower": 0.02603155602753894,
+        "upper": 0.03804600971048546,
+        "n_clusters": 467
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4408,
+       "coverage": 0.638840579710145,
+       "risk": 0.07667876588021778,
+       "ci": {
+        "lower": 0.06927813329379495,
+        "upper": 0.08469417766593511,
+        "n_clusters": 481
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4408,
+       "coverage": 0.638840579710145,
+       "risk": 0.07667876588021778,
+       "ci": {
+        "lower": 0.06880536010745111,
+        "upper": 0.08458523553411608,
+        "n_clusters": 481
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 13801,
+   "count": 3,
+   "agreement_count": 1,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": {
+   "units": 10563,
+   "repos": 2180,
+   "splits": {
+    "random_issue": {
+     "n_calib": 5274,
+     "n_eval": 5289,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2529,
+       "coverage": 0.47816222348269993,
+       "risk": 0.051008303677342826,
+       "ci": {
+        "lower": 0.04109491228670778,
+        "upper": 0.06162335051478438,
+        "n_clusters": 1106
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2934,
+       "coverage": 0.554736245036869,
+       "risk": 0.10088616223585549,
+       "ci": {
+        "lower": 0.08770639043793796,
+        "upper": 0.1137042643826279,
+        "n_clusters": 1228
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 5282,
+     "n_eval": 5281,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2367,
+       "coverage": 0.4482105661806476,
+       "risk": 0.05154203633291086,
+       "ci": {
+        "lower": 0.041593729602455054,
+        "upper": 0.0629031900725166,
+        "n_clusters": 721
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2807,
+       "coverage": 0.5315281196743041,
+       "risk": 0.11328820805130033,
+       "ci": {
+        "lower": 0.09946040647981333,
+        "upper": 0.12944997171522585,
+        "n_clusters": 812
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 5938,
+     "n_eval": 4625,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2011,
+       "coverage": 0.4348108108108108,
+       "risk": 0.05420188960716062,
+       "ci": {
+        "lower": 0.0438578062804069,
+        "upper": 0.06585971307295829,
+        "n_clusters": 789
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2372,
+       "coverage": 0.5128648648648648,
+       "risk": 0.10919055649241147,
+       "ci": {
+        "lower": 0.09546667951135794,
+        "upper": 0.12358206491628358,
+        "n_clusters": 878
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  }
+ },
+ "alternative": {
+  "nebius_openhands": {
+   "units": 6063,
+   "repos": 1809,
+   "splits": {
+    "random_issue": {
+     "n_calib": 3019,
+     "n_eval": 3044,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1313,
+       "coverage": 0.43134034165571616,
+       "risk": 0.07235338918507235,
+       "ci": {
+        "lower": 0.05921488482032953,
+        "upper": 0.08569704612867864,
+        "n_clusters": 743
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1607,
+       "coverage": 0.5279237844940867,
+       "risk": 0.15432482887367766,
+       "ci": {
+        "lower": 0.1355026805103149,
+        "upper": 0.17232766505199687,
+        "n_clusters": 854
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 3032,
+     "n_eval": 3031,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1288,
+       "coverage": 0.42494226327944573,
+       "risk": 0.07608695652173914,
+       "ci": {
+        "lower": 0.06254767435559065,
+        "upper": 0.08996233981715872,
+        "n_clusters": 568
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1574,
+       "coverage": 0.5193005608709996,
+       "risk": 0.150571791613723,
+       "ci": {
+        "lower": 0.13279105111334172,
+        "upper": 0.16897130647130645,
+        "n_clusters": 642
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 3856,
+     "n_eval": 2207,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 829,
+       "coverage": 0.37562301767104667,
+       "risk": 0.07478890229191798,
+       "ci": {
+        "lower": 0.05555555555555555,
+        "upper": 0.09276793287179673,
+        "n_clusters": 414
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1027,
+       "coverage": 0.4653375623017671,
+       "risk": 0.1596884128529698,
+       "ci": {
+        "lower": 0.13899660716440634,
+        "upper": 0.18146647121202666,
+        "n_clusters": 474
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_openhands_minimax_m25_swe-rebench-v2": {
+   "units": 9570,
+   "repos": 2145,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4824,
+     "n_eval": 4746,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1545,
+       "coverage": 0.3255372945638432,
+       "risk": 0.06472491909385113,
+       "ci": {
+        "lower": 0.052211240539553797,
+        "upper": 0.07728204272810786,
+        "n_clusters": 822
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1923,
+       "coverage": 0.4051833122629583,
+       "risk": 0.13832553302132086,
+       "ci": {
+        "lower": 0.12275278897519609,
+        "upper": 0.15546143081971106,
+        "n_clusters": 944
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4785,
+     "n_eval": 4785,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1536,
+       "coverage": 0.32100313479623827,
+       "risk": 0.06770833333333333,
+       "ci": {
+        "lower": 0.055068669317997414,
+        "upper": 0.08040858928102887,
+        "n_clusters": 598
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1875,
+       "coverage": 0.39184952978056425,
+       "risk": 0.1376,
+       "ci": {
+        "lower": 0.12148541114058356,
+        "upper": 0.15457848801774784,
+        "n_clusters": 661
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 5437,
+     "n_eval": 4133,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1326,
+       "coverage": 0.32083232518751514,
+       "risk": 0.07164404223227752,
+       "ci": {
+        "lower": 0.05801284262276878,
+        "upper": 0.08680625740624254,
+        "n_clusters": 621
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1646,
+       "coverage": 0.39825792402613114,
+       "risk": 0.13973268529769137,
+       "ci": {
+        "lower": 0.12195121951219512,
+        "upper": 0.15882099544770067,
+        "n_clusters": 711
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
+   "units": 7880,
+   "repos": 1961,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4029,
+     "n_eval": 3851,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 736,
+       "coverage": 0.19111918982082576,
+       "risk": 0.12907608695652173,
+       "ci": {
+        "lower": 0.104589944042133,
+        "upper": 0.15546371164744968,
+        "n_clusters": 462
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 3940,
+     "n_eval": 3940,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 862,
+       "coverage": 0.21878172588832487,
+       "risk": 0.12761020881670534,
+       "ci": {
+        "lower": 0.10496128106179109,
+        "upper": 0.1548258686594314,
+        "n_clusters": 403
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 4519,
+     "n_eval": 3361,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 701,
+       "coverage": 0.20856887831002677,
+       "risk": 0.10984308131241084,
+       "ci": {
+        "lower": 0.08590124640460212,
+        "upper": 0.13729230312952856,
+        "n_clusters": 394
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 1,
+   "agreement_count": 0,
+   "count_difference": 1,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_sweagent_minimax_m25_swe-rebench-v2": {
+   "units": 11020,
+   "repos": 2157,
+   "splits": {
+    "random_issue": {
+     "n_calib": 5517,
+     "n_eval": 5503,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1875,
+       "coverage": 0.34072324186807196,
+       "risk": 0.07626666666666666,
+       "ci": {
+        "lower": 0.06467257410269017,
+        "upper": 0.08880056120572838,
+        "n_clusters": 920
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2331,
+       "coverage": 0.4235871342903871,
+       "risk": 0.154011154011154,
+       "ci": {
+        "lower": 0.13727936728462062,
+        "upper": 0.17041142989017474,
+        "n_clusters": 1055
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 5510,
+     "n_eval": 5510,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1840,
+       "coverage": 0.3339382940108893,
+       "risk": 0.07228260869565217,
+       "ci": {
+        "lower": 0.05998811219638262,
+        "upper": 0.08526421516090722,
+        "n_clusters": 656
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2290,
+       "coverage": 0.41560798548094374,
+       "risk": 0.14541484716157205,
+       "ci": {
+        "lower": 0.12864550217452123,
+        "upper": 0.1650718222972327,
+        "n_clusters": 726
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 6295,
+     "n_eval": 4725,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1569,
+       "coverage": 0.33206349206349206,
+       "risk": 0.0758444869343531,
+       "ci": {
+        "lower": 0.06263852176479084,
+        "upper": 0.08997828592302906,
+        "n_clusters": 671
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1954,
+       "coverage": 0.41354497354497355,
+       "risk": 0.14943705220061412,
+       "ci": {
+        "lower": 0.1323662012457999,
+        "upper": 0.16591821976261606,
+        "n_clusters": 769
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
+   "units": 3430,
+   "repos": 1223,
+   "splits": {
+    "random_issue": {
+     "n_calib": 1703,
+     "n_eval": 1727,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 570,
+       "coverage": 0.33005211349160396,
+       "risk": 0.06842105263157895,
+       "ci": {
+        "lower": 0.048210851648351656,
+        "upper": 0.09043823836695329,
+        "n_clusters": 362
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 705,
+       "coverage": 0.40822235089751013,
+       "risk": 0.14468085106382977,
+       "ci": {
+        "lower": 0.11826510240550757,
+        "upper": 0.17139200667374488,
+        "n_clusters": 428
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 1715,
+     "n_eval": 1715,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 583,
+       "coverage": 0.33994169096209914,
+       "risk": 0.07032590051457976,
+       "ci": {
+        "lower": 0.05101906316129264,
+        "upper": 0.09357500895094875,
+        "n_clusters": 293
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 734,
+       "coverage": 0.4279883381924198,
+       "risk": 0.13215258855585832,
+       "ci": {
+        "lower": 0.10862924584971603,
+        "upper": 0.15946766532053522,
+        "n_clusters": 353
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 1743,
+     "n_eval": 1687,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 573,
+       "coverage": 0.3396561944279787,
+       "risk": 0.07329842931937172,
+       "ci": {
+        "lower": 0.05282286425363848,
+        "upper": 0.09705653281316876,
+        "n_clusters": 313
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 697,
+       "coverage": 0.41315945465323056,
+       "risk": 0.13773314203730272,
+       "ci": {
+        "lower": 0.1111111111111111,
+        "upper": 0.16765168654874532,
+        "n_clusters": 369
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_minisweagent_qwen36_27b_scale-swe": {
+   "units": 9904,
+   "repos": 1009,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4949,
+     "n_eval": 4955,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1292,
+       "coverage": 0.2607467204843592,
+       "risk": 0.047987616099071206,
+       "ci": {
+        "lower": 0.03624885468686614,
+        "upper": 0.06143604815020701,
+        "n_clusters": 518
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1292,
+       "coverage": 0.2607467204843592,
+       "risk": 0.047987616099071206,
+       "ci": {
+        "lower": 0.036523295085036364,
+        "upper": 0.06037743652168485,
+        "n_clusters": 518
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4952,
+     "n_eval": 4952,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1275,
+       "coverage": 0.2574717285945073,
+       "risk": 0.04549019607843137,
+       "ci": {
+        "lower": 0.034792027167129425,
+        "upper": 0.05708027749762549,
+        "n_clusters": 320
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1275,
+       "coverage": 0.2574717285945073,
+       "risk": 0.04549019607843137,
+       "ci": {
+        "lower": 0.0342404037048462,
+        "upper": 0.05698148148148147,
+        "n_clusters": 320
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 9904,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": {
+   "units": 13849,
+   "repos": 2367,
+   "splits": {
+    "random_issue": {
+     "n_calib": 6917,
+     "n_eval": 6932,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2046,
+       "coverage": 0.2951529140219273,
+       "risk": 0.07820136852394917,
+       "ci": {
+        "lower": 0.06654003646255353,
+        "upper": 0.09137849079025548,
+        "n_clusters": 945
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2661,
+       "coverage": 0.3838718984420081,
+       "risk": 0.17474633596392333,
+       "ci": {
+        "lower": 0.15851445418958426,
+        "upper": 0.19207166526542518,
+        "n_clusters": 1133
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 6925,
+     "n_eval": 6924,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2149,
+       "coverage": 0.31036972848064703,
+       "risk": 0.08608655188459749,
+       "ci": {
+        "lower": 0.07304708413635383,
+        "upper": 0.10070724670096175,
+        "n_clusters": 674
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2768,
+       "coverage": 0.3997689196995956,
+       "risk": 0.18063583815028902,
+       "ci": {
+        "lower": 0.16350974275028818,
+        "upper": 0.19976970383901865,
+        "n_clusters": 795
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 7697,
+     "n_eval": 6152,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1663,
+       "coverage": 0.2703185955786736,
+       "risk": 0.08177991581479255,
+       "ci": {
+        "lower": 0.06714437136382154,
+        "upper": 0.09713681453171297,
+        "n_clusters": 699
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2189,
+       "coverage": 0.35581924577373214,
+       "risk": 0.18638647784376428,
+       "ci": {
+        "lower": 0.16407931120663358,
+        "upper": 0.20954894421602965,
+        "n_clusters": 833
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_sweagent_qwen36_27b_scale-swe": {
+   "units": 9537,
+   "repos": 1009,
+   "splits": {
+    "random_issue": {
+     "n_calib": 4752,
+     "n_eval": 4785,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2215,
+       "coverage": 0.46290491118077326,
+       "risk": 0.03747178329571106,
+       "ci": {
+        "lower": 0.029270308610414974,
+        "upper": 0.04608596288400129,
+        "n_clusters": 631
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2492,
+       "coverage": 0.5207941483803553,
+       "risk": 0.07945425361155699,
+       "ci": {
+        "lower": 0.06888818122347165,
+        "upper": 0.08981642464377067,
+        "n_clusters": 663
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2492,
+       "coverage": 0.5207941483803553,
+       "risk": 0.07945425361155699,
+       "ci": {
+        "lower": 0.06834929872455403,
+        "upper": 0.08985908662950821,
+        "n_clusters": 663
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 4769,
+     "n_eval": 4768,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2249,
+       "coverage": 0.47168624161073824,
+       "risk": 0.035571365051133834,
+       "ci": {
+        "lower": 0.027840989408271233,
+        "upper": 0.0431241661575896,
+        "n_clusters": 414
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2512,
+       "coverage": 0.5268456375838926,
+       "risk": 0.0804140127388535,
+       "ci": {
+        "lower": 0.07088828526207103,
+        "upper": 0.0899940202994765,
+        "n_clusters": 426
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2512,
+       "coverage": 0.5268456375838926,
+       "risk": 0.0804140127388535,
+       "ci": {
+        "lower": 0.07148279516130236,
+        "upper": 0.09027535160300636,
+        "n_clusters": 426
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 9537,
+   "count": 3,
+   "agreement_count": 0,
+   "count_difference": 3,
+   "verdict": "n/a (count)"
+  },
+  "v1.1_sweagent_qwen36_27b_swe-rebench-v2": {
+   "units": 6377,
+   "repos": 1812,
+   "splits": {
+    "random_issue": {
+     "n_calib": 3199,
+     "n_eval": 3178,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1359,
+       "coverage": 0.4276274386406545,
+       "risk": 0.17071376011773362,
+       "ci": {
+        "lower": 0.14894995032290115,
+        "upper": 0.193088950510722,
+        "n_clusters": 739
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 3189,
+     "n_eval": 3188,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 1033,
+       "coverage": 0.3240276035131744,
+       "risk": 0.08906098741529525,
+       "ci": {
+        "lower": 0.06858791595927552,
+        "upper": 0.11223581760206805,
+        "n_clusters": 481
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1345,
+       "coverage": 0.42189460476787954,
+       "risk": 0.19033457249070632,
+       "ci": {
+        "lower": 0.1643900779641071,
+        "upper": 0.2167336495677551,
+        "n_clusters": 579
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 3480,
+     "n_eval": 2897,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 915,
+       "coverage": 0.31584397652744217,
+       "risk": 0.07978142076502732,
+       "ci": {
+        "lower": 0.05948961700215897,
+        "upper": 0.10231479286092682,
+        "n_clusters": 453
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 1180,
+       "coverage": 0.40731791508457027,
+       "risk": 0.16610169491525423,
+       "ci": {
+        "lower": 0.14309477351344252,
+        "upper": 0.1923427147320283,
+        "n_clusters": 557
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  },
+  "v1.2_minisweagent_qwen38_27b_scale-swe": {
+   "units": 15509,
+   "repos": 1131,
+   "splits": {
+    "random_issue": {
+     "n_calib": 7758,
+     "n_eval": 7751,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 3842,
+       "coverage": 0.49567797703522126,
+       "risk": 0.03357626236335242,
+       "ci": {
+        "lower": 0.027992853777944103,
+        "upper": 0.039467753836708114,
+        "n_clusters": 760
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4300,
+       "coverage": 0.5547671268223455,
+       "risk": 0.08372093023255814,
+       "ci": {
+        "lower": 0.07495010445422666,
+        "upper": 0.09257950941011017,
+        "n_clusters": 793
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4300,
+       "coverage": 0.5547671268223455,
+       "risk": 0.08372093023255814,
+       "ci": {
+        "lower": 0.07521219859611047,
+        "upper": 0.09219144369890009,
+        "n_clusters": 793
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 7755,
+     "n_eval": 7754,
+     "alpha": {
+      "0.05": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 3935,
+       "coverage": 0.5074800103172556,
+       "risk": 0.03430749682337993,
+       "ci": {
+        "lower": 0.02863926365579866,
+        "upper": 0.03977831747865866,
+        "n_clusters": 472
+       },
+       "verdict": "HOLDS"
+      },
+      "0.1": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4392,
+       "coverage": 0.5664173329894248,
+       "risk": 0.07923497267759563,
+       "ci": {
+        "lower": 0.0713583065980555,
+        "upper": 0.0875475685158996,
+        "n_clusters": 483
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 4392,
+       "coverage": 0.5664173329894248,
+       "risk": 0.07923497267759563,
+       "ci": {
+        "lower": 0.07116344538733106,
+        "upper": 0.087371690689021,
+        "n_clusters": 483
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 15509,
+   "count": 3,
+   "agreement_count": 0,
+   "count_difference": 3,
+   "verdict": "n/a (count)"
+  },
+  "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": {
+   "units": 12151,
+   "repos": 2285,
+   "splits": {
+    "random_issue": {
+     "n_calib": 6080,
+     "n_eval": 6071,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2561,
+       "coverage": 0.42184154175588867,
+       "risk": 0.06286606794221007,
+       "ci": {
+        "lower": 0.051424576036247935,
+        "upper": 0.07480381916546146,
+        "n_clusters": 1121
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 3125,
+       "coverage": 0.5147422170976775,
+       "risk": 0.13696,
+       "ci": {
+        "lower": 0.12142456124669684,
+        "upper": 0.15328545034531346,
+        "n_clusters": 1284
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "heldout_repo": {
+     "n_calib": 6076,
+     "n_eval": 6075,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2470,
+       "coverage": 0.4065843621399177,
+       "risk": 0.06437246963562752,
+       "ci": {
+        "lower": 0.053191257489473,
+        "upper": 0.07549627762071981,
+        "n_clusters": 754
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 3093,
+       "coverage": 0.5091358024691358,
+       "risk": 0.14678305851923698,
+       "ci": {
+        "lower": 0.12969045593002201,
+        "upper": 0.1665014848632596,
+        "n_clusters": 865
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    },
+    "temporal": {
+     "n_calib": 6754,
+     "n_eval": 5397,
+     "alpha": {
+      "0.05": {
+       "tau": null,
+       "certified": false,
+       "n_submitted": 0,
+       "coverage": 0.0,
+       "risk": null,
+       "ci": null,
+       "verdict": "NO-COVERAGE"
+      },
+      "0.1": {
+       "tau": 0.6666666666666666,
+       "certified": true,
+       "n_submitted": 2031,
+       "coverage": 0.3763201778765981,
+       "risk": 0.06351550960118169,
+       "ci": {
+        "lower": 0.05235236089558856,
+        "upper": 0.07616127855671777,
+        "n_clusters": 797
+       },
+       "verdict": "HOLDS"
+      },
+      "0.2": {
+       "tau": 0.3333333333333333,
+       "certified": true,
+       "n_submitted": 2529,
+       "coverage": 0.46859366314619233,
+       "risk": 0.1435349940688019,
+       "ci": {
+        "lower": 0.12650148837293299,
+        "upper": 0.16059829181803048,
+        "n_clusters": 923
+       },
+       "verdict": "HOLDS"
+      }
+     }
+    }
+   },
+   "temporal_missing_issues": 0,
+   "count": 2,
+   "agreement_count": 0,
+   "count_difference": 2,
+   "verdict": "n/a (count)"
+  }
+ },
+ "k8_arm": {
+  "units": 4580,
+  "repos": 1544,
+  "splits": {
+   "random_issue": {
+    "n_calib": 2335,
+    "n_eval": 2245,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 803,
+      "coverage": 0.3576837416481069,
+      "risk": 0.026151930261519303,
+      "ci": {
+       "lower": 0.01618878676356697,
+       "upper": 0.03787878787878788,
+       "n_clusters": 537
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 967,
+      "coverage": 0.4307349665924276,
+      "risk": 0.055842812823164424,
+      "ci": {
+       "lower": 0.04189636163175303,
+       "upper": 0.0707556839662612,
+       "n_clusters": 605
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 1122,
+      "coverage": 0.4997772828507795,
+      "risk": 0.09714795008912656,
+      "ci": {
+       "lower": 0.08078969609377734,
+       "upper": 0.11372633058777595,
+       "n_clusters": 669
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   },
+   "heldout_repo": {
+    "n_calib": 2290,
+    "n_eval": 2290,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 839,
+      "coverage": 0.3663755458515284,
+      "risk": 0.03218116805721097,
+      "ci": {
+       "lower": 0.02078186732768758,
+       "upper": 0.043428517149613315,
+       "n_clusters": 447
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 983,
+      "coverage": 0.42925764192139737,
+      "risk": 0.06002034587995931,
+      "ci": {
+       "lower": 0.04569373145901339,
+       "upper": 0.07489715189873417,
+       "n_clusters": 491
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 1140,
+      "coverage": 0.4978165938864629,
+      "risk": 0.10526315789473684,
+      "ci": {
+       "lower": 0.08790179739086942,
+       "upper": 0.12276183382742864,
+       "n_clusters": 545
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   },
+   "temporal": {
+    "n_calib": 3080,
+    "n_eval": 1500,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 453,
+      "coverage": 0.302,
+      "risk": 0.04856512141280353,
+      "ci": {
+       "lower": 0.03162723118444459,
+       "upper": 0.06823931742508323,
+       "n_clusters": 283
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 533,
+      "coverage": 0.35533333333333333,
+      "risk": 0.06566604127579738,
+      "ci": {
+       "lower": 0.04686945360040569,
+       "upper": 0.08772019334049408,
+       "n_clusters": 308
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 634,
+      "coverage": 0.4226666666666667,
+      "risk": 0.12302839116719243,
+      "ci": {
+       "lower": 0.09833035714285715,
+       "upper": 0.14730322165466755,
+       "n_clusters": 343
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   }
+  },
+  "temporal_missing_issues": 0,
+  "count": 3,
+  "agreement_count": 0,
+  "count_difference": 3
+ },
+ "k8_arm_alternative": {
+  "units": 4580,
+  "repos": 1544,
+  "splits": {
+   "random_issue": {
+    "n_calib": 2335,
+    "n_eval": 2245,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 803,
+      "coverage": 0.3576837416481069,
+      "risk": 0.026151930261519303,
+      "ci": {
+       "lower": 0.01618878676356697,
+       "upper": 0.03787878787878788,
+       "n_clusters": 537
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 967,
+      "coverage": 0.4307349665924276,
+      "risk": 0.055842812823164424,
+      "ci": {
+       "lower": 0.04189636163175303,
+       "upper": 0.0707556839662612,
+       "n_clusters": 605
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 1122,
+      "coverage": 0.4997772828507795,
+      "risk": 0.09714795008912656,
+      "ci": {
+       "lower": 0.08078969609377734,
+       "upper": 0.11372633058777595,
+       "n_clusters": 669
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   },
+   "heldout_repo": {
+    "n_calib": 2290,
+    "n_eval": 2290,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 839,
+      "coverage": 0.3663755458515284,
+      "risk": 0.03218116805721097,
+      "ci": {
+       "lower": 0.02078186732768758,
+       "upper": 0.043428517149613315,
+       "n_clusters": 447
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 983,
+      "coverage": 0.42925764192139737,
+      "risk": 0.06002034587995931,
+      "ci": {
+       "lower": 0.04569373145901339,
+       "upper": 0.07489715189873417,
+       "n_clusters": 491
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 1140,
+      "coverage": 0.4978165938864629,
+      "risk": 0.10526315789473684,
+      "ci": {
+       "lower": 0.08790179739086942,
+       "upper": 0.12276183382742864,
+       "n_clusters": 545
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   },
+   "temporal": {
+    "n_calib": 3080,
+    "n_eval": 1500,
+    "alpha": {
+     "0.05": {
+      "tau": 0.875,
+      "certified": true,
+      "n_submitted": 453,
+      "coverage": 0.302,
+      "risk": 0.04856512141280353,
+      "ci": {
+       "lower": 0.03162723118444459,
+       "upper": 0.06823931742508323,
+       "n_clusters": 283
+      },
+      "verdict": "HOLDS"
+     },
+     "0.1": {
+      "tau": 0.75,
+      "certified": true,
+      "n_submitted": 533,
+      "coverage": 0.35533333333333333,
+      "risk": 0.06566604127579738,
+      "ci": {
+       "lower": 0.04686945360040569,
+       "upper": 0.08772019334049408,
+       "n_clusters": 308
+      },
+      "verdict": "HOLDS"
+     },
+     "0.2": {
+      "tau": 0.5,
+      "certified": true,
+      "n_submitted": 634,
+      "coverage": 0.4226666666666667,
+      "risk": 0.12302839116719243,
+      "ci": {
+       "lower": 0.09833035714285715,
+       "upper": 0.14730322165466755,
+       "n_clusters": 343
+      },
+      "verdict": "HOLDS"
+     }
+    }
+   }
+  },
+  "temporal_missing_issues": 0,
+  "count": 3,
+  "agreement_count": 0,
+  "count_difference": 3
+ },
+ "agreement_frozen": {
+  "nebius_openhands": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_openhands_minimax_m25_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_sweagent_minimax_m25_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_minisweagent_qwen36_27b_scale-swe": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_sweagent_qwen36_27b_scale-swe": {
+   "count": 1,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": 1.0
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": 1.0,
+     "coverage": 0.07136150234741784,
+     "risk": 0.15789473684210525,
+     "ci": {
+      "lower": 0.11671537225910085,
+      "upper": 0.20067185895241355,
+      "n_clusters": 157
+     },
+     "verdict": "HOLDS",
+     "n_submitted": 304
+    }
+   }
+  },
+  "v1.1_sweagent_qwen36_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.2_minisweagent_qwen38_27b_scale-swe": {
+   "count": 1,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": 1.0
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": 1.0,
+     "coverage": 0.05579710144927536,
+     "risk": 0.16363636363636364,
+     "ci": {
+      "lower": 0.12386913229018492,
+      "upper": 0.20634920634920634,
+      "n_clusters": 181
+     },
+     "verdict": "HOLDS",
+     "n_submitted": 385
+    }
+   }
+  },
+  "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "nebius_openhands@K8": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  }
+ },
+ "agreement_frozen_alt": {
+  "nebius_openhands": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_openhands_minimax_m25_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_sweagent_minimax_m25_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_minisweagent_qwen36_27b_scale-swe": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_sweagent_qwen36_27b_scale-swe": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.1_sweagent_qwen36_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.2_minisweagent_qwen38_27b_scale-swe": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  },
+  "nebius_openhands@K8": {
+   "count": 0,
+   "by_alpha": {
+    "0.05": null,
+    "0.1": null,
+    "0.2": null
+   },
+   "detail": {
+    "0.05": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.1": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    },
+    "0.2": {
+     "tau": null,
+     "coverage": 0.0,
+     "risk": null,
+     "ci": null,
+     "verdict": "NO-COVERAGE",
+     "n_submitted": 0
+    }
+   }
+  }
+ },
+ "checks": {
+  "reproduced_frozen_crossfit_cells": {
+   "cells": 36,
+   "mismatches": []
+  },
+  "split_sizes_match_frozen": {
+   "mismatches": []
+  }
+ },
+ "family_primary": {
+  "sign_test": {
+   "n_pos": 11,
+   "n_neg": 0,
+   "n_ties": 0,
+   "n_eff": 11,
+   "p_two_sided": 0.0009765625,
+   "direction": "positive",
+   "verdict": "SIGNIFICANT+"
+  },
+  "directions": {
+   "nebius_openhands": 1,
+   "v1.0_openhands_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_openhands_qwen35_122b_swe-rebench-v2": 1,
+   "v1.0_sweagent_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_sweagent_qwen35_122b_swe-rebench-v2": 1,
+   "v1.1_minisweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.1_sweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_sweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.2_minisweagent_qwen38_27b_scale-swe": 1,
+   "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": 1
+  }
+ },
+ "family": {
+  "sign_test": {
+   "n_pos": 11,
+   "n_neg": 0,
+   "n_ties": 0,
+   "n_eff": 11,
+   "p_two_sided": 0.0009765625,
+   "direction": "positive",
+   "verdict": "SIGNIFICANT+"
+  },
+  "directions": {
+   "nebius_openhands": 1,
+   "v1.0_openhands_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_openhands_qwen35_122b_swe-rebench-v2": 1,
+   "v1.0_sweagent_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_sweagent_qwen35_122b_swe-rebench-v2": 1,
+   "v1.1_minisweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.1_sweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_sweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.2_minisweagent_qwen38_27b_scale-swe": 1,
+   "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": 1
+  }
+ },
+ "family_alternative": {
+  "sign_test": {
+   "n_pos": 11,
+   "n_neg": 0,
+   "n_ties": 0,
+   "n_eff": 11,
+   "p_two_sided": 0.0009765625,
+   "direction": "positive",
+   "verdict": "SIGNIFICANT+"
+  },
+  "directions": {
+   "nebius_openhands": 1,
+   "v1.0_openhands_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_openhands_qwen35_122b_swe-rebench-v2": 1,
+   "v1.0_sweagent_minimax_m25_swe-rebench-v2": 1,
+   "v1.0_sweagent_qwen35_122b_swe-rebench-v2": 1,
+   "v1.1_minisweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.1_sweagent_qwen36_27b_scale-swe": 1,
+   "v1.1_sweagent_qwen36_27b_swe-rebench-v2": 1,
+   "v1.2_minisweagent_qwen38_27b_scale-swe": 1,
+   "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": 1
+  }
+ }
+}

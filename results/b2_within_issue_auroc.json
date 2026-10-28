@@ -1,0 +1,225 @@
+{
+ "analysis": "B2 within-issue pairwise AUROC",
+ "prereg": "PREREG-2 \u00a74",
+ "deviation": "D8",
+ "arm": "nebius_openhands@K8",
+ "signals": {
+  "primary": "pred_passes_gen_tests (own generated tests pass on own patch)",
+  "gen_tests_correct": "gold-patch-dependent; EXPLORATORY",
+  "agreement": "canonical cluster size within the K=8 sample / 8",
+  "steps": "assistant-message count",
+  "exit_reason": "submit = 1, max-iteration = 0"
+ },
+ "frame": {
+  "units": 4580,
+  "mixed_issues": 1160,
+  "issues_with_pair": 754,
+  "pairs": 4226,
+  "pairs_both_submit": 2460,
+  "pairs_both_max_iteration": 532,
+  "pairs_with_both_gen": 4200,
+  "attempts": 36640,
+  "attempts_with_own_test": 17067
+ },
+ "primary": {
+  "estimate": 0.5125414103170847,
+  "lower": 0.49727375306010885,
+  "upper": 0.5286267160795624,
+  "p": 0.11894052973513243,
+  "n_clusters": 443,
+  "B": 2000,
+  "n_pairs": 4226,
+  "n_repos": 443,
+  "verdict": "NOT SIGNIFICANT"
+ },
+ "comparisons": {
+  "agreement": {
+   "estimate": 0.5057974443918599,
+   "lower": 0.5017800252589731,
+   "upper": 0.5111983484311163,
+   "p": 0.001999000499750125,
+   "n_clusters": 443,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_repos": 443,
+   "paired_diff_vs_own_test": {
+    "estimate": -0.006743965925224799,
+    "lower": -0.024244900795347645,
+    "upper": 0.00987166211822301,
+    "p": 0.39780109945027486,
+    "n_clusters": 443,
+    "B": 2000,
+    "n_pairs": 4226
+   },
+   "label": "SECONDARY"
+  },
+  "steps": {
+   "estimate": 0.43965925224798863,
+   "lower": 0.41460306089704035,
+   "upper": 0.4648731312430276,
+   "p": 0.0009995002498750624,
+   "n_clusters": 443,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_repos": 443,
+   "paired_diff_vs_own_test": {
+    "estimate": -0.07288215806909608,
+    "lower": -0.10408638010540185,
+    "upper": -0.04453025934785427,
+    "p": 0.0009995002498750624,
+    "n_clusters": 443,
+    "B": 2000,
+    "n_pairs": 4226
+   },
+   "label": "SECONDARY"
+  },
+  "exit_reason": {
+   "estimate": 0.5764316138192144,
+   "lower": 0.5578275807451741,
+   "upper": 0.5939194195217276,
+   "p": 0.0009995002498750624,
+   "n_clusters": 443,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_repos": 443,
+   "paired_diff_vs_own_test": {
+    "estimate": 0.06389020350212968,
+    "lower": 0.04043528346538788,
+    "upper": 0.08422285916105193,
+    "p": 0.0009995002498750624,
+    "n_clusters": 443,
+    "B": 2000,
+    "n_pairs": 4226
+   },
+   "label": "SECONDARY"
+  }
+ },
+ "exploratory": {
+  "gen_tests_correct": {
+   "estimate": 0.5894047619047619,
+   "lower": 0.5724698307054502,
+   "upper": 0.607251545703306,
+   "p": 0.0009995002498750624,
+   "n_clusters": 442,
+   "B": 2000,
+   "n_pairs": 4200,
+   "n_repos": 442,
+   "label": "EXPLORATORY (uses the golden patch at evaluation time; not deployable)"
+  },
+  "e1_stratified": {
+   "both_submit": {
+    "estimate": 0.5063008130081301,
+    "lower": 0.4896403744156113,
+    "upper": 0.5243607832971026,
+    "p": 0.48075962018990503,
+    "n_clusters": 367,
+    "B": 2000,
+    "n_pairs": 2460,
+    "n_repos": 367,
+    "label": "EXPLORATORY"
+   },
+   "both_max_iteration": {
+    "estimate": 0.506578947368421,
+    "lower": 0.46432449628844114,
+    "upper": 0.5523136933031587,
+    "p": 0.7736131934032984,
+    "n_clusters": 102,
+    "B": 2000,
+    "n_pairs": 532,
+    "n_repos": 102,
+    "label": "EXPLORATORY"
+   }
+  }
+ },
+ "checks": {
+  "prereg_availability_table": {
+   "full_pool_full_pool": 55368,
+   "full_pool_with_own_test": 25748,
+   "pairs_full_pool_own_test": 11614,
+   "issues_with_pair_full_pool_own_test": 942,
+   "pairs_full_pool_gen_tests_correct": 11611,
+   "issues_with_pair_full_pool_gen_tests_correct": 943,
+   "prereg_table_value": 11611,
+   "prereg_table_issues": 943,
+   "pairs_in_frozen_k8_sample": 4226,
+   "issues_with_pair_frozen_sample": 754,
+   "note": "PREREG \u00a74's 11,611 / 943 are reproduced exactly, but two things differ from the sentence they sit under: (a) scripts/b4_cost_probe.py counts pos*neg over each issue's FULL pool, not the frozen K=8 sample; (b) it uses the last column (`gen_tests_correct`), not the primary own-test signal. On the full pool the own-test count is 11,614 / 942; on the frozen K=8 sample the analysis uses 4,226 pairs over 754 issues. Reported, not reconciled."
+  },
+  "pair_construction": {
+   "pairs": 4226,
+   "issues_with_pair": 754,
+   "repos": 443,
+   "every_pair_has_two_distinct_labels": true,
+   "sample_size_per_issue": 8
+  }
+ },
+ "secondary_selection_lift": {
+  "random_rate": 0.4810316593886463,
+  "selected_rates": {
+   "agreement": 0.48231441048034934,
+   "own_test": 0.48995633187772925,
+   "own_test_null0": 0.48973799126637557,
+   "combined": 0.4925764192139738
+  },
+  "lifts": {
+   "agreement": {
+    "estimate": 0.0012827510917030568,
+    "lower": -0.0047994142869412755,
+    "upper": 0.007105904336135622,
+    "p": 0.6686656671664168,
+    "n_clusters": 1544,
+    "B": 2000
+   },
+   "own_test": {
+    "estimate": 0.00892467248908297,
+    "lower": 0.002679501232458539,
+    "upper": 0.015193957775180329,
+    "p": 0.004997501249375313,
+    "n_clusters": 1544,
+    "B": 2000
+   },
+   "combined": {
+    "estimate": 0.011544759825327511,
+    "lower": 0.005667065465793412,
+    "upper": 0.017757266385265993,
+    "p": 0.0009995002498750624,
+    "n_clusters": 1544,
+    "B": 2000
+   },
+   "e2_own_test_null0": {
+    "estimate": 0.008706331877729257,
+    "lower": 0.0020265530944278444,
+    "upper": 0.015272551780868924,
+    "p": 0.014992503748125937,
+    "n_clusters": 1544,
+    "B": 2000,
+    "label": "EXPLORATORY (D8 E2)"
+   },
+   "own_test_minus_agreement": {
+    "estimate": 0.007641921397379912,
+    "lower": -0.0008572668718729174,
+    "upper": 0.016862231037677363,
+    "p": 0.09195402298850575,
+    "n_clusters": 1544,
+    "B": 2000
+   },
+   "combined_minus_agreement": {
+    "estimate": 0.010262008733624454,
+    "lower": 0.0022284502773158377,
+    "upper": 0.019493221694842938,
+    "p": 0.010994502748625687,
+    "n_clusters": 1544,
+    "B": 2000
+   },
+   "e2_own_test_null0_minus_agreement": {
+    "estimate": 0.007423580786026201,
+    "lower": -0.0013725880604205686,
+    "upper": 0.016559779999154364,
+    "p": 0.10594702648675662,
+    "n_clusters": 1544,
+    "B": 2000
+   }
+  },
+  "label": "SECONDARY (report-only)"
+ }
+}

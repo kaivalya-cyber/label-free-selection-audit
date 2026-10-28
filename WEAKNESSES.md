@@ -96,6 +96,38 @@ result), and the check that mitigates it or the fact that it does not.
     configs.** With 11 configs, the distribution of verdicts is coarse; no meta-analytic combination
     was pre-registered (and pooling across configs was explicitly forbidden).
 
+## Part C (B1–B4), added after that run
+
+23. **B2's analysis frame is 36% of the size its own prereg table implies.** PREREG-2 §4 cites 11,611
+    pairs / 943 issues; the frozen K=8 sample yields **4,226 / 754** (DEVIATIONS D9: the table counted
+    the full pool and the `gen_tests_correct` column). The observed 95% CI half-width is 0.016 AUROC,
+    so the test cannot resolve effects smaller than that; a true 0.52 would often fail to separate.
+    Direction: understates a real signal rather than inventing one.
+24. **B2's pair set is selected by exit reason.** The own-test signal is present on 46.6% of sampled
+    attempts, and nulls are concentrated in `submit` rows (56.9% vs 15.9% at max-iteration), so pairs
+    that survive eligibility over-represent max-iteration attempts relative to the corpus. Direction
+    unknown; PREREG §10.1 accepted this before the run.
+25. **B4's matched-cost comparison is not interpolation-free.** `f(k)` is a step function; at the top
+    budget a step between `f(K−1)` and `f(K)` makes the linear `f_interp` sit below the achieved
+    rate. The K=8 arm's +0.096pp (p = 0.039) is exactly this: the stop-at-2 rule never changes the
+    D1 submission, so `r_ad = f(8)` and the whole Δ is the interpolation corner. Direction: inflates
+    Δ near `K_max`. At K=3 the same mechanism moves Δ by ≈0.01pp because the saving is 0.11 attempts.
+26. **The kill test's submitted representative is not D1's written rule.** `build_units` breaks
+    equal-size cluster ties by the smallest canonical string, not the smallest `trajectory_id`
+    (D9). The rules pick different representatives in 18.2–20.3% of K=3 issues and 8.4% at K=8, and
+    the arm-level resolve rate moves by −1.83 to +1.08pp. Every KILL_TEST.md number uses the
+    implementation; B4 uses the documented rule, so its `f(K)` differs from the reported
+    `resolved_rate`. The endpoint was not re-run and no kill-test number is restated. Direction: per
+    arm, either way — this is a reproducibility defect, not a bias with a known sign.
+27. **B3's win is a label-count signal, not a free rule.** It certifies 2/11 at α=0.05, 10/11 at
+    0.10 and 11/11 at 0.20 where agreement certifies 0/0/2 — but it needs the other K−1 attempts
+    evaluated first, and it inherits #26 through the unit label it subtracts. Reporting it as
+    "difficulty is the better signal" without the evaluation cost would overstate the practical
+    result.
+28. **The sign tests have almost no resolution.** With 11 configs the exact two-sided threshold is
+    10–1 (p = 0.0117); PREREG-2 §10 bullet 7 says 9–2, which actually gives p = 0.065 (D9). A 9–2 or
+    8–3 split is not evidence of anything, and the B1/B4 family tests sit in that region.
+
 ## Pipeline risks
 
 14. **Signal and label live in different columns from the same row.** A join bug would silently
