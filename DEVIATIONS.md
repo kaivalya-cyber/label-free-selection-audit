@@ -287,3 +287,37 @@ PREREG-3's "no generation, no chain of thought"; the prompt's instruction text, 
 truncation rule and comparison signals are unchanged. The runner asserts the suffix and records the
 rendered prompt's sha256 per attempt, so any template drift is visible in the shard. No judge output
 exists at this entry.
+
+## D14 — the judge backend: Gemma 4 26B-A4B QAT Q4_0 via llama.cpp (2026-10-30) **[pre-evaluation]**
+
+The frozen PREREG-3 primary was `google/gemma-4-26B-A4B-it` in NF4 with
+`BitsAndBytesConfig(load_in_4bit=True)`. That cannot load on Kaggle 2×T4 (2 × 15.64 GB) at all.
+The model is `Gemma4ForConditionalGeneration` with **25.806B** parameters, and each of its 30 MoE
+layers stores all **128 experts as 3-D `nn.Parameter` tensors** (`gate_up_proj`, `down_proj`).
+bitsandbytes converts only `nn.Linear` modules, so about **22.8B expert parameters (~45.7 GB in
+bf16)** remain unquantised; `device_map="auto"` offloads them and raises the CPU/disk error even
+with the cards' full memory. This is an architecture limitation, not a batch-size OOM, and no
+standard NF4 checkpoint with per-expert `nn.Linear` modules exists for this variant.
+
+**With the user's explicit approval (2026-10-30)**, the primary judge is now the official
+**`google/gemma-4/gguf/gemma-4-26b-a4b-it-qat-q4_0-gguf/2`** checkpoint, file
+`gemma-4-26B_q4_0-it.gguf` (**14,439,361,440 bytes**), run with **llama.cpp** through
+`llama-cpp-python` built with CUDA 12.8 for sm_75, across both T4s (`n_gpu_layers=-1`,
+`split_mode=LAYER`, `tensor_split=[0.5, 0.5]`, `n_ctx=10240`, `n_batch=512`, `n_ubatch=256`).
+
+**Unchanged:** the 4,226-pair seeded sample and its order, the frozen truncated content
+(precomputed with the HF Gemma 4 tokenizer, PREREG-3 §4.3), the D13 no-thinking suffix
+`<|channel>thought\n<channel|>`, the single-token YES/NO read at the next position
+(ids 26915/7018, asserted again after load), the pointwise design, the sealed pilot of the first
+200 pairs, the D12 throughput-only N rule and its 15% margin, the 12 GPU-hour cap, and the 9-hour
+chunk limit. The score is the two-way softmax over the YES and NO logits from
+`llama_get_logits` at the final prompt token; no generation, no sampling.
+
+**Changed:** quantisation format **NF4 → QAT Q4_0**, backend **transformers/bitsandbytes →
+llama.cpp**, and the model artifact (GGUF file sha256 recorded in every run manifest). Results
+are labelled **`26B-A4B Q4_0 (llama.cpp)`** everywhere and are not comparable to an NF4 run. The
+Q4_0 file is QAT-trained by Google, so the quantisation is at least as well matched to the weights
+as post-hoc NF4, but this is a different estimator and is stated as a limitation.
+
+No judge score, completion or ranking exists at this entry. The pilot is the first GPU use of
+this backend.

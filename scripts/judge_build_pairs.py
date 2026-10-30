@@ -90,6 +90,10 @@ def main() -> None:
                        "patch_tokens": len(patch_ids),
                        "issue_truncated": built["issue_truncated"],
                        "patch_truncated": built["patch_truncated"],
+                       # The frozen truncated content, rendered with the HF Gemma 4 tokenizer. The
+                       # GGUF runner must not re-truncate with its own tokenizer; using this column
+                       # keeps the D14 backend faithful to PREREG-3 §4.3.
+                       "content": built["content"],
                        "prompt_tokens_estimate": len(issue_ids) - built["issue_omitted"]
                        + len(patch_ids) - built["patch_omitted"] + 120})
     att = pd.DataFrame(counts)
@@ -123,6 +127,8 @@ def main() -> None:
     pa.to_parquet(pilot_dir / "attempts.parquet", index=False)
     shutil.copy2(ROOT / "scripts" / "judge_core.py", pilot_dir / "judge_core.py")
     shutil.copy2(ROOT / "scripts" / "judge_run.py", pilot_dir / "judge_run.py")
+    if (ROOT / "scripts" / "judge_run_gguf.py").exists():
+        shutil.copy2(ROOT / "scripts" / "judge_run_gguf.py", pilot_dir / "judge_run_gguf.py")
     pman = dict(manifest)
     pman.update({"pairs": PILOT_PAIRS, "attempts": len(pa),
                  "pilot_pairs_sha256": sha256_file(pilot_dir / "pairs.parquet"),
@@ -130,6 +136,19 @@ def main() -> None:
                  "pilot_pairs": int(pp.pair_id.nunique()),
                  "pilot_issue_text_sha256": sha256_file(pilot_dir / "attempts.parquet")})
     (pilot_dir / "manifest.json").write_text(json.dumps(pman, indent=1) + "\n")
+
+    # ---------------------------------------------------------------- main bundle (all pairs)
+    main_dir = OUT / "bundle_main"
+    if main_dir.exists():
+        shutil.rmtree(main_dir)
+    main_dir.mkdir(parents=True)
+    shutil.copy2(pairs_path, main_dir / "pairs.parquet")
+    shutil.copy2(att_path, main_dir / "attempts.parquet")
+    shutil.copy2(ROOT / "scripts" / "judge_core.py", main_dir / "judge_core.py")
+    shutil.copy2(ROOT / "scripts" / "judge_run.py", main_dir / "judge_run.py")
+    if (ROOT / "scripts" / "judge_run_gguf.py").exists():
+        shutil.copy2(ROOT / "scripts" / "judge_run_gguf.py", main_dir / "judge_run_gguf.py")
+    (main_dir / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
 
     print(json.dumps({k: v for k, v in manifest.items() if not k.endswith("sha256")}, indent=1))
