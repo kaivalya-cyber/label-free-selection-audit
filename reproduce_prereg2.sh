@@ -21,6 +21,9 @@ $PY scripts/b3_crossfit_certification.py
 echo "== B4: adaptive stopping (+ B5) =="
 $PY scripts/b4_adaptive_stopping.py
 
+echo "== DESCRIPTIVE: selection baselines, ICC, f(k) =="
+$PY scripts/descriptive_tables.py
+
 echo "== render RESULTS_2.md =="
 $PY scripts/render_results2.py
 

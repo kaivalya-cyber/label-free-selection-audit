@@ -97,6 +97,9 @@ def main():
     b3 = json.loads(Path("results/b3_crossfit_certification.json").read_text())
     b4 = json.loads(Path("results/b4_adaptive_stopping.json").read_text())
     kt = json.loads(Path("results/kill_test.json").read_text())
+    desc = json.loads(Path("results/descriptive_tables.json").read_text())
+    if desc["checks"]["identity_mismatches"]:
+        raise SystemExit(f"descriptive identity check failed: {desc['checks']}")
 
     L = []
     A = L.append
@@ -105,7 +108,8 @@ def main():
     A("Run: `bash reproduce_prereg2.sh` · rules: [PREREG-2.md](PREREG-2.md) frozen at `f9558d9`, "
       "amended by [DEVIATIONS.md](DEVIATIONS.md) D8 before this run · raw numbers: "
       "[B1](results/b1_selection_lift.json), [B2](results/b2_within_issue_auroc.json), "
-      "[B3](results/b3_crossfit_certification.json), [B4](results/b4_adaptive_stopping.json).")
+      "[B3](results/b3_crossfit_certification.json), [B4](results/b4_adaptive_stopping.json). "
+      "§8 is a DESCRIPTIVE addition: it computes no test and changes no number above it.")
     A("")
     A("**Policy models.** Taken from the dataset cards and verified against the rows: every frozen "
       "nvidia config has exactly one `metadata.teacher_model.name` value across 100% of its rows. "
@@ -485,14 +489,97 @@ def main():
     A(f"- **Tests.** `pytest tests -q` at render time: {test_line}.")
     A("- **Spend.** $0.00 (COST_LOG.md).")
     A("")
-    A("## 8. Files")
+    A("## 8. DESCRIPTIVE — chance-level baselines, clustering, and the full budget curve")
+    A("")
+    A("**No hypothesis test and no verdict is computed in this section.** It adds the three tables "
+      "requested after the B1–B4 run: per-arm selection baselines, the ICC of `resolved` by issue, "
+      "and `f(k)` for every arm in one place. Nothing here re-estimates or replaces a frozen B1–B4 "
+      "quantity; the identity checks at the end of the section are the only consistency statements.")
+    A("")
+    A("### 8.1 Selection baselines per arm")
+    A("")
+    A("`pass@1` is the mean of `resolved` over the sampled attempts; with a balanced K it equals the "
+      "issue-level `random-K` baseline of §2, so the same number appears there. `selected` is the "
+      "DEVIATIONS D1 rule (largest canonical cluster; equal-size ties by the smallest `trajectory_id` "
+      "inside the cluster). The second selected column is the tie-break `scripts/kill_test.py` "
+      "actually implements (smallest canonical string among the top clusters); it is also the rule "
+      "behind `kill_test.json`'s `resolved_rate` (DEVIATIONS D9). `gap = oracle − selected`: the "
+      "headroom a rule would gain from knowing in advance which sampled attempt resolves. It is a "
+      "ceiling, not a deployable rule.")
+    A("")
+    rows = []
+    for tag, r in desc["arms"].items():
+        rows.append([short(tag), r["issues"], pct(r["pass_at_1"], 2), pct(r["selected_d1"], 2),
+                     pct(r["oracle_pass_at_k"], 2), pp(r["selection_gap_d1"], 2),
+                     pct(r["selected_killtest_tiebreak"], 2),
+                     pp(r["selection_gap_killtest_tiebreak"], 2)])
+    k8d = desc["k8_arm"]["nebius_openhands@K8"]
+    rows.append(["nebius@K8 (separate)", k8d["issues"], pct(k8d["pass_at_1"], 2),
+                 pct(k8d["selected_d1"], 2), pct(k8d["oracle_pass_at_k"], 2),
+                 pp(k8d["selection_gap_d1"], 2),
+                 pct(k8d["selected_killtest_tiebreak"], 2),
+                 pp(k8d["selection_gap_killtest_tiebreak"], 2)])
+    A(table(["config", "issues", "pass@1", "selected (D1)", "oracle pass@K", "gap (D1)",
+             "selected (kill-test, D9)", "gap (kill-test)"], rows))
+    A("")
+    diffs = sorted((abs(100 * (r["selected_d1"] - r["selected_killtest_tiebreak"])), t)
+                   for t, r in desc["arms"].items())
+    A(f"The two rules disagree in the selected rate by up to {diffs[-1][0]:.2f}pp "
+      f"(`{short(diffs[-1][1])}`); the next largest is {diffs[-2][0]:.2f}pp. The gap is "
+      "4.8–15.8pp across the K=3 arms and 11.2pp at K=8: even at K=8, a rule that knew which "
+      "attempt resolves would gain more than ten points over submitting the largest cluster.")
+    A("")
+    A("### 8.2 Intraclass correlation of `resolved` by issue")
+    A("")
+    A("One-way random-effects ICC(1), issue as the group, on the frozen K-sample frame; the CI is a "
+      "repo-clustered bootstrap (`B = 2000`), i.e. whole repos resampled with replacement and all "
+      "their issues kept.")
+    A("")
+    A(table(["config", "ICC(1)", "95% CI", "issues", "repos", "k₀"],
+            [[short(t), f"{r['icc']['estimate']:.3f}",
+              f"[{r['icc']['lower']:.3f}, {r['icc']['upper']:.3f}]", r["issues"], r["repos"],
+              f"{r['icc']['k0']:.2f}"] for t, r in desc["arms"].items()] +
+            [["nebius@K8 (separate)", f"{k8d['icc']['estimate']:.3f}",
+              f"[{k8d['icc']['lower']:.3f}, {k8d['icc']['upper']:.3f}]", k8d["issues"],
+              k8d["repos"], f"{k8d['icc']['k0']:.2f}"]]))
+    A("")
+    A("ICC(1) is 0.646–0.864 across the twelve arms (K=8: 0.798), so most of the variance in "
+      "`resolved` is **between issues**, not between attempts of the same issue. That is the "
+      "quantitative reason the within-issue contrasts of B1 and B2 are noisy: after issue difficulty "
+      "is removed, only 14–35% of the label variance is left to rank attempts, and the repo-clustered "
+      "bootstrap cannot create information that the design does not contain.")
+    A("")
+    A("### 8.3 Fixed-budget curve f(k), every arm in one table")
+    A("")
+    A("`f(k)` = mean resolve rate of the D1 submission restricted to the first k seeded draws "
+      "(DEVIATIONS D8 draw order); the K=8 arm's curve is the same object at eight budgets.")
+    A("")
+    A(table(["config", "f(1)", "f(2)", "f(3)", "f(4)", "f(5)", "f(6)", "f(7)", "f(8)"],
+            [[short(t), *[(pct(c[str(k)]) if str(k) in c else "—") for k in range(1, 9)]]
+             for t, c in desc["curves"].items()]))
+    A("")
+    ranges = {t: 100 * (max(c.values()) - min(c.values())) for t, c in desc["curves"].items()}
+    A(f"`f(k)` is flat in every arm: the full range across the budgets is at most "
+      f"{max(ranges.values()):.2f}pp (`{short(max(ranges, key=ranges.get))}`), and at most 0.68pp "
+      "for the K=8 arm. Spending more attempts therefore does not move the selected patch's resolve "
+      "rate in any arm; the only large budget effect in the table is the oracle gap in §8.1, which "
+      "needs the labels of all attempts.")
+    A("")
+    A("**Identity checks (no new number).** "
+      f"{desc['checks']['arms_checked']} arms: frame sizes equal B1/B4; the D1 selected rate equals "
+      "B4's `f(K)` exactly; the kill-test tie-break reproduces `kill_test.json`'s `resolved_rate` "
+      f"exactly; `identity_mismatches` = {len(desc['checks']['identity_mismatches'])}.")
+    A("")
+    A("## 9. Files")
     A("")
     A("- Scripts: `scripts/b1_selection_lift.py`, `scripts/b2_within_issue_auroc.py`, "
       "`scripts/b3_crossfit_certification.py`, `scripts/b4_adaptive_stopping.py`, "
-      "`scripts/render_results2.py`; shared machinery `src/prereg2.py`.")
+      "`scripts/descriptive_tables.py`, `scripts/render_results2.py`; shared machinery "
+      "`src/prereg2.py`.")
     A("- Wrapper: `bash reproduce_prereg2.sh`. `reproduce_all.sh` is unchanged.")
     A("- Raw: `results/b1_selection_lift.json`, `results/b2_within_issue_auroc.json`, "
-      "`results/b3_crossfit_certification.json`, `results/b4_adaptive_stopping.json`.")
+      "`results/b3_crossfit_certification.json`, `results/b4_adaptive_stopping.json`, "
+      "`results/descriptive_tables.json`.")
     Path("RESULTS_2.md").write_text("\n".join(L) + "\n")
     print("wrote RESULTS_2.md", flush=True)
 

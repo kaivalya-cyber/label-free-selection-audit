@@ -198,3 +198,22 @@ actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §
    "cannot reach p < 0.05 unless the split is at least 9–2". Exact two-sided values:
    2·P(Bin(11,½) ≤ 2) = 0.0654 for 9–2, and 2·P(Bin(11,½) ≤ 1) = 0.0117 for 10–1. The threshold is
    **10–1**. §7's formula is unchanged and is what B1–B4 use; only the illustrative sentence is wrong.
+
+## D10 — DESCRIPTIVE tables added after the B1–B4 run (2026-10-29) **[post-evaluation, descriptive only]**
+
+Requested after reading the Part-C results. `scripts/descriptive_tables.py` →
+`results/descriptive_tables.json` adds three tables to [RESULTS_2.md](RESULTS_2.md) §8: per-arm
+pass@1 / agreement-selected / oracle / selection gap, the ICC(1) of `resolved` by issue, and the
+fixed-budget curve `f(k)` for every arm in one place.
+
+- **No hypothesis test, threshold or verdict is computed.** No B1–B4 quantity, frame, seed or
+  label convention is re-estimated; the section says so in place.
+- **Both selection tie-breaks are shown.** The primary column is the documented D1 rule; the second
+  is the rule `kill_test.py` actually implements, which is the D9 mismatch. The identity checks
+  assert that the D1 rate equals B4's `f(K)` exactly and the kill-test rate equals
+  `kill_test.json`'s `resolved_rate` exactly (0 mismatches in 12 arms).
+- **ICC(1)** is the one-way random-effects intraclass correlation with issue as the group, on the
+  frozen balanced-K frames; the CI resamples whole repos (B = 2000). It is descriptive, not a
+  variance-component model used for any inference elsewhere.
+- `reproduce_prereg2.sh` now runs the descriptive script before the renderer; no other wrapper is
+  touched.

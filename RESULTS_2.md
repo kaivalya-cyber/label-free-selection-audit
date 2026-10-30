@@ -1,6 +1,6 @@
 # RESULTS_2 — four pre-registered analyses on the frozen frames
 
-Run: `bash reproduce_prereg2.sh` · rules: [PREREG-2.md](PREREG-2.md) frozen at `f9558d9`, amended by [DEVIATIONS.md](DEVIATIONS.md) D8 before this run · raw numbers: [B1](results/b1_selection_lift.json), [B2](results/b2_within_issue_auroc.json), [B3](results/b3_crossfit_certification.json), [B4](results/b4_adaptive_stopping.json).
+Run: `bash reproduce_prereg2.sh` · rules: [PREREG-2.md](PREREG-2.md) frozen at `f9558d9`, amended by [DEVIATIONS.md](DEVIATIONS.md) D8 before this run · raw numbers: [B1](results/b1_selection_lift.json), [B2](results/b2_within_issue_auroc.json), [B3](results/b3_crossfit_certification.json), [B4](results/b4_adaptive_stopping.json). §8 is a DESCRIPTIVE addition: it computes no test and changes no number above it.
 
 **Policy models.** Taken from the dataset cards and verified against the rows: every frozen nvidia config has exactly one `metadata.teacher_model.name` value across 100% of its rows. The card states v1.0 = OpenHands v0.53.0 + SWE-agent (no separate SWE-agent version), v1.1 adds mini-swe-agent, v1.2 = Qwen3.8-27B. The nebius card names the policy directly.
 
@@ -267,11 +267,80 @@ B5 cuts the budget from 8 attempts to 3.44 (43%) with a resolve rate statistical
 - **Kill test reproduction.** The pre-D6 JSON (`8b7e11b`) has 6,461 leaf values; all are present and identical in the current `results/kill_test.json` (0 differences), i.e. the D6/D7 edits changed no primary number.
 - **B3 reproduction.** 36 cross-fit cells re-executed; 0 differ from the stored `difficulty_cross_fit` baselines. Split sizes match the frozen JSON (0 mismatches).
 - **B4 frame check.** With the kill test's own tie-break, the full-budget resolve rate reproduces every arm's `resolved_rate` (0 mismatches); the documented-rule values are reported beside them in §6.6. B4 was executed twice: the first execution stopped at its own sanity assertion (it assumed the two tie-breaks agreed) before writing any output; the analysis code and seeds were unchanged.
-- **Tests.** `pytest tests -q` at render time: 37 passed in 0.65s.
+- **Tests.** `pytest tests -q` at render time: 37 passed in 1.35s.
 - **Spend.** $0.00 (COST_LOG.md).
 
-## 8. Files
+## 8. DESCRIPTIVE — chance-level baselines, clustering, and the full budget curve
 
-- Scripts: `scripts/b1_selection_lift.py`, `scripts/b2_within_issue_auroc.py`, `scripts/b3_crossfit_certification.py`, `scripts/b4_adaptive_stopping.py`, `scripts/render_results2.py`; shared machinery `src/prereg2.py`.
+**No hypothesis test and no verdict is computed in this section.** It adds the three tables requested after the B1–B4 run: per-arm selection baselines, the ICC of `resolved` by issue, and `f(k)` for every arm in one place. Nothing here re-estimates or replaces a frozen B1–B4 quantity; the identity checks at the end of the section are the only consistency statements.
+
+### 8.1 Selection baselines per arm
+
+`pass@1` is the mean of `resolved` over the sampled attempts; with a balanced K it equals the issue-level `random-K` baseline of §2, so the same number appears there. `selected` is the DEVIATIONS D1 rule (largest canonical cluster; equal-size ties by the smallest `trajectory_id` inside the cluster). The second selected column is the tie-break `scripts/kill_test.py` actually implements (smallest canonical string among the top clusters); it is also the rule behind `kill_test.json`'s `resolved_rate` (DEVIATIONS D9). `gap = oracle − selected`: the headroom a rule would gain from knowing in advance which sampled attempt resolves. It is a ceiling, not a deployable rule.
+
+| config | issues | pass@1 | selected (D1) | oracle pass@K | gap (D1) | selected (kill-test, D9) | gap (kill-test) |
+|---|---|---|---|---|---|---|---|
+| nebius_openhands | 6063 | 47.55% | 47.52% | 55.09% | +7.57pp | 47.04% | +8.05pp |
+| v1.0_openhands_minimax_m25 · srb2 | 7463 | 46.04% | 46.34% | 52.39% | +6.06pp | 45.80% | +6.59pp |
+| v1.0_openhands_qwen35_122b · srb2 | 5959 | 32.29% | 32.20% | 41.70% | +9.50pp | 31.23% | +10.47pp |
+| v1.0_sweagent_minimax_m25 · srb2 | 8466 | 50.06% | 50.44% | 57.47% | +7.03pp | 49.49% | +7.97pp |
+| v1.0_sweagent_qwen35_122b · srb2 | 2490 | 51.42% | 52.13% | 59.28% | +7.15pp | 51.04% | +8.23pp |
+| v1.1_minisweagent_qwen36_27b · scale | 8783 | 38.09% | 37.30% | 53.05% | +15.75pp | 39.13% | +13.91pp |
+| v1.1_minisweagent_qwen36_27b · srb2 | 12073 | 37.92% | 38.23% | 44.33% | +6.10pp | 37.84% | +6.49pp |
+| v1.1_sweagent_qwen36_27b · scale | 8520 | 56.37% | 56.48% | 61.30% | +4.82pp | 56.36% | +4.94pp |
+| v1.1_sweagent_qwen36_27b · srb2 | 5580 | 41.81% | 41.59% | 48.48% | +6.88pp | 41.95% | +6.52pp |
+| v1.2_minisweagent_qwen38_27b · scale | 13801 | 59.49% | 59.44% | 64.30% | +4.86pp | 59.44% | +4.86pp |
+| v1.2_minisweagent_qwen38_27b · srb2 | 10563 | 50.72% | 50.71% | 56.64% | +5.94pp | 50.86% | +5.78pp |
+| nebius@K8 (separate) | 4580 | 48.10% | 48.30% | 59.54% | +11.24pp | 47.21% | +12.34pp |
+
+The two rules disagree in the selected rate by up to 1.83pp (`v1.1_minisweagent_qwen36_27b · scale`); the next largest is 1.08pp. The gap is 4.8–15.8pp across the K=3 arms and 11.2pp at K=8: even at K=8, a rule that knew which attempt resolves would gain more than ten points over submitting the largest cluster.
+
+### 8.2 Intraclass correlation of `resolved` by issue
+
+One-way random-effects ICC(1), issue as the group, on the frozen K-sample frame; the CI is a repo-clustered bootstrap (`B = 2000`), i.e. whole repos resampled with replacement and all their issues kept.
+
+| config | ICC(1) | 95% CI | issues | repos | k₀ |
+|---|---|---|---|---|---|
+| nebius_openhands | 0.795 | [0.782, 0.807] | 6063 | 1809 | 3.00 |
+| v1.0_openhands_minimax_m25 · srb2 | 0.821 | [0.810, 0.832] | 7463 | 1846 | 3.00 |
+| v1.0_openhands_qwen35_122b · srb2 | 0.713 | [0.692, 0.733] | 5959 | 1669 | 3.00 |
+| v1.0_sweagent_minimax_m25 · srb2 | 0.792 | [0.781, 0.804] | 8466 | 1859 | 3.00 |
+| v1.0_sweagent_qwen35_122b · srb2 | 0.781 | [0.759, 0.802] | 2490 | 984 | 3.00 |
+| v1.1_minisweagent_qwen36_27b · scale | 0.646 | [0.626, 0.666] | 8783 | 963 | 3.00 |
+| v1.1_minisweagent_qwen36_27b · srb2 | 0.813 | [0.800, 0.825] | 12073 | 2278 | 3.00 |
+| v1.1_sweagent_qwen36_27b · scale | 0.862 | [0.852, 0.871] | 8520 | 961 | 3.00 |
+| v1.1_sweagent_qwen36_27b · srb2 | 0.812 | [0.796, 0.828] | 5580 | 1719 | 3.00 |
+| v1.2_minisweagent_qwen38_27b · scale | 0.864 | [0.857, 0.871] | 13801 | 1081 | 3.00 |
+| v1.2_minisweagent_qwen38_27b · srb2 | 0.834 | [0.823, 0.845] | 10563 | 2180 | 3.00 |
+| nebius@K8 (separate) | 0.798 | [0.787, 0.811] | 4580 | 1544 | 8.00 |
+
+ICC(1) is 0.646–0.864 across the twelve arms (K=8: 0.798), so most of the variance in `resolved` is **between issues**, not between attempts of the same issue. That is the quantitative reason the within-issue contrasts of B1 and B2 are noisy: after issue difficulty is removed, only 14–35% of the label variance is left to rank attempts, and the repo-clustered bootstrap cannot create information that the design does not contain.
+
+### 8.3 Fixed-budget curve f(k), every arm in one table
+
+`f(k)` = mean resolve rate of the D1 submission restricted to the first k seeded draws (DEVIATIONS D8 draw order); the K=8 arm's curve is the same object at eight budgets.
+
+| config | f(1) | f(2) | f(3) | f(4) | f(5) | f(6) | f(7) | f(8) |
+|---|---|---|---|---|---|---|---|---|
+| nebius_openhands | 47.9% | 47.3% | 47.5% | — | — | — | — | — |
+| v1.0_openhands_minimax_m25 · srb2 | 46.1% | 46.1% | 46.3% | — | — | — | — | — |
+| v1.0_openhands_qwen35_122b · srb2 | 32.6% | 32.4% | 32.2% | — | — | — | — | — |
+| v1.0_sweagent_minimax_m25 · srb2 | 49.7% | 50.2% | 50.4% | — | — | — | — | — |
+| v1.0_sweagent_qwen35_122b · srb2 | 51.2% | 52.2% | 52.1% | — | — | — | — | — |
+| v1.1_minisweagent_qwen36_27b · scale | 38.2% | 38.4% | 37.3% | — | — | — | — | — |
+| v1.1_minisweagent_qwen36_27b · srb2 | 37.9% | 38.1% | 38.2% | — | — | — | — | — |
+| v1.1_sweagent_qwen36_27b · scale | 56.4% | 56.5% | 56.5% | — | — | — | — | — |
+| v1.1_sweagent_qwen36_27b · srb2 | 41.8% | 42.1% | 41.6% | — | — | — | — | — |
+| v1.2_minisweagent_qwen38_27b · scale | 59.4% | 59.5% | 59.4% | — | — | — | — | — |
+| v1.2_minisweagent_qwen38_27b · srb2 | 50.7% | 50.8% | 50.7% | — | — | — | — | — |
+| nebius_openhands@K8 | 47.6% | 48.0% | 48.1% | 47.8% | 48.0% | 48.0% | 47.9% | 48.3% |
+
+`f(k)` is flat in every arm: the full range across the budgets is at most 1.07pp (`v1.1_minisweagent_qwen36_27b · scale`), and at most 0.68pp for the K=8 arm. Spending more attempts therefore does not move the selected patch's resolve rate in any arm; the only large budget effect in the table is the oracle gap in §8.1, which needs the labels of all attempts.
+
+**Identity checks (no new number).** 12 arms: frame sizes equal B1/B4; the D1 selected rate equals B4's `f(K)` exactly; the kill-test tie-break reproduces `kill_test.json`'s `resolved_rate` exactly; `identity_mismatches` = 0.
+
+## 9. Files
+
+- Scripts: `scripts/b1_selection_lift.py`, `scripts/b2_within_issue_auroc.py`, `scripts/b3_crossfit_certification.py`, `scripts/b4_adaptive_stopping.py`, `scripts/descriptive_tables.py`, `scripts/render_results2.py`; shared machinery `src/prereg2.py`.
 - Wrapper: `bash reproduce_prereg2.sh`. `reproduce_all.sh` is unchanged.
-- Raw: `results/b1_selection_lift.json`, `results/b2_within_issue_auroc.json`, `results/b3_crossfit_certification.json`, `results/b4_adaptive_stopping.json`.
+- Raw: `results/b1_selection_lift.json`, `results/b2_within_issue_auroc.json`, `results/b3_crossfit_certification.json`, `results/b4_adaptive_stopping.json`, `results/descriptive_tables.json`.
