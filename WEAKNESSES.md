@@ -139,3 +139,36 @@ result), and the check that mitigates it or the fact that it does not.
 16. **Free-tier infrastructure.** Reads are range requests over the HF CDN with no retries pinned to a
     snapshot/revision. A dataset revision change would silently alter the numbers; the recon records
     the file inventory and sizes, which is the only version evidence.
+
+## Judge study (PREREG-3, D14 backend)
+
+29. **The judge is not the frozen NF4 estimator.** The frozen 26B-A4B NF4 path cannot load on
+    2×T4 because the 30 MoE layers store 128 experts as 3-D parameters that bitsandbytes leaves
+    in bf16; the approved D14 backend is the official QAT Q4_0 GGUF via llama.cpp. The primary
+    number (0.5786) belongs to **26B-A4B Q4_0 (llama.cpp)** and is not an NF4 result. A bf16 or
+    NF4 control is impossible at this context on 2×T4, so the study cannot separate judge quality
+    from quantisation quality.
+30. **The labels are the published resolved flags, not ground truth.** The estimand is agreement
+    with the dataset's label; a judge can be right where the harness is flaky and still score below
+    0.5 (WEAKNESSES #1–#2). The within-issue design cancels issue difficulty but not label noise
+    that is shared by both attempts in a pair.
+31. **AUROC is the only calibration-free claim.** The judge's `p_yes` is extremely confident
+    (median 0.817; 25% 0.231, 75% 0.974), and no calibration, threshold or abstention analysis was
+    registered. A high AUROC does not license using the raw probability as a correctness estimate.
+32. **Pairs share attempts and issues.** The 4,226 pairs come from 5,466 attempts and 1,128 issues;
+    the repo-clustered bootstrap (641 clusters) is the only inference reported, but it cannot
+    remove the dependence between pairs that reuse an attempt.
+33. **Prompt truncation affects a quarter of patches.** 26.1% of patches and 1.2% of issues hit the
+    frozen head+tail cap; the realised no-truncation pair share is **52.6%** (2,221/4,226), lower
+    than PREREG-3 §4.3's ≈74% (that figure is optimistic for a pair of attempts). The exploratory
+    split is flat (0.5772 vs 0.5800), which argues against truncation driving the result, but it is
+    a subset comparison, not a causal test.
+34. **The own-test comparison is selected.** Only 1,381 of 4,226 pairs have non-null own-test
+    signals on both attempts; the 0.5112 estimate and its paired difference are on that subset,
+    not the full sample.
+35. **The pilot needed a second session.** The first GGUF pilot worker exposed one T4 and failed
+    context creation; the restarted pilot (0.43 h) and the main run (4.75 h) used both cards. The
+    failed session produced no scores; the sealed pilot hash covers only the successful run.
+36. **The D12 projection was conservative.** It predicted 8.16 h for N=4,226; the actual model wall
+    was 5.18 h (pilot + main), plus about 0.9 h of diagnostics. The cap was not approached, but the
+    projection's 2× token factor is not a throughput measurement and should not be reused as one.

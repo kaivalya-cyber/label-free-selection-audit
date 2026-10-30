@@ -108,7 +108,15 @@ def main() -> None:
     scores = load_scores(args.scores).set_index("trajectory_id")
     sig = signal_frame()
     tids = sorted(set(pairs.pos_tid.astype(str)) | set(pairs.neg_tid.astype(str)))
-    assert set(tids) <= set(scores.index), f"missing {len(set(tids) - set(scores.index))} scores"
+    missing = set(tids) - set(scores.index)
+    # Empty patches are fixed at 0 by PREREG-3 §4.3 and need no forward pass. The main shards
+    # may omit them; fill them here rather than treating them as missing model output.
+    empty = attempts.assign(is_empty=attempts.patch.astype(str).str.strip().eq(""))
+    empty_tids = set(empty.loc[empty["is_empty"], "trajectory_id"].astype(str))
+    assert missing <= empty_tids, f"missing {sorted(missing - empty_tids)[:5]} scores"
+    if missing:
+        fill = pd.DataFrame({"trajectory_id": sorted(missing), "p_yes": 0.0, "n_tokens": 0})
+        scores = pd.concat([scores.reset_index(), fill], ignore_index=True).set_index("trajectory_id")
     assert set(tids) <= set(sig.index), f"missing {len(set(tids) - set(sig.index))} signal rows"
 
     out = pairs.copy()

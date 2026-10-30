@@ -1,0 +1,129 @@
+{
+ "analysis": "PREREG-3 within-issue pairwise AUROC (GGUF Q4_0 backend, D14)",
+ "model": "26B-A4B Q4_0 (llama.cpp)",
+ "backend": "llama.cpp / llama-cpp-python 0.3.36, CUDA 12.8, 2x Tesla T4",
+ "n_pairs": 4226,
+ "n_issues": 1128,
+ "n_repos": 641,
+ "n_distinct_attempts": 5466,
+ "primary": {
+  "estimate": 0.5785612872692854,
+  "lower": 0.5587164358839714,
+  "upper": 0.5987253814194977,
+  "p": 0.0009995002498750624,
+  "n_clusters": 641,
+  "B": 2000,
+  "n_pairs": 4226,
+  "n_issues": 1128,
+  "n_repos": 641,
+  "verdict": "SIGNIFICANT+"
+ },
+ "comparisons": {
+  "exit_reason": {
+   "estimate": 0.5576194983435874,
+   "lower": 0.5451442574800217,
+   "upper": 0.5706972301688812,
+   "p": 0.0009995002498750624,
+   "n_clusters": 641,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_issues": 1128,
+   "n_repos": 641,
+   "label": "SECONDARY",
+   "definition": "submit=1, max-iteration=0",
+   "paired_diff_vs_judge": {
+    "estimate": -0.02094178892569806,
+    "lower": -0.041074894201549396,
+    "upper": -0.0025220323191593465,
+    "p": 0.026986506746626688,
+    "n_clusters": 641,
+    "B": 2000,
+    "n_pairs": 4226
+   }
+  },
+  "own_test": {
+   "estimate": 0.5112237509051412,
+   "lower": 0.4913147815396255,
+   "upper": 0.5321827394117282,
+   "p": 0.255872063968016,
+   "n_clusters": 355,
+   "B": 2000,
+   "n_pairs": 1381,
+   "n_issues": 595,
+   "n_repos": 355,
+   "label": "SECONDARY",
+   "definition": "pred_passes_gen_tests, null excluded",
+   "paired_diff_vs_judge": {
+    "estimate": -0.05937726285300507,
+    "lower": -0.10238385254395467,
+    "upper": -0.019711738968028344,
+    "p": 0.005997001499250375,
+    "n_clusters": 355,
+    "B": 2000,
+    "n_pairs": 1381
+   }
+  },
+  "agreement": {
+   "estimate": 0.5120681495504023,
+   "lower": 0.5046082505904216,
+   "upper": 0.5188106687224915,
+   "p": 0.001999000499750125,
+   "n_clusters": 641,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_issues": 1128,
+   "n_repos": 641,
+   "label": "SECONDARY",
+   "definition": "canonical cluster size / 8",
+   "paired_diff_vs_judge": {
+    "estimate": -0.0664931377188831,
+    "lower": -0.08524124552744955,
+    "upper": -0.047258519146986075,
+    "p": 0.0009995002498750624,
+    "n_clusters": 641,
+    "B": 2000,
+    "n_pairs": 4226
+   }
+  }
+ },
+ "exploratory": {
+  "own_test_null0": {
+   "estimate": 0.5074538570752485,
+   "lower": 0.49351048009068577,
+   "upper": 0.5216145147422768,
+   "p": 0.2958520739630185,
+   "n_clusters": 641,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_issues": 1128,
+   "n_repos": 641,
+   "label": "EXPLORATORY (E2 analogue, null -> 0)"
+  }
+ },
+ "truncation": {
+  "neither_patch_truncated": {
+   "estimate": 0.5772174696082846,
+   "lower": 0.5493259502103504,
+   "upper": 0.6058950128084206,
+   "p": 0.0009995002498750624,
+   "n_clusters": 494,
+   "B": 2000,
+   "n_pairs": 2221,
+   "n_issues": 772,
+   "n_repos": 494
+  },
+  "at_least_one_patch_truncated": {
+   "estimate": 0.5800498753117207,
+   "lower": 0.5553787196583692,
+   "upper": 0.6069529182901097,
+   "p": 0.0009995002498750624,
+   "n_clusters": 460,
+   "B": 2000,
+   "n_pairs": 2005,
+   "n_issues": 748,
+   "n_repos": 460
+  },
+  "neither_pairs": 2221,
+  "either_pairs": 2005
+ }
+}

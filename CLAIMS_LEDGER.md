@@ -126,3 +126,13 @@ replaces a B1–B4 quantity.
 | C78 | intraclass correlation of `resolved` by issue, ICC(1), repo-clustered bootstrap CI | 0.646–0.864 across 12 arms (all CIs within [0.626, 0.871]); nebius K=3 0.795 [0.782, 0.807]; K=8 0.798 [0.787, 0.811] | results/descriptive_tables.json (`icc`); RESULTS_2 §8.2 |
 | C79 | fixed-budget curve f(k) is flat in every arm | full range across k = 1…K is at most 1.07pp (`v1.1_minisweagent/qwen36_27b/scale-swe`); at most 0.68pp for the K=8 arm | results/descriptive_tables.json (`curves`); RESULTS_2 §8.3 |
 | C80 | descriptive identity checks | 12 arms: frame sizes equal B1/B4; D1 selected rate equals B4 `f(K)` exactly; kill-test tie-break equals `kill_test.json` `resolved_rate` exactly; 0 mismatches | results/descriptive_tables.json (`checks`) |
+
+## PREREG-3 — the local Gemma judge (D14 backend: 26B-A4B QAT Q4_0, llama.cpp)
+
+| # | claim | number | source |
+|---|---|---|---|
+| C81 | PREREG-3 primary: within-issue pairwise AUROC of the Q4_0 judge | **0.5786** (95% CI 0.5587–0.5987), p = 0.0010, **SIGNIFICANT+**, on 4,226 pairs / 1,128 issues / 641 repos | results/judge_analysis.json (`primary`); RESULTS_3.md §3 |
+| C82 | Judge vs the cheap signals on the same pairs | exit reason 0.5576 (0.5451–0.5707), own tests 0.5112 (0.4913–0.5322) on 1,381 pairs, agreement 0.5121 (0.5046–0.5188); paired judge−exit **+0.0209** (+0.0025 to +0.0411), p = 0.027; paired judge−own +0.0594 (+0.0197 to +0.1024), p = 0.006 | results/judge_analysis.json (`comparisons`); RESULTS_3.md §4 |
+| C83 | Truncation split | neither patch truncated: 0.5772 (0.5493–0.6059), 2,221 pairs; at least one truncated: 0.5800 (0.5554–0.6070), 2,005 pairs; flat, no verdict | results/judge_analysis.json (`truncation`); RESULTS_3.md §5 |
+| C84 | Pilot throughput and D12 N | 388 attempts, 1,452,435 tokens, **993.923 prefill tok/s**; **N = 4,226**; main 5,076 new attempts, 16,753,941 tokens, 1,047.886 tok/s, 4.75 h wall; total model wall 5.18 h | results/judge_n.json; out/judge/pilot_gguf_out/pilot_throughput.json; out/judge/main_gguf_out/throughput.json |
+| C85 | Judge-run verification | 26/26 main shard hashes match the run manifest; pilot sealed sha256 `f042359d…b434`; 5,464 scored + 2 empty patches = 5,466 attempts; 0 duplicate trajectory scores; 43 tests pass | out/judge/main_gguf_out/shards/manifest.json; `scripts/analyze_judge.py`; `pytest tests -q` |

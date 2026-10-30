@@ -304,6 +304,9 @@ def main() -> None:
         metrics["sealed_rows"] = len(all_rows)
         (out / "pilot_throughput.json").write_text(json.dumps(metrics, indent=1) + "\n")
     else:
+        # Empty patches are fixed at 0 and have no forward pass; still persist them so the
+        # analysis has a complete row for every sampled attempt.
+        pending.extend(fixed)
         flush()
         metrics = metrics_now()
         metrics["shards"] = shard_hashes
