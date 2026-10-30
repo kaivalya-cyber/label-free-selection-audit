@@ -217,3 +217,20 @@ fixed-budget curve `f(k)` for every arm in one place.
   variance-component model used for any inference elsewhere.
 - `reproduce_prereg2.sh` now runs the descriptive script before the renderer; no other wrapper is
   touched.
+
+## D11 — PREREG-3 cost-rationale wording, before any run (2026-10-29) **[pre-evaluation]**
+
+Three sentences in [PREREG-3.md](PREREG-3.md) overstated the 31B's exclusion, and one called 4,226
+"the largest N whose cost fits". Arithmetic from the frozen table: at 350 prefill tok/s the 31B needs
+23.2 GPU-h for N = 4,226, which does fit a 30 GPU-h week (with 6.8 h spare); at 250 tok/s it needs
+32.4 h and does not. N = 6,000 at the 26B-A4B's conservative 700 tok/s needs 16.4 h, also inside the
+week. Corrected in place:
+
+- §4.2: 4,226 is chosen for B2 comparability and cost margin (≈11.6 h), not as the largest affordable
+  N; 6,000 is affordable but costs 50% more for 0.004 AUROC of precision.
+- §3.1 and §6.2: the 31B fits memory and only the optimistic end of its range fits the weekly quota;
+  "with margin" is the property that selects the 26B-A4B.
+
+No judge has run, no judge output exists, and no quantity, sample, seed, truncation rule, prompt,
+comparison signal or verdict rule changes. The freeze commit `65c3999` remains the record of the
+original wording.

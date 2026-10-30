@@ -1,6 +1,7 @@
 # PREREG-3 — a local Gemma judge for patch correctness (nebius, follow-up to B2)
 
-Status: **frozen at commit `65c3999`** (the commit that adds this file); any later change is a
+Status: **frozen at commit `65c3999`** (the commit that adds this file), amended by DEVIATIONS D11
+(wording of the cost rationale only; no quantity, sample, seed or rule changed); any later change is a
 `DEVIATIONS.md` entry.
 **Not approved to run.** No judge has been executed and **no judge output exists** — not a single
 score, prompt completion or ranking. The only numbers in this file come from the data-side
@@ -104,9 +105,10 @@ infrastructure failure** (bitsandbytes unavailable, OOM that cannot be fixed by 
 `google/gemma-4-12B-it` in bf16 across both T4s, batch 1. A fallback run is labelled with its model
 everywhere and is never compared across models; there is no third fallback.
 
-**Why not the 31B:** it fits memory but not the GPU-hour budget at this token volume (§6). If the
-approval insists on the literal "largest that fits", the estimate is the 31B row of §6 and the study
-is not affordable inside one weekly quota.
+**Why not the 31B:** it fits memory, but at this token volume it needs 23.2 h even at the optimistic
+350 tok/s and 32.4 h at 250 tok/s (§6), so only the optimistic end fits a 30 GPU-h week and it leaves
+no room for a re-run. If the approval insists on the literal "largest that fits", the estimate is the
+31B row of §6.
 
 ### 3.2 Prompt (fixed verbatim; one user turn, no system turn)
 
@@ -168,9 +170,10 @@ attempts, not 2N. (The cost table in §6 uses 2N judgments, i.e. no reuse — an
 - **Primary N = 4,226 pairs**, a seeded uniform sample without replacement:
   `seeded_rng("judge3", "pairs").choice(12917, size=4226, replace=False)`.
 - Why 4,226: it equals B2's realised pair count, so the study has B2's precision and is directly
-  readable against B2's 0.5125; and it is the largest N whose cost fits a weekly Kaggle quota at the
-  conservative throughput (§6). The realised number of distinct attempts, issues and repos is reported
-  with the result.
+  readable against B2's 0.5125; at the conservative throughput it needs ≈11.6 GPU-h, which leaves room
+  for a re-run inside a 30 GPU-h week. A larger N (6,000 pairs, ≈16.4 h) is affordable but buys only
+  0.004 AUROC of precision for 50% more compute. The realised number of distinct attempts, issues and
+  repos is reported with the result.
 - **All 4,226 pairs are scored before any AUROC is computed.** No partial-output analysis: the first
   200 pairs are an engineering pilot (answer-token check, throughput, peak memory) and are *included*
   in the final set, but their scores are not analysed on their own.
@@ -247,8 +250,9 @@ for load, tokenise, shard I/O and retries.
 | 12B NF4 (fallback) | 8.1 / 10.8 / 16.2 h | 11.5 / 15.4 / 23.0 h | 24.8 / 33.0 / 49.6 h |
 
 **The answer to "largest that fits":** the 31B fits **memory** (≈18 GB of 30 GB in NF4, sharded) but
-not the budget — 23–54 GPU-h for the proposed N, against a 30 GPU-h weekly quota. The largest variant
-that fits **both** is the 26B-A4B at 5.4–11.6 h for N = 4,226.
+only the optimistic end of its 23.2–54.0 GPU-h range fits a 30 GPU-h week (23.2 h at 350 tok/s; 32.4 h
+at 250), with no re-run margin. The largest variant that fits **both memory and budget with margin** is
+the 26B-A4B at 5.4–11.6 h for N = 4,226.
 
 **Quota assumption:** 30 GPU-h/week, as in the sibling project's Kaggle log. It must be confirmed in
 the account before a run; if it is lower, N drops per §6.3.
