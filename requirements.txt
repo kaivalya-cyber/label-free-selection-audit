@@ -6,3 +6,4 @@ pandas
 numpy
 scipy
 pytest
+tokenizers>=0.20

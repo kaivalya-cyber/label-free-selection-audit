@@ -1,0 +1,131 @@
+{
+ "tokenizer": "google/gemma-4-26B-A4B-it",
+ "note": "PREREG-3 feasibility probe (data side only; no judge is run, no judge output exists).",
+ "problem_statements": {
+  "source": "nebius/SWE-rebench (test split, 2 parquet shards)",
+  "rows": 21336,
+  "unique_instance_ids": 21336,
+  "duplicate_instance_ids": 0,
+  "columns": [
+   "instance_id",
+   "repo",
+   "problem_statement"
+  ],
+  "p50_chars": 710.0,
+  "p95_chars": 4182.5,
+  "empty_or_null": 0,
+  "ids_with_conflicting_text": 0
+ },
+ "join_coverage": {
+  "nebius_issues_all": 6102,
+  "with_problem_statement": 6102,
+  "share": 1.0,
+  "k8_issues": 4580,
+  "k8_with_issue_text": 4580,
+  "k8_share": 1.0,
+  "k8_attempts": 36640,
+  "k8_attempts_with_issue_text": 36640,
+  "k8_pairs_with_issue_text": 12917
+ },
+ "pairs": {
+  "k8_mixed_label_issues": 1160,
+  "k8_pairs_no_signal_filter": 12917,
+  "full_pool_mixed_label_issues": 1687,
+  "full_pool_pairs_no_signal_filter": 37505,
+  "k8_pairs_with_signal_filter_b2": 4226,
+  "k8_issues_with_signal_filter_b2": 754
+ },
+ "tokens": {
+  "issue": {
+   "p50": 270.0,
+   "p90": 1065.2000000000007,
+   "p95": 1610.6000000000022,
+   "p99": 4660.52,
+   "mean": 526.6997816593887,
+   "max": 18350.0
+  },
+  "patch": {
+   "p50": 1418.5,
+   "p90": 8776.099999999999,
+   "p95": 11361.049999999996,
+   "p99": 18784.83,
+   "mean": 3458.998444323144,
+   "max": 108646.0
+  },
+  "judgment_raw": {
+   "p50": 2157.0,
+   "p90": 9709.099999999999,
+   "p95": 12461.44999999996,
+   "p99": 20436.22,
+   "mean": 4105.698225982533,
+   "max": 108881.0
+  },
+  "judgment_truncated": {
+   "p50": 2157.0,
+   "p90": 5788.0,
+   "p95": 6217.0,
+   "p99": 7883.0,
+   "mean": 3002.4783024017465,
+   "max": 9336.0
+  },
+  "cap": {
+   "issue": 4096,
+   "patch_head": 4096,
+   "patch_tail": 1024,
+   "prompt_overhead": 120
+  },
+  "patch_truncated_share": 0.2614355895196507,
+  "issue_truncated_share": 0.012445414847161572,
+  "sum_raw_judgment_tokens": 150432783.0,
+  "sum_truncated_judgment_tokens": 110010805.0,
+  "judgments": 36640,
+  "judgments_missing_issue_text": 0
+ },
+ "power": {
+  "observed_se_at_4226": 0.007998351760403127,
+  "basis": "B2 primary CI half-width / 1.96; clustered design held fixed",
+  "rows": [
+   {
+    "n_pairs": 849,
+    "se_auroc": 0.017844788350513875,
+    "half_width_95": 0.03497514275462658,
+    "min_detectable_delta_80pct": 0.04999369137097442
+   },
+   {
+    "n_pairs": 2359,
+    "se_auroc": 0.01070535999214062,
+    "half_width_95": 0.0209821201916359,
+    "min_detectable_delta_80pct": 0.029991975973581282
+   },
+   {
+    "n_pairs": 4226,
+    "se_auroc": 0.007998351760403127,
+    "half_width_95": 0.015676481509726753,
+    "min_detectable_delta_80pct": 0.022408062316668996
+   },
+   {
+    "n_pairs": 5307,
+    "se_auroc": 0.007137410947360331,
+    "half_width_95": 0.013989068510032144,
+    "min_detectable_delta_80pct": 0.019996063448960495
+   },
+   {
+    "n_pairs": 6000,
+    "se_auroc": 0.006712582266561874,
+    "half_width_95": 0.013156419589499677,
+    "min_detectable_delta_80pct": 0.01880586978926575
+   },
+   {
+    "n_pairs": 12917,
+    "se_auroc": 0.00457492961301196,
+    "half_width_95": 0.008966697344037372,
+    "min_detectable_delta_80pct": 0.012817054179870113
+   }
+  ]
+ },
+ "cost_inputs": {
+  "mean_judgment_tokens_truncated": 3002.4783024017465,
+  "judgments_per_pair": 2,
+  "token_volume_per_1000_pairs": 6004956.604803493
+ }
+}
