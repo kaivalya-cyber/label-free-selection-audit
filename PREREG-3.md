@@ -1,6 +1,7 @@
 # PREREG-3 — a local Gemma judge for patch correctness (nebius, follow-up to B2)
 
-Status: **frozen at the commit that adds this file**; any later change is a `DEVIATIONS.md` entry.
+Status: **frozen at commit `65c3999`** (the commit that adds this file); any later change is a
+`DEVIATIONS.md` entry.
 **Not approved to run.** No judge has been executed and **no judge output exists** — not a single
 score, prompt completion or ranking. The only numbers in this file come from the data-side
 feasibility probe ([scripts/prereg3_probe.py](scripts/prereg3_probe.py) →
