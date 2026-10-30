@@ -234,3 +234,38 @@ week. Corrected in place:
 No judge has run, no judge output exists, and no quantity, sample, seed, truncation rule, prompt,
 comparison signal or verdict rule changes. The freeze commit `65c3999` remains the record of the
 original wording.
+
+## D12 — the judge run's N is a throughput-only prefix rule (2026-10-29) **[pre-evaluation]**
+
+Committed **before the pilot**. No judge output exists. Approval for PREREG-3 fixes the model
+(`google/gemma-4-26B-A4B-it`, NF4 only), a **12 GPU-hour total cap** across pilot and main run,
+checkpointed sessions of at most 9 h, and a hard stop on 2026-11-04 evening.
+
+**Frozen pair order.** The primary sample is `seeded_rng("judge3", "pairs").choice(12917, size=4226,
+replace=False)` over the pairs of PREREG-3 §2.2, in the order that call returns. A *prefix* means the
+first `n` elements of that order. The first 200 pairs are the pilot; they are part of every prefix and
+their sealed scores are the first 200 rows of the main sample.
+
+**Measured rate.** `r` = total **real (unpadded) prefill tokens** across the pilot's forward passes
+divided by the summed wall time of those forward passes (`torch.cuda.synchronize()` around each
+batch). Model mount, load, tokenisation, shard writing and retries are outside `r`. `r` is recorded in
+`pilot_throughput.json`; no judge score, AUROC, ranking or any quantity derived from `p_yes` enters
+the computation.
+
+**N rule.** With the frozen mean judgment length `L = 3,002.4783024017465` tokens (PREREG-3 §2.3) and a
+**15% safety margin**:
+
+```
+T(n) = 2 * n * L * 1.15 / (r * 3600)          GPU-hours, pilot included
+N    = min(4226, max { n in [200, 4226] : T(n) <= 12 })
+```
+
+`N` is the largest seeded prefix whose predicted token time plus the 15% margin fits the 12 GPU-h cap.
+If `T(200) > 12`, the study stops at the pilot and reports the rate; N is not invented below the
+registered minimum. If `N = 4226`, the whole registered sample runs. The rule reads throughput only;
+it may not be changed after any score is seen.
+
+**Consequences fixed now.** The main run scores pairs `200..N-1` (the pilot's 200 are reused from the
+sealed shard), in checkpointed chunks of at most 9 h, with shard hashes verified after each chunk. The
+pilot's throughput and token counts are reported as soon as measured; the sealed scores stay unopened
+until the main run completes. Every session is logged in `KAGGLE_QUOTA_LOG.md`.
