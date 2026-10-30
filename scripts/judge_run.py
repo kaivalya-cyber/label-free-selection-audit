@@ -41,6 +41,11 @@ def find_bundle(explicit: str | None) -> Path:
         return Path(explicit)
     if BUNDLE_KAGGLE.is_dir():
         return BUNDLE_KAGGLE
+    # Newer Kaggle mounts datasets under /kaggle/input/datasets/<owner>/<slug>.
+    hits = sorted(glob.glob("/kaggle/input/**/judge_run.py", recursive=True),
+                  key=len)
+    if hits:
+        return Path(hits[0]).parent
     return BUNDLE_FALLBACK
 
 

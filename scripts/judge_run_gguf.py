@@ -154,8 +154,13 @@ def main() -> None:
     manifest = json.loads((bundle / "manifest.json").read_text())
     pairs = pd.read_parquet(bundle / "pairs.parquet")
     attempts = pd.read_parquet(bundle / "attempts.parquet")
-    key_pairs = "pilot_pairs_sha256" if args.mode == "pilot" else "pairs_sha256"
-    key_attempts = "pilot_attempts_sha256" if args.mode == "pilot" else "attempts_sha256"
+    # One dataset serves both modes: the pilot selects the first 200 pairs from the full frozen
+    # file. Hash the whole file, not the selected prefix. A dedicated pilot bundle (200 rows)
+    # instead carries the pilot_* hashes.
+    key_pairs = ("pairs_sha256" if len(pairs) == manifest.get("pair_sample")
+                 else "pilot_pairs_sha256")
+    key_attempts = ("attempts_sha256" if len(attempts) == manifest.get("distinct_attempts")
+                    else "pilot_attempts_sha256")
     assert sha256_file(bundle / "pairs.parquet") == manifest[key_pairs], "pair file hash mismatch"
     assert sha256_file(bundle / "attempts.parquet") == manifest[key_attempts], \
         "attempt file hash mismatch"

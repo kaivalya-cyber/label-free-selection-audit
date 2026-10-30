@@ -1,0 +1,11 @@
+{
+ "pilot_rate_tok_s": 993.923,
+ "pilot_real_tokens": 1452435,
+ "pilot_prefill_s": 1461.316,
+ "pilot_attempts": 388,
+ "mean_judgment_tokens_frozen": 3002.4783024017465,
+ "n": 4226,
+ "predicted_total_gpu_h": 8.156,
+ "predicted_main_gpu_h": 7.77,
+ "formula": "D12: 2*n*3002.4783024017465*1.15/(r*3600)"
+}
