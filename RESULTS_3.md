@@ -62,10 +62,11 @@ GPU time was **8.16 h** (main 7.77 h), inside the 12 h cap. The actual split was
 |---:|---|---:|---|
 | **0.5786** | **0.5587–0.5987** | **0.0010** | **SIGNIFICANT+** |
 
-At 0.5786 the judge is 6.6 pp above B2’s own-test 0.5125 and 0.2 pp above the free exit-reason
-signal (0.5764 on B2’s frame, 0.5576 on these pairs); the paired judge−exit difference is +0.0209
+At 0.5786 the judge is 6.6 pp above B2’s own-test 0.5125. On these pairs the free exit-reason
+signal is 0.5576, so the judge is 2.1 pp above it; the paired judge−exit difference is +0.0209
 (95% CI +0.0025 to +0.0411, p = 0.027), so the judge adds a small but detectable amount beyond exit
-status. It is not a replacement for execution: a 0.579 AUROC still misorders about 42% of the
+status. (B2’s 0.5764 exit value came from a different pair frame and is not the same-pair
+comparison.) It is not a replacement for execution: a 0.579 AUROC still misorders about 42% of the
 mixed-label pairs.
 
 ## 4. Comparison signals (same pairs)
