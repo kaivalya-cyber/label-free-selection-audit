@@ -269,3 +269,21 @@ it may not be changed after any score is seen.
 sealed shard), in checkpointed chunks of at most 9 h, with shard hashes verified after each chunk. The
 pilot's throughput and token counts are reported as soon as measured; the sealed scores stay unopened
 until the main run completes. Every session is logged in `KAGGLE_QUOTA_LOG.md`.
+
+## D13 — the rendered prompt's no-thinking suffix (2026-10-29) **[pre-evaluation]**
+
+Found while checking the Gemma 4 chat template, before the pilot. `PREREG-3` §3.2 describes the
+template as ending at `<|turn>model\n`. That is the **thinking-enabled** rendering. The template's
+`enable_thinking` default is false, and with thinking disabled it closes the model turn with the empty
+thought block:
+
+```
+<|turn>model\n<|channel>thought\n<channel|>
+```
+
+The runner passes `enable_thinking=False` explicitly and reads the YES/NO logits at the **next**
+position, i.e. the first token after `<channel|>`. This is the only rendering consistent with
+PREREG-3's "no generation, no chain of thought"; the prompt's instruction text, answer cue, model,
+truncation rule and comparison signals are unchanged. The runner asserts the suffix and records the
+rendered prompt's sha256 per attempt, so any template drift is visible in the shard. No judge output
+exists at this entry.
