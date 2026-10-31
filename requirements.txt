@@ -5,5 +5,6 @@ pyarrow
 pandas
 numpy
 scipy
+matplotlib>=3.7
 pytest
 tokenizers>=0.20

@@ -5,3 +5,8 @@ __pycache__/
 data/
 out/
 logs/
+build/
+paper.aux
+paper.bbl
+paper.blg
+paper.log

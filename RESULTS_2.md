@@ -141,7 +141,7 @@ The own-test signal is flat inside both exit reasons; the exit reason itself is 
 | largest cluster, then own-test | 49.3% | +1.154pp | [+0.567, +1.776] | <0.001 |
 | own-test, null = 0 (E2, EXPLORATORY) | 49.0% | +0.871pp | [+0.203, +1.527] | 0.015 |
 
-Paired against agreement-only: own-test +0.764pp (CI [-0.086, +1.686], p=0.092); combined +1.026pp (CI [+0.223, +1.949], p=0.011); E2 +0.742pp (p=0.106).
+Paired against agreement-only: own-test +0.764pp (CI [-0.086, +1.686], p=0.092); combined +1.026pp (CI [+0.223, +1.949], p=0.011); E2 null→0 minus agreement +0.742pp (p=0.106).
 
 **Frame discrepancy, reported not reconciled.** PREREG-2 §4's table says 11,611 pairs over 943 issues. That count is reproducible, but only under two conditions the §4 sentence does not state: `scripts/b4_cost_probe.py` counted pos×neg over each issue's **full pool** of attempts and used its last column, **`gen_tests_correct`**. Full pool / gen = 11,611 / 943; full pool / own-test = 11,614 / 942; frozen K=8 sample / own-test = 4,226 / 754. B2 follows §4's definition, so its power is lower than the table implies. No threshold or quantity changed (DEVIATIONS D9).
 

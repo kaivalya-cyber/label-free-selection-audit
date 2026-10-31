@@ -39,4 +39,7 @@ $PY scripts/posthoc_diagnostics.py       # DEVIATIONS D5 (post-hoc, descriptive 
 echo "== render KILL_TEST.md =="
 $PY scripts/render_kill_test.py
 
-echo "done. numbers: results/*.json results/*.csv ; prose: DATA_RECON.md PREREG.md KILL_TEST.md"
+echo "== paper figures and tables (cached JSONs only) =="
+$PY notebook_regenerate.py
+
+echo "done. numbers: results/*.json results/*.csv ; prose: DATA_RECON.md PREREG.md KILL_TEST.md ; paper: paper.md paper.pdf figures/ tables/"

@@ -1,0 +1,19 @@
+{
+  "fig1_design.pdf": "740b2aa48c418a78ec481065f65f3aa6e466c9a404a992f636a6aa4365f32436",
+  "fig1_design.png": "bb4096e5c82e7f9cb4636a756e81b896f4de9483e953a9bbbd9422a55722000b",
+  "fig2_selection_gap.pdf": "89cb3bdc67e4e244311ec2dbee30dd0567d15b670b449d22e34e08de856ded50",
+  "fig2_selection_gap.png": "775c8a4dca91e49c16639ac5912075e6bdbbd3be573a5e9f4b916b59f4691005",
+  "fig3_fixed_budget.pdf": "48b519a7182e73d66f1b0dfa16953f75949310ec07dc569f58ce977e295ed3e0",
+  "fig3_fixed_budget.png": "22207a5952612f9db25e002cade0b854f25fcd2dd923cf5451cec27ce7ae4769",
+  "fig4_icc.pdf": "e5e944f0cf2d2ec15a5d3e6bf471f2dc17d5e311bcffdf5a47ecc9ba8f19fefb",
+  "fig4_icc.png": "3ea91faf6fd20d8402581cafa8732badadbce5a5088f0e2aea79e433c71a7492",
+  "fig5_auroc.pdf": "cac1dd88e056d5342c46bf878cc39dc8092a0ab2ec8a6ab67e62e9732d540571",
+  "fig5_auroc.png": "00c06b64ba7c672ad5ec8ffc09b36448c5f018b984743f0c3f6ed00c71fc2690",
+  "fig6_certification.pdf": "186b31d7a50e636ba590c7ab2fc3ca7f801bac30c811c9b6627a1c9c63a93edf",
+  "fig6_certification.png": "17659abc40279b9c837b4cb7b861e795a08d511cbfd4abf458a6ecfca456032e",
+  "source:b2_within_issue_auroc.json": "8c7152a7050d66dc4388581af66b8fbb569cdda98b4f2945b4cda09edf52cf3b",
+  "source:b3_crossfit_certification.json": "0d348ec924081bd3f34102cde2e3e589d4583f7efb1a4635d7308f5cd60f6cf4",
+  "source:config_metadata.json": "0dc0d08c4c344123470998e2b719ae3d07140fcd7184864d17ce94a6504a5b28",
+  "source:descriptive_tables.json": "914b2a42473401140bb73e48d88f89298bbd7cfa54e602ddc971c9c458f0a3ce",
+  "source:judge_analysis.json": "2ba5a4ccbf4d1504886c592b36e15c25b11755e98e4678e4cd545cb67e390d0c"
+}

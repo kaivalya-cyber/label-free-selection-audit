@@ -1,0 +1,124 @@
+{
+  "source": "RESULTS_2.md policy-model table, checked against the dataset cards; issue counts are not stored here",
+  "note": "Metadata only. No outcome, signal, or estimate is stored in this file.",
+  "corpora": {
+    "nebius": {
+      "dataset": "nebius/SWE-rebench-openhands-trajectories",
+      "url": "https://huggingface.co/datasets/nebius/SWE-rebench-openhands-trajectories"
+    },
+    "nvidia": {
+      "dataset": "nvidia/Open-SWE-Traces",
+      "url": "https://huggingface.co/datasets/nvidia/Open-SWE-Traces"
+    }
+  },
+  "arms": {
+    "nebius_openhands": {
+      "label": "Nebius K=3",
+      "short": "Nebius",
+      "corpus": "nebius",
+      "agent": "OpenHands v0.54.0",
+      "benchmark": "SWE-rebench",
+      "policy": "Qwen3-Coder-480B-A35B-Instruct",
+      "k": 3
+    },
+    "v1.0_openhands_minimax_m25_swe-rebench-v2": {
+      "label": "v1.0 OH / MiniMax-M2.5",
+      "short": "v1.0 OH/M2.5",
+      "corpus": "nvidia",
+      "agent": "OpenHands v0.53.0",
+      "benchmark": "SWE-rebench V2",
+      "policy": "MiniMax-M2.5",
+      "k": 3
+    },
+    "v1.0_openhands_qwen35_122b_swe-rebench-v2": {
+      "label": "v1.0 OH / Qwen3.5-122B",
+      "short": "v1.0 OH/Q3.5",
+      "corpus": "nvidia",
+      "agent": "OpenHands v0.53.0",
+      "benchmark": "SWE-rebench V2",
+      "policy": "Qwen3.5-122B-A10B",
+      "k": 3
+    },
+    "v1.0_sweagent_minimax_m25_swe-rebench-v2": {
+      "label": "v1.0 SWE / MiniMax-M2.5",
+      "short": "v1.0 SWE/M2.5",
+      "corpus": "nvidia",
+      "agent": "SWE-agent (v1.0)",
+      "benchmark": "SWE-rebench V2",
+      "policy": "MiniMax-M2.5",
+      "k": 3
+    },
+    "v1.0_sweagent_qwen35_122b_swe-rebench-v2": {
+      "label": "v1.0 SWE / Qwen3.5-122B",
+      "short": "v1.0 SWE/Q3.5",
+      "corpus": "nvidia",
+      "agent": "SWE-agent (v1.0)",
+      "benchmark": "SWE-rebench V2",
+      "policy": "Qwen3.5-122B-A10B",
+      "k": 3
+    },
+    "v1.1_minisweagent_qwen36_27b_scale-swe": {
+      "label": "v1.1 mini / Qwen3.6 · Scale",
+      "short": "v1.1 mini/Q3.6 S",
+      "corpus": "nvidia",
+      "agent": "mini-swe-agent",
+      "benchmark": "Scale-SWE",
+      "policy": "Qwen3.6-27B",
+      "k": 3
+    },
+    "v1.1_minisweagent_qwen36_27b_swe-rebench-v2": {
+      "label": "v1.1 mini / Qwen3.6 · SRB2",
+      "short": "v1.1 mini/Q3.6 R",
+      "corpus": "nvidia",
+      "agent": "mini-swe-agent",
+      "benchmark": "SWE-rebench V2",
+      "policy": "Qwen3.6-27B",
+      "k": 3
+    },
+    "v1.1_sweagent_qwen36_27b_scale-swe": {
+      "label": "v1.1 SWE / Qwen3.6 · Scale",
+      "short": "v1.1 SWE/Q3.6 S",
+      "corpus": "nvidia",
+      "agent": "SWE-agent",
+      "benchmark": "Scale-SWE",
+      "policy": "Qwen3.6-27B",
+      "k": 3
+    },
+    "v1.1_sweagent_qwen36_27b_swe-rebench-v2": {
+      "label": "v1.1 SWE / Qwen3.6 · SRB2",
+      "short": "v1.1 SWE/Q3.6 R",
+      "corpus": "nvidia",
+      "agent": "SWE-agent",
+      "benchmark": "SWE-rebench V2",
+      "policy": "Qwen3.6-27B",
+      "k": 3
+    },
+    "v1.2_minisweagent_qwen38_27b_scale-swe": {
+      "label": "v1.2 mini / Qwen3.8 · Scale",
+      "short": "v1.2 mini/Q3.8 S",
+      "corpus": "nvidia",
+      "agent": "mini-swe-agent",
+      "benchmark": "Scale-SWE",
+      "policy": "Qwen3.8-27B",
+      "k": 3
+    },
+    "v1.2_minisweagent_qwen38_27b_swe-rebench-v2": {
+      "label": "v1.2 mini / Qwen3.8 · SRB2",
+      "short": "v1.2 mini/Q3.8 R",
+      "corpus": "nvidia",
+      "agent": "mini-swe-agent",
+      "benchmark": "SWE-rebench V2",
+      "policy": "Qwen3.8-27B",
+      "k": 3
+    },
+    "nebius_openhands@K8": {
+      "label": "Nebius K=8",
+      "short": "Nebius K=8",
+      "corpus": "nebius",
+      "agent": "OpenHands v0.54.0",
+      "benchmark": "SWE-rebench",
+      "policy": "Qwen3-Coder-480B-A35B-Instruct",
+      "k": 8
+    }
+  }
+}
