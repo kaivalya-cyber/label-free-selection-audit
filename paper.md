@@ -91,7 +91,7 @@ B3 compares cross-fit and agreement with identical machinery: 2/11, 10/11, 11/11
 
 ## B4 and B5: stopping early does not buy accuracy
 
-B4 is 8+/3− at K=3 (p = 0.227), no Holm survivor; the largest negative arm is −0.075 pp (−0.124 to −0.022; raw 0.009, Holm 0.099), mean attempts 2.886–2.956/3. There is no detectable effect, CI [−0.124, +0.022]. K=8 is +0.096 (0.010–0.181, p = 0.039), but an interpolation artifact: the trigger fires only when the first two patches agree, so `r_ad = f(8)`, and Δ is the corner between f(7) and f(8).
+B4 is 8+/3− at K=3 (p = 0.227), no Holm survivor; the largest negative arm is −0.075 pp (−0.124 to −0.022; raw 0.009, Holm 0.099), mean attempts 2.886–2.956/3. That arm's raw interval excludes zero, but it does not survive the family correction; the family shows no detectable effect (sign test p = 0.227). K=8 is +0.096 (0.010–0.181, p = 0.039), but an interpolation artifact: the trigger fires only when the first two patches agree, so `r_ad = f(8)`, and Δ is the corner between f(7) and f(8).
 
 B5 stops at the first own-test pass (null never stops), else K_max = 8: 3.443/8 attempts (43%), 47.8% vs 48.0%, Δ = −0.148 (−0.980 to +0.640, p = 0.740). At matched cost there is no detectable difference; B5 is not a compute saving.
 

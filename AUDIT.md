@@ -73,7 +73,7 @@ precision printed.
 | 55 | Results 4.4 | B4 8+/3−, p = 0.227 | C70 | Y |
 | 56 | Results 4.4 | −0.075 pp (−0.124 to −0.022), raw 0.009, Holm 0.099 | C70; `results/b4_adaptive_stopping.json` | Y |
 | 57 | Results 4.4 | mean attempts 2.886–2.956 of 3 | C70 | Y |
-| 58 | Results 4.4 | no detectable effect, CI [−0.124, +0.022] | C70; `results/b4_adaptive_stopping.json` | Y |
+| 58 | Results 4.4 | no detectable family effect (p = 0.227); negative arm −0.124 to −0.022, raw 0.009, Holm 0.099 | C70; `results/b4_adaptive_stopping.json` | Y |
 | 59 | Results 4.4 | K=8 +0.096 (0.010–0.181), p = 0.039 | C71 | Y |
 | 60 | Results 4.4 | B5 3.443/8 (43%), 47.8% vs 48.0%, Δ −0.148 (−0.980 to +0.640), p = 0.740 | C72; C86 for 43% | Y |
 | 61 | Table 1 | all values repeat rows 47–60 | C61–C72 | Y |
@@ -130,15 +130,15 @@ and tables):
 
 | Part | Words |
 |---|---:|
-| Body prose | 2,278 |
+| Body prose | 2,294 |
 | Abstract | 169 |
 | Figure captions | 217 |
 | Table text | 289 |
-| Body + abstract | 2,447 |
-| **With captions and tables** | **2,953** |
+| Body + abstract | 2,463 |
+| **With captions and tables** | **2,969** |
 
-Limit 2,990; headroom 37 words. The requested body target was ~2,530, so the
-body is 252 words under that target while captions and tables are 56 over their
+Limit 2,990; headroom 21 words. The requested body target was ~2,530, so the
+body is 236 words under that target while captions and tables are 56 over their
 ~450 target. The hard cap is met. References are excluded and are not counted.
 
 ## 4. Language-rule checklist
@@ -151,7 +151,7 @@ body is 252 words under that target while captions and tables are 56 over their
 | B3 is not blind | §4.2: "This is strong for a signal that is neither free nor blind: the count existed before PREREG-2, and deploying it requires evaluating the other K−1 attempts." |
 | Name the policy model for every corpus/config; no claim for "local models" beyond them | §3.1 and Table 3: every arm has a policy; "No agent policy is a local model; only the judge is local." |
 | Judge is Q4_0 GGUF via llama.cpp, not NF4 and not the 31B model; say why | §5: "**Gemma 4 26B-A4B, QAT Q4_0, via llama.cpp** … not the pre-registered NF4 estimator and not the 31B model… Standard bitsandbytes NF4 leaves the 3-D expert tensors … unquantised… D14 substituted the official QAT Q4_0 GGUF." |
-| Say "no detectable effect, CI [a, b]", not "no effect" | §4.4: "There is no detectable effect, CI [−0.124, +0.022]." B5: "no detectable difference" with Δ and CI. "No effect" does not appear. |
+| Say "no detectable effect, CI [a, b]", not "no effect" | §4.4: the negative arm's interval and raw/Holm p are printed, then "the family shows no detectable effect (sign test p = 0.227)". B5: "no detectable difference" with Δ and CI. "No effect" does not appear. |
 | Report D9 mismatches and tie-break sensitivity (up to 1.83 pp) in Limitations | §6: "The rules choose different representatives in 18.2–20.3% … and full-budget resolve moves by −1.83 to +1.08 pp." |
 | Limitations: published labels not recomputed | §6 first paragraph: "Labels are published, not recomputed. Flaky tests and harness errors are inherited." |
 | Limitations: NVIDIA sampling rule undocumented | §6: "NVIDIA's sampling rule is undocumented, 1–3 trajectories per issue with no stated rule." |
@@ -175,16 +175,17 @@ body is 252 words under that target while captions and tables are 56 over their
 | Fig. 6 | Certification counts at 0.05/0.10/0.20, agreement vs cross-fit, NO-COVERAGE hatched, K=8 note. |
 | Tables 1–3 | Rebuilt by `notebook_regenerate.py`; values match §1 and the paper's Markdown tables. |
 | Clean-room test | Copied `notebook_regenerate.py`, `scripts/make_figures.py` and `results/*.json` to `/tmp/clean_regen`, ran with no working-directory assumptions; all six PNGs and three tables produced. PNG bytes are identical to the repo copies; PDF bytes differ only in the embedded creation timestamp. |
-| Word count | `scripts/count_paper_words.py` exits 0 at 2,953/2,990. |
+| Word count | `scripts/count_paper_words.py` exits 0 at 2,969/2,990. |
 
 ## 6. Discrepancies and corrections
 
 1. **Prompt vs files: NF4.** The task text says the judge is "26B-A4B (NF4) only." D14 and `RESULTS_3.md` record that bitsandbytes NF4 leaves the 3-D MoE expert tensors unquantised and does not fit on 2×T4; the executed estimator is the official QAT **Q4_0 GGUF** via llama.cpp. The paper discloses this in §5 and does not call the result an NF4 run. **Files win.**
 2. **Ledger C67 mislabelled E2.** The ledger said "E2 +0.742pp (p = 0.106)". `results/b2_within_issue_auroc.json` gives E2 null→0 = +0.871pp (0.203–1.527, p = 0.015); +0.742pp is E2 null→0 **minus agreement**. C67 and the RESULTS_2 sentence were corrected; no result number changed.
 3. **Removed unsourced paper numbers.** The draft quoted median `p_yes` 0.817 (present only in WEAKNESSES.md) and 26.1% patch truncation (present in RESULTS_3 prose, not in a result JSON). Both were removed from `paper.md`; the truncation split and the claim that truncation affects a substantial minority remain, sourced to C83.
-4. **Word target.** Requested body ~2,530; actual body 2,278. Total with abstract, captions and tables is 2,953, under the 2,990 hard cap. The paper chose the hard cap over the body target.
+4. **Word target.** Requested body ~2,530; actual body 2,294. Total with abstract, captions and tables is 2,969, under the 2,990 hard cap. The paper chose the hard cap over the body target.
 5. **"Tight null" for own tests.** The orientation text calls the own-test result a "tight null"; the CI is 0.4973–0.5286, which includes 0.5 but is not tight. The paper says "do not separate pairs" and "indistinguishable from chance", not "tight null".
 6. **JUDGE median/truncation percentages.** The WEAKNESSES/RESULTS_3 prose still contains the removed values; they are descriptive and are not used in the paper. No frozen result was altered.
+7. **B4 wording corrected during audit.** The first draft attached the negative arm's interval [−0.124, −0.022] to a family-level "no detectable effect". That interval excludes zero (raw p = 0.009), so the sentence was wrong; it now reports the arm's raw interval and Holm failure separately from the family sign test (p = 0.227). No number changed.
 
 No numeric discrepancy remains between `paper.md` and the result JSONs after
 these corrections.
@@ -227,8 +228,8 @@ the pre-registrations and listed separately in §2.
 
 ## 9. Verification performed
 
-- `python scripts/build_paper.py` — exit 0; 9-page PDF, 630,078 bytes.
-- `python scripts/count_paper_words.py` — exit 0; 2,953/2,990.
+- `python scripts/build_paper.py` — exit 0; 9-page PDF, 630,249 bytes.
+- `python scripts/count_paper_words.py` — exit 0; 2,969/2,990.
 - `.venv/bin/python -m pytest tests -q` — 43 passed.
 - `python notebook_regenerate.py` — 6 figures + 3 tables written.
 - Clean-room run in `/tmp/clean_regen` — exit 0; PNGs byte-identical to repo.

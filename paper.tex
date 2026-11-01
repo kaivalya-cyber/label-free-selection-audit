@@ -392,10 +392,12 @@ accuracy}\label{b4-and-b5-stopping-early-does-not-buy-accuracy}
 
 B4 is 8+/3− at K=3 (p = 0.227), no Holm survivor; the largest negative
 arm is −0.075 pp (−0.124 to −0.022; raw 0.009, Holm 0.099), mean
-attempts 2.886--2.956/3. There is no detectable effect, CI {[}−0.124,
-+0.022{]}. K=8 is +0.096 (0.010--0.181, p = 0.039), but an interpolation
-artifact: the trigger fires only when the first two patches agree, so
-\texttt{r\_ad\ =\ f(8)}, and Δ is the corner between f(7) and f(8).
+attempts 2.886--2.956/3. That arm's raw interval excludes zero, but it
+does not survive the family correction; the family shows no detectable
+effect (sign test p = 0.227). K=8 is +0.096 (0.010--0.181, p = 0.039),
+but an interpolation artifact: the trigger fires only when the first two
+patches agree, so \texttt{r\_ad\ =\ f(8)}, and Δ is the corner between
+f(7) and f(8).
 
 B5 stops at the first own-test pass (null never stops), else K\_max = 8:
 3.443/8 attempts (43\%), 47.8\% vs 48.0\%, Δ = −0.148 (−0.980 to +0.640,
