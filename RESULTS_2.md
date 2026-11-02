@@ -143,7 +143,9 @@ The own-test signal is flat inside both exit reasons; the exit reason itself is 
 
 Paired against agreement-only: own-test +0.764pp (CI [-0.086, +1.686], p=0.092); combined +1.026pp (CI [+0.223, +1.949], p=0.011); E2 null→0 minus agreement +0.742pp (p=0.106).
 
-**Frame discrepancy, reported not reconciled.** PREREG-2 §4's table says 11,611 pairs over 943 issues. That count is reproducible, but only under two conditions the §4 sentence does not state: `scripts/b4_cost_probe.py` counted pos×neg over each issue's **full pool** of attempts and used its last column, **`gen_tests_correct`**. Full pool / gen = 11,611 / 943; full pool / own-test = 11,614 / 942; frozen K=8 sample / own-test = 4,226 / 754. B2 follows §4's definition, so its power is lower than the table implies. No threshold or quantity changed (DEVIATIONS D9).
+*EXPLORATORY — full availability (D17/D18).* Restricting to the 226 issues (150 repos) where all eight attempts have a non-null own-test result, the own-test selection lift is **−0.22pp** (95% CI [−4.04, +3.76], p = 0.977), versus +0.892pp pooled. The interval cannot exclude the pooled lift, and the minimum detectable effect at this sample is about 5.6pp at 80% power, so the availability question is open; no primary quantity changes.
+
+**Frame discrepancy, reported not reconciled.** PREREG-2 §4's table says 11,611 pairs over 943 issues. That count is reproducible, but only under two conditions the §4 sentence does not state: `scripts/b4_cost_probe.py` counted pos×neg over each issue's **full pool** of attempts and used its last column, **`gen_tests_correct`**. Full pool / gen = 11,611 / 943; full pool / own-test = 11,614 / 942; frozen K=8 sample / own-test = 4,226 / 754. B2 follows §4's definition, so its power is lower than the table implies. No threshold or quantity changed (DEVIATIONS D9.1).
 
 ## 4. B3 — cross-fit difficulty certification
 
@@ -246,13 +248,13 @@ nebius@K8: f(1)=47.6%, f(2)=48.0%, f(3)=48.1%, f(4)=47.8%, f(5)=48.0%, f(6)=48.0
 | B5 own-test stop | 3.443 | 47.8% | 48.0% | -0.148pp | [-0.980, +0.640] | 0.740 | NOT SIGNIFICANT |
 | B4 seq_first2 (same arm) | 7.768 | 48.3% | 48.2% | +0.096pp | [+0.010, +0.181] | 0.039 | — |
 
-B5 cuts the budget from 8 attempts to 3.44 (43%) with a resolve rate statistically indistinguishable from fixed-k at that budget. It is the only one of the four analyses whose point estimate is a large practical saving; it is exploratory because it was registered in D8, after the Part-A look at the same corpus.
+B5 cuts the budget from 8 attempts to 3.44 (43%) with a resolve rate statistically indistinguishable from fixed-k at that budget. It is the only one of the four analyses whose point estimate is a large practical saving; it is exploratory because it was registered in D8, after the kill test on the same corpus.
 
 ## 6. Concerns
 
 1. **The agreement story does not survive as a selection rule.** B1's lift is null in every arm but one, and that one is negative. Whatever agreement measures at the config level, it does not pick a better-than-random attempt *within* an issue.
 2. **B2's own-test signal is not significant where it was pre-registered.** The AUROC is 0.513 with a CI that includes 0.5. Its secondary selection lift is positive (+0.892pp, p = 0.005), but that is a report-only quantity on the same data; the two are not the same estimand and the positive one is not the pre-registered test.
-3. **B2's power is lower than the prereg's table implies** — 4,226 pairs over 754 issues, not 11,611 over 943 (D9). A true AUROC of 0.52 would often fail to separate at this n.
+3. **B2's power is lower than the prereg's table implies** — 4,226 pairs over 754 issues, not 11,611 over 943 (D9.1). A true AUROC of 0.52 would often fail to separate at this n.
 4. **B3 is a strong result for a signal that is not free.** It needs the labels of the other K−1 attempts, i.e. running the evaluation harness on them first. It also inherits the kill test's unit labels, including the tie-break issue below.
 5. **B4's K=8 “SIGNIFICANT+” is interpolation, not evidence.** `r_ad` equals `f(8)` exactly: the stop-at-2 trigger fires only when the two patches already agree, so the D1 submission is unchanged and continuing buys nothing. The positive Δ is `f_interp` cutting the corner below a step in `f`. At K=3 the same mechanism gives Δ ≈ 0.01pp because the saving is 0.11 of an attempt.
 6. **D1's tie-break was not the one implemented.** `scripts/kill_test.py::build_units` breaks equal-size cluster ties by the lexicographically smallest canonical form, not by the smallest `trajectory_id` as DEVIATIONS D1 says. B4 uses the documented rule, so its f(K) is not the kill test's `resolved_rate`; the audit shows the rules pick a different representative in 18.2–20.3% of K=3 issues and 8.4% of K=8 issues, and the arm-level full-budget resolve rate moves by −1.83 to +1.08pp (nebius K=3 +0.48pp; nebius K=8 +1.09pp). The kill test's frozen numbers are unchanged and are what KILL_TEST.md reports; this is a documentation mismatch in an already-run endpoint, not a re-analysis.
@@ -276,9 +278,9 @@ B5 cuts the budget from 8 attempts to 3.44 (43%) with a resolve rate statistical
 
 ### 8.1 Selection baselines per arm
 
-`pass@1` is the mean of `resolved` over the sampled attempts; with a balanced K it equals the issue-level `random-K` baseline of §2, so the same number appears there. `selected` is the DEVIATIONS D1 rule (largest canonical cluster; equal-size ties by the smallest `trajectory_id` inside the cluster). The second selected column is the tie-break `scripts/kill_test.py` actually implements (smallest canonical string among the top clusters); it is also the rule behind `kill_test.json`'s `resolved_rate` (DEVIATIONS D9). `gap = oracle − selected`: the headroom a rule would gain from knowing in advance which sampled attempt resolves. It is a ceiling, not a deployable rule.
+`pass@1` is the mean of `resolved` over the sampled attempts; with a balanced K it equals the issue-level `random-K` baseline of §2, so the same number appears there. `selected` is the DEVIATIONS D1 rule (largest canonical cluster; equal-size ties by the smallest `trajectory_id` inside the cluster). The second selected column is the tie-break `scripts/kill_test.py` actually implements (smallest canonical string among the top clusters); it is also the rule behind `kill_test.json`'s `resolved_rate` (DEVIATIONS D9.2). `gap = oracle − selected`: the headroom a rule would gain from knowing in advance which sampled attempt resolves. It is a ceiling, not a deployable rule.
 
-| config | issues | pass@1 | selected (D1) | oracle pass@K | gap (D1) | selected (kill-test, D9) | gap (kill-test) |
+| config | issues | pass@1 | selected (D1) | oracle pass@K | gap (D1) | selected (kill-test, D9.2) | gap (kill-test) |
 |---|---|---|---|---|---|---|---|
 | nebius_openhands | 6063 | 47.55% | 47.52% | 55.09% | +7.57pp | 47.04% | +8.05pp |
 | v1.0_openhands_minimax_m25 · srb2 | 7463 | 46.04% | 46.34% | 52.39% | +6.06pp | 45.80% | +6.59pp |

@@ -1,7 +1,7 @@
 """DESCRIPTIVE tables for RESULTS_2.md — no hypothesis tests, no verdicts.
 
 (a) per arm: pass@1 over the sampled attempts, the agreement-selected resolve rate (DEVIATIONS D1
-    rule, plus the `kill_test.py` tie-break as the D9 sensitivity), oracle pass@K, and the
+    rule, plus the `kill_test.py` tie-break as the D9.2 sensitivity), oracle pass@K, and the
     selection gap (= oracle − selected);
 (b) per arm: the intraclass correlation of `resolved` with issue as the group (one-way random
     effects ANOVA, ICC(1)), with a repo-clustered bootstrap CI;
@@ -137,7 +137,7 @@ def main():
            "rules": {
                "primary": "DEVIATIONS D1: largest canonical cluster; equal-size ties by the "
                           "smallest trajectory_id in the cluster; representative = that id.",
-               "sensitivity": "DEVIATIONS D9: the tie-break actually implemented in "
+               "sensitivity": "DEVIATIONS D9.2: the tie-break actually implemented in "
                               "scripts/kill_test.py::build_units (smallest canonical string among "
                               "the top clusters, then smallest id); this is also the rule behind "
                               "kill_test.json's resolved_rate."},

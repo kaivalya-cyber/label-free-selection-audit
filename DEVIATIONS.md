@@ -166,11 +166,16 @@ per-signal seed.
 
 ## D9 — Part-C reporting notes: three discrepancies found while running B1–B4 (2026-10-27) **[post-evaluation, reporting only]**
 
-Written after the single B1–B4 run. None of these changes a quantity, threshold, frame, seed or
-verdict; each is a mismatch between a pre-registration sentence and what the code or arithmetic
-actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §6.
+Written after the single B1–B4 run. None of them changed a reported frozen result, but D9.2 means the
+kill test and B3 used a tie-break other than the frozen text (smallest `trajectory_id`). Each is a
+mismatch between a pre-registration sentence and what the code or arithmetic actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §6. Each item carries
+its own sub-identifier so that one identifier names one item: **D9.1** B2's pair frame, **D9.2** the
+kill test's cluster tie-break, **D9.3** the sign-test threshold. What changed in each case is a
+sentence in a document; no reported frozen result changed, but D9.2 means the kill test and B3 used a
+tie-break other than the frozen text (smallest `trajectory_id`), and full-budget resolve moves by
+−1.83 to +1.08 pp between the two rules.
 
-1. **B2's pair frame is not the frame its own table describes.** PREREG-2 §4 cites 11,611 pairs over
+1. **D9.1 — B2's pair frame is not the frame its own table describes.** PREREG-2 §4 cites 11,611 pairs over
    943 issues. Those numbers reproduce exactly, but only because `scripts/b4_cost_probe.py`
    (a) counted pos×neg over each issue's **full pool** of attempts rather than the frozen K=8 sample
    §4 defines, and (b) used its last argument column, **`gen_tests_correct`**, not the primary
@@ -178,9 +183,10 @@ actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §
    own-test = 11,614 / 942; frozen K=8 sample / own-test = **4,226 pairs / 754 issues**. B2 follows
    §4's definition, so its power is lower than the table implies (95% CI half-width ≈ 0.016 AUROC).
    The `gen_tests_correct` count is also the gold-patch-dependent signal §4 itself says is not
-   deployable.
+   deployable. **Frozen quantities:** the B2 sample (4,226 pairs / 754 issues), its seeds and its
+   decision rule are unchanged; 11,611 / 943 describe a different frame and a different signal.
 
-2. **D1's cluster tie-break is not the one `kill_test.py` implements.** DEVIATIONS D1 says equal-size
+2. **D9.2 — D1's cluster tie-break is not the one `kill_test.py` implements.** DEVIATIONS D1 says equal-size
    clusters are broken by the **smallest `trajectory_id` in the cluster**;
    `scripts/kill_test.py::build_units` instead takes `min(canonical form)` among the top clusters and
    then the smallest id inside it. The two rules pick a different representative in 18.2–20.3% of
@@ -192,12 +198,15 @@ actually does. All three are reported in [RESULTS_2.md](RESULTS_2.md) §3 and §
    twice because of this: the first execution stopped at a sanity assertion that assumed `f(K)`
    equalled the kill test's `resolved_rate`, before it wrote any output and before any B4 quantity was
    read. The analysis code and seeds were unchanged; the reported run is the second, and the
-   assertion is now the tie-break audit in `results/b4_adaptive_stopping.json`.
+   assertion is now the tie-break audit in `results/b4_adaptive_stopping.json`. **Frozen
+   quantities:** the kill test's reported cells, coverage, risk intervals and verdicts are
+   unchanged, and no endpoint was re-run under the documented rule.
 
-3. **Sign-test arithmetic in PREREG-2 §10 bullet 7.** The sentence says a sign test over 11 pairs
+3. **D9.3 — Sign-test arithmetic in PREREG-2 §10 bullet 7.** The sentence says a sign test over 11 pairs
    "cannot reach p < 0.05 unless the split is at least 9–2". Exact two-sided values:
    2·P(Bin(11,½) ≤ 2) = 0.0654 for 9–2, and 2·P(Bin(11,½) ≤ 1) = 0.0117 for 10–1. The threshold is
-   **10–1**. §7's formula is unchanged and is what B1–B4 use; only the illustrative sentence is wrong.
+   **10–1**. **Frozen quantities:** §7's formula is unchanged and is what B1–B4 use; only the
+   illustrative sentence is corrected, and B1/B4 sit at 7–4 and 8–3 either way.
 
 ## D10 — DESCRIPTIVE tables added after the B1–B4 run (2026-10-29) **[post-evaluation, descriptive only]**
 
@@ -209,7 +218,7 @@ fixed-budget curve `f(k)` for every arm in one place.
 - **No hypothesis test, threshold or verdict is computed.** No B1–B4 quantity, frame, seed or
   label convention is re-estimated; the section says so in place.
 - **Both selection tie-breaks are shown.** The primary column is the documented D1 rule; the second
-  is the rule `kill_test.py` actually implements, which is the D9 mismatch. The identity checks
+  is the rule `kill_test.py` actually implements, which is the D9.2 mismatch. The identity checks
   assert that the D1 rate equals B4's `f(K)` exactly and the kill-test rate equals
   `kill_test.json`'s `resolved_rate` exactly (0 mismatches in 12 arms).
 - **ICC(1)** is the one-way random-effects intraclass correlation with issue as the group, on the
@@ -321,3 +330,157 @@ as post-hoc NF4, but this is a different estimator and is stated as a limitation
 
 No judge score, completion or ranking exists at this entry. The pilot is the first GPU use of
 this backend.
+
+## D15 — reporting clarifications after the audit (2026-11-01) **[no quantity changed]**
+
+Three reporting points were clarified without changing a result, sample, threshold or verdict:
+
+1. **Cell count.** There are 99 kill-test cells per label convention: 90 K=3 cells (eight
+   configurations on three splits; three Scale-SWE configurations on two, because they lack
+   `created_at`) plus 9 K=8 cells. The nine K=8 cells are identical across conventions, so the
+   distinct computation count is 90×2 + 9 = 189, not 198. The nominal 12×3×3=108 grid overcounts.
+   `KILL_TEST.md`, `WEAKNESSES.md` and CLAIMS_LEDGER C45 state the composition; no cell was re-run.
+2. **Own-test estimands.** The B2 AUROC (0.5125) is pairwise on mixed-label issues with non-null
+   tests; the +0.892 pp selection lift is a per-issue submit-one rule with null = −1 over all
+   4,580 issues. The paper explains the estimand difference and does not claim an availability
+   mechanism.
+3. **Judge sample.** The judge's 4,226 pairs are a seeded sample of 12,917 mixed-label pairs over
+   1,128 issues; B2's 4,226 are all own-test-eligible pairs over 754 issues. N matches because
+   PREREG-3 fixed it to B2's realised count, not because the samples are the same.
+
+No judge output, analysis or frozen number changed.
+
+## D16 — post-hoc steps orientation and paper counts (2026-11-01) **[post-hoc reporting]**
+
+The review asked for the steps signal to be checked against its code and for the paper's
+issue count to distinguish units from issues. Neither change alters a frozen estimate,
+sample, threshold or verdict.
+
+1. **Steps orientation.** `scripts/b2_within_issue_auroc.py` stores the raw assistant-message
+   count and computes the AUROC on that raw score, so its printed 0.4397 means resolved
+   attempts have *fewer* steps. On the B2 frame the within-issue means are 68.06 steps for
+   resolved versus 70.29 for unresolved attempts (1,160 mixed-label issues), confirming the
+   direction; the post-hoc oriented score is therefore 1 − 0.4397 = 0.5603
+   (0.5351–0.5854). The paper now says the code scores the raw count and gives the oriented
+   value as post-hoc. On the judge's 4,226 pairs the same reversal gives 0.5477
+   (0.5254–0.5687), added to Table 2 as EXPLORATORY. These are transformations of cached
+   attempt scores, not new outcomes or a new endpoint.
+2. **Distinct issues.** The 48,300 pool issues are the union after excluding 204 cross-corpus
+   shared issues; only 41,073 clear the three-attempt floor and enter the sampled frames (D17).
+   Nebius K=8 reuses all 4,580 of its issues from Nebius K=3 and adds none distinct. Computed by
+   `scripts/paper_addenda.py`; `results/paper_addenda.json`.
+3. **Policy size.** Six of the eleven K=3 arms use 27B language models (four Qwen3.6-27B,
+   two Qwen3.8-27B), from `results/config_metadata.json`; both cards report 28B total with
+   the vision encoder. The paper compares them with Gemma 4 26B-A4B and 31B and makes no
+   claim that any policy ran locally.
+
+No judge score, AUROC, sample, threshold or verdict in RESULTS_2.md, RESULTS_3.md or the
+frozen JSONs changed.
+
+## D17 — review reconciliation (2026-11-01) **[reporting only]**
+
+1. **Kill-test cells.** D15 double-counted the nine K=8 cells, which are identical across the two
+   label conventions. The correct accounting is 99 cells per convention (90 K=3 + 9 K=8) and
+   **189 distinct computations** (90×2 + 9), not 198. `KILL_TEST.md`, C45 and the paper now state
+   189; 0 BREAKS is unchanged and no cell was re-run.
+2. **Distinct issues.** The 48,300 figure is the union of the 11 selected configuration pools after
+   excluding 204 shared issues (Nebius 6,102; NVIDIA 42,198; disjoint). Only **41,073** issues clear
+   the three-attempt floor and enter a sampled frame: Nebius K=3 keeps 6,063 (39 issues have fewer
+   than three labels), and the NVIDIA K=3 frames cover 35,010 (7,188 filtered). The 94,341 units are
+   over those 41,073 issues, not over all 48,300. `scripts/paper_addenda.py` asserts every count.
+3. **E1 selection lift.** Stratifying the report-only own-test lift by the exit composition of the
+   eight attempts gives +0.67 pp (95% CI 0.03–1.32, p = 0.044) on 3,299 all-submit issues,
+   +1.39 pp (−0.07–2.93) on 1,239 mixed-exit issues, and +3.27 pp (−5.21–11.61) on 42 all-max
+   issues. The pooled lift is +0.892 pp (0.268–1.519, p = 0.005). The paper no longer claims the
+   lift reflects signal availability; that mechanism was not tested.
+4. **Model cards.** `nvidia/Open-SWE-Traces` names Qwen3.6-27B and Qwen3.8-27B as the v1.1/v1.2
+   policies. Both Qwen cards say 27B for the language model and 28B total with the vision
+   encoder; checked 2026-11-01. URLs are recorded in AUDIT.md §7.
+5. **Word budget.** Rebuilding moved the strictest count to 2,846/2,850 after trimming the nominal
+   108-grid sentence and the future-work sentence in §7.
+
+No judge score, AUROC, sample, threshold or verdict in the frozen JSONs changed.
+
+## D18 — full-availability test and NVIDIA count reconciliation (2026-11-01) **[reporting only]**
+
+1. **Own-test lift under full availability.** Restricting to the 226 issues (150 repos) where all
+   eight attempts carry a non-null own-test result, the per-issue own-test selection lift is
+   **−0.0022 on the fraction scale**, i.e. **−0.22 pp** (95% CI −4.04 to +3.76 pp, p = 0.977),
+   versus +0.0089 (= +0.892 pp) pooled. The interval is too wide to test the pooled effect: the
+   minimum detectable effect here is about 5.6 pp at 80% power, so it cannot exclude +0.892 pp and
+   the availability question stays open rather than answered. This is EXPLORATORY (D17) and changes
+   no frozen B2 quantity; `scripts/paper_addenda.py` writes it to
+   `results/paper_addenda.json` (`e1_selection_lift.fully_available`). The paper's earlier
+   "−0.022 pp" was a ×10 conversion slip in prose, corrected in D19; the JSON was always on the
+   fraction scale.
+2. **NVIDIA's 143-issue gap.** The casefolded NVIDIA total is 42,545. Of these, 42,402 occur in the
+   eleven frozen configurations; 204 of those are shared with Nebius, leaving the 42,198 pool.
+   The dataset has **32 configurations**, 10 of them frozen K=3 arms, so **22** are non-frozen; the
+   remaining **143** issues occur only in those 22. Thus 42,545 − 204 = 42,341, and
+   42,341 − 143 = 42,198. `scripts/paper_addenda.py` asserts 32, 10, 22 and the 143 from
+   `out/nvidia_paths.parquet`; no label or unit changed.
+3. **B2 reduced draw.** The B1–B4 amendment is the reduced-draw deviation recorded as **D9.1**:
+   4,226 pairs / 754 issues in the frozen K=8 sample, not 11,611 / 943 from the pre-registration's
+   full-pool table.
+
+No judge score, AUROC, sample, threshold or verdict in the frozen JSONs changed.
+
+## D19 — revision-4 corrections: scale, power framing, identifiers (2026-11-01) **[reporting only]**
+
+Text and reporting corrections only. No frozen B1–B5, kill-test or judge estimate, sample, seed,
+threshold or verdict changes. `results/paper_addenda.json` is regenerated by
+`scripts/paper_addenda.py` with the same numbers plus a `power` block.
+
+1. **Full-availability scale.** The JSON stores the lift on the fraction scale: −0.0022124 (95% CI
+   −0.0404263 to +0.0375688) on 226 issues / 150 repos, against a pooled +0.0089247. In percentage
+   points that is **−0.22 pp (95% CI −4.04 to +3.76 pp)**, not the −0.022 pp (−0.041 to +0.038) the
+   paper printed: the earlier prose multiplied by 10 instead of 100. The pooled +0.892 pp was already
+   converted correctly, and the code never changed. Every location now prints −0.22 pp.
+2. **Power statement replaces "does not survive".** The percentile CI half-width is 3.90 pp, so the
+   implied SE is 1.99 pp and the minimum detectable effect at 80% power, two-sided α = 0.05, is
+   5.57 pp (≈5.6 pp). The interval cannot exclude the pooled +0.892 pp, so §4.3, §7, Limitations,
+   AUDIT.md, C93, RESULTS_2.md and WEAKNESSES.md now report the value, the interval and the MDE and
+   say the availability question is open; "does not survive" and "no detectable lift" are gone. This
+   is a reporting change, not a new test: estimand, frame, seed and B = 2,000 are unchanged.
+3. **Deviation identifiers.** D9's three items now carry **D9.1** (B2's pair frame), **D9.2** (the
+   kill test's cluster tie-break) and **D9.3** (the sign-test threshold). Every reference in the
+   paper, AUDIT.md, RESULTS_2.md, WEAKNESSES.md, CLAIMS_LEDGER.md and the renderers names the one
+   item it means; no bare D9 is used for a single item.
+4. **NVIDIA non-frozen configurations.** The dataset has 32 configurations, 10 of them frozen K=3
+   arms, so **22** are non-frozen (the text said 21). Verified that all 143 non-frozen-only issues
+   occur in those 22 and in none of the frozen ten; `scripts/paper_addenda.py` asserts 32 / 10 / 22
+   from `out/nvidia_paths.parquet`. The 42,545 / 42,402 / 42,341 / 42,198 counts are unchanged.
+5. **Word budget.** The official limit is 3,000 words under rule 3, with a 2,900 working target. This
+   revision adds the power caveat and trims two duplicated sentences (the Introduction roadmap and a
+   restatement after f(k)). Counts: 2,295 body-only, 2,694 body+captions+tables, **2,898** everything
+   except references.
+6. **Blind review.** AUDIT.md item 22 claimed the track does not require blind review. No rule text
+   for the track is present in this workspace, so the claim is removed rather than quoted; the author
+   name stays.
+
+## D20 — revision-5 reporting corrections (2026-11-02) **[reporting only]**
+
+Seven changes to what the paper and audit say. No frozen estimate, interval, threshold, seed, frame
+or verdict changed.
+
+1. **Signal scope.** Neither corpus records the repository's held-out test result per attempt
+   (AUDIT §1a). Limitations now says own tests are agent-written (`pred_passes_gen_tests`), not the
+   repository suite, and that the conclusions do not cover selection by running it; the abstract and
+   Implications say "with the signals these trajectories contain".
+2. **"Frozen quantity" wording withdrawn.** No post-freeze amendment changed a reported frozen
+   result, but D9.2 means the kill test and B3 used a tie-break other than the frozen text (smallest
+   `trajectory_id`), and full-budget resolve moves by −1.83 to +1.08 pp between the rules. §3.3 and
+   DEVIATIONS now say that instead of "none changed a frozen quantity".
+3. **Selected-rate rule.** §4.1 and the Figure 2 caption state that the 32.20–59.44% selected rates
+   use the largest canonical cluster with ties by the smallest `trajectory_id` (`d1_pick`, the
+   documented D1/B4 rule), not B1's seeded draw over tied top clusters. Values unchanged.
+4. **MDE comparison.** §4.3, §7 and Limitations now say 5.6 pp at 80% power is roughly six times the
+   pooled +0.892 pp, so the 226-issue subset cannot test whether the pooled lift reflects test
+   availability. Values unchanged.
+5. **Judge frame.** Table 2 opens "Judge frame:"; §5 names Nebius K=8 and separates the 12,917-pair
+   pool over 1,160 issues from the 4,226-pair sample over 1,128. Values unchanged.
+6. **Terminology.** "audit pre-registration" is now PREREG-2 wherever it names the protocol, defined
+   once in §3.3; Limitations says B5 was registered after the kill test, not after a "Part-A look".
+7. **Word budget.** After these additions, paid for from Related work and Implications: **2,276**
+   body-only, **2,685** body+captions+tables, **2,896** everything except references (target 2,900,
+   official limit 3,000).

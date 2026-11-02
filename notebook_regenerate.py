@@ -41,6 +41,11 @@ def pct(x: float, nd: int = 2) -> str:
     return f"{100 * x:.{nd}f}"
 
 
+def ptext(p: float, nd: int = 4) -> str:
+    """Report values at the bootstrap floor as an inequality, not a fake exact p."""
+    return "<= 0.001" if p <= 0.0011 else f"{p:.{nd}f}"
+
+
 def ci(block: dict, nd: int = 3, scale: float = 1.0, signed: bool = False) -> str:
     lo, hi = block["ci"] if isinstance(block.get("ci"), list) else (block["lower"], block["upper"])
     fmt = f"{{:+.{nd}f}}" if signed else f"{{:.{nd}f}}"
@@ -54,7 +59,7 @@ def b1_table(b1: dict) -> str:
     p = family["p_two_sided"]
     holm = v["holm_p"]
     estimate = (
-        f"{family['n_pos']}+/{family['n_neg']}−; one arm "
+        f"{family['n_pos']}+/{family['n_neg']}−; one arm Holm-significant negative: "
         f"{100 * v['mean_lift']:+.3f} pp {ci(v, 3, 100, True)}"
     )
     verdict = "SIGNIFICANT+" if p < 0.05 else "NOT SIGNIFICANT"
@@ -94,7 +99,8 @@ def table1(b1: dict, b2: dict, b3: dict, b4: dict) -> str:
         "|---|---|---|---|",
         b1_table(b1),
         f"| B2 | {b2p['estimate']:.4f} [{b2p['lower']:.4f}, {b2p['upper']:.4f}] | {b2p['p']:.3f} | {b2p['verdict']} |",
-        f"| B3 | {b3_counts(b3)} | {b3['family_primary']['sign_test']['p_two_sided']:.5f} | SIGNIFICANT+ |",
+        f"| B3 | {b3_counts(b3)} | {ptext(b3['family_primary']['sign_test']['p_two_sided'])} | "
+        "SIGNIFICANT+ (not blind) |",
         f"| B4 | {b4_est} | {b4['family']['sign_test']['p_two_sided']:.3f} (Holm {b4v['holm_p']:.3f}) | "
         f"{b4v['verdict']} |",
         f"| B5 | {100 * b5['point']['delta']:+.3f} pp "
@@ -102,36 +108,38 @@ def table1(b1: dict, b2: dict, b3: dict, b4: dict) -> str:
         f"{b5['verdict']} (exploratory) |",
     ]
     caption = (
-        ": Frozen verdicts. B1/B4 use Holm over 11 K=3 configurations; B2 is a single test; "
-        "B3 is an exact sign test; B5 is exploratory. K=8 is separate. Source: "
-        "`results/b1_selection_lift.json`, `b2_within_issue_auroc.json`, "
-        "`b3_crossfit_certification.json`, `b4_adaptive_stopping.json`."
+        ": Holm over 11 K=3 configurations for B1/B4; B2 single test; B3 sign test; "
+        "B5 exploratory; K=8 separate. Sources: `b1`–`b4` JSONs."
     )
     return "\n".join(rows) + "\n\n" + caption + "\n"
 
 
 def table2(judge: dict) -> str:
     rows = [
-        "| Signal | AUROC (95% CI) | p | n pairs | Δ vs judge (95% CI; p) |",
-        "|---|---|---|---:|---|",
+        "| Signal | AUROC (95% CI) | p | n pairs |",
+        "|---|---|---|---:|",
     ]
     p = judge["primary"]
     rows.append(
-        f"| Judge | {p['estimate']:.4f} ({p['lower']:.4f}–{p['upper']:.4f}) | {p['p']:.4f} | "
-        f"{p['n_pairs']:,} | — |"
+        f"| Judge | {p['estimate']:.4f} ({p['lower']:.4f}–{p['upper']:.4f}) | "
+        f"{ptext(p['p'])} | {p['n_pairs']:,} |"
     )
     labels = [("exit_reason", "Exit reason"), ("own_test", "Own tests"), ("agreement", "Agreement")]
     for key, label in labels:
         c = judge["comparisons"][key]
-        d = c["paired_diff_vs_judge"]
         rows.append(
-            f"| {label} | {c['estimate']:.4f} ({c['lower']:.4f}–{c['upper']:.4f}) | {c['p']:.4f} | "
-            f"{c['n_pairs']:,} | {d['estimate']:+.4f} ({d['lower']:+.4f} to {d['upper']:+.4f}); {d['p']:.3f} |"
+            f"| {label} | {c['estimate']:.4f} ({c['lower']:.4f}–{c['upper']:.4f}) | "
+            f"{ptext(c['p'])} | {c['n_pairs']:,} |"
         )
+    steps = judge["exploratory"]["steps_oriented"]
+    rows.append(
+        f"| Steps (oriented, post-hoc) | {steps['estimate']:.4f} "
+        f"({steps['lower']:.4f}–{steps['upper']:.4f}) | {ptext(steps['p'])} | "
+        f"{steps['n_pairs']:,} |"
+    )
     caption = (
-        ": Judge and same-pair signals. Δ is signal minus judge, so negative means the judge has the "
-        "higher AUROC. Intervals are 95% repo-clustered bootstrap (B = 2,000). Source: "
-        "`results/judge_analysis.json`."
+        ": Judge frame: judge and same-pair signals; 95% repo-clustered bootstrap (B = 2,000). "
+        "Steps oriented post-hoc (DEVIATIONS.md). Source: `judge_analysis.json`."
     )
     return "\n".join(rows) + "\n\n" + caption + "\n"
 
@@ -149,9 +157,9 @@ def table3(desc: dict, meta: dict) -> str:
             f"| {arm} | {agent} | {m['policy']} | {m['benchmark']} | {block['issues']:,} |"
         )
     caption = (
-        ": Frozen arms and policy models. Issue counts are the K-sample frames after the 204 shared "
-        "issues are excluded; no row is a local model. Source: `results/descriptive_tables.json` and "
-        "the `RESULTS_2.md` policy table."
+        ": Frozen arms and models; counts exclude 204 shared issues. Six of eleven K=3 arms "
+        "use 27B language-model policies; no local-execution claim. "
+        "Source: `results/descriptive_tables.json`."
     )
     return "\n".join(rows) + "\n\n" + caption + "\n"
 

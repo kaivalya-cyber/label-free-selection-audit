@@ -1,0 +1,167 @@
+{
+ "analysis": "DESCRIPTIVE additions for the paper (DEVIATIONS D16/D17)",
+ "tests": "none for B1-B5; exploratory bootstrap intervals only",
+ "distinct_issues": {
+  "pool_value": 48300,
+  "analysis_frame_value": 41073,
+  "nebius_pool": 6102,
+  "nvidia_pool": 42198,
+  "pool_overlap": 0,
+  "nebius_k3_frame": 6063,
+  "nebius_dropped_below_k": 39,
+  "nvidia_k3_frame_union": 35010,
+  "nvidia_dropped_below_k": 7188,
+  "nvidia_casefold_total": 42545,
+  "nvidia_frozen_config_issues": 42402,
+  "nvidia_only_nonfrozen_configs": 143,
+  "nvidia_configs_total": 32,
+  "nvidia_frozen_configs": 10,
+  "nvidia_nonfrozen_configs": 22,
+  "nvidia_after_shared_total": 42341,
+  "method": "pools: union of key sets in out/signals/*.parquet after excluding 204 shared issues; analysis frame: union of the 11 K=3 sampled frames (only issues with at least three eligible attempts); the 143-issue gap is the casefolded NVIDIA total minus the union of the frozen eleven configurations, i.e. issues present only in the 22 non-frozen configurations (32 total, 10 frozen K=3 arms)"
+ },
+ "nebius_k8_reuse": {
+  "issues": 4580,
+  "new_distinct_issues": 0,
+  "method": "K=8 key set is a subset of the Nebius K=3 frame"
+ },
+ "arms_27b": {
+  "count": 6,
+  "arms": [
+   "v1.1_minisweagent_qwen36_27b_scale-swe",
+   "v1.1_minisweagent_qwen36_27b_swe-rebench-v2",
+   "v1.1_sweagent_qwen36_27b_scale-swe",
+   "v1.1_sweagent_qwen36_27b_swe-rebench-v2",
+   "v1.2_minisweagent_qwen38_27b_scale-swe",
+   "v1.2_minisweagent_qwen38_27b_swe-rebench-v2"
+  ],
+  "policies": [
+   "Qwen3.6-27B",
+   "Qwen3.8-27B"
+  ],
+  "source": "results/config_metadata.json"
+ },
+ "steps_b2": {
+  "raw": {
+   "estimate": 0.43965925224798863,
+   "lower": 0.41460306089704035,
+   "upper": 0.4648731312430276
+  },
+  "oriented": {
+   "estimate": 0.5603407477520114,
+   "lower": 0.5351268687569724,
+   "upper": 0.5853969391029596
+  },
+  "within_issue_mixed_issues": 1160,
+  "mean_steps_resolved": 68.06466338259442,
+  "mean_steps_unresolved": 70.28711206896551,
+  "mean_difference": -2.2224486863711004,
+  "label": "EXPLORATORY (post-hoc orientation)"
+ },
+ "steps_judge_pairs": {
+  "estimate": 0.547681022243256,
+  "lower": 0.5254253330663081,
+  "upper": 0.5686672794117646,
+  "p": 0.0009995002498750624,
+  "n_pairs": 4226,
+  "n_issues": 1128,
+  "n_repos": 641,
+  "label": "EXPLORATORY (post-hoc orientation)"
+ },
+ "e1_selection_lift": {
+  "label": "EXPLORATORY (D17; post-hoc stratification and availability test)",
+  "overall": {
+   "estimate": 0.00892467248908297,
+   "lower": 0.002679501232458539,
+   "upper": 0.015193957775180329,
+   "p": 0.004997501249375313,
+   "n_clusters": 1544,
+   "B": 2000
+  },
+  "by_exit_composition": {
+   "all_max_iteration": {
+    "estimate": 0.03273809523809524,
+    "lower": -0.05233323133414933,
+    "upper": 0.11539062499999997,
+    "p": 0.5217391304347826,
+    "n_clusters": 33,
+    "B": 2000,
+    "n_issues": 42,
+    "n_repos": 33
+   },
+   "all_submit": {
+    "estimate": 0.006744468020612307,
+    "lower": 0.0003196382309004898,
+    "upper": 0.013193739415822565,
+    "p": 0.04397801099450275,
+    "n_clusters": 1349,
+    "B": 2000,
+    "n_issues": 3299,
+    "n_repos": 1349
+   },
+   "mixed_exit": {
+    "estimate": 0.013922518159806295,
+    "lower": -0.00070875497310096,
+    "upper": 0.02929467084639495,
+    "p": 0.06896551724137931,
+    "n_clusters": 552,
+    "B": 2000,
+    "n_issues": 1239,
+    "n_repos": 552
+   }
+  },
+  "by_selected_exit": {
+   "max_iteration": {
+    "estimate": -0.02586206896551724,
+    "lower": -0.049769721203477314,
+    "upper": -0.0017359934134781386,
+    "p": 0.038980509745127435,
+    "n_clusters": 256,
+    "B": 2000,
+    "n_issues": 464,
+    "n_repos": 256
+   },
+   "other": {
+    "estimate": -0.09482758620689655,
+    "lower": -0.17252155172413794,
+    "upper": -0.03017241379310345,
+    "p": 0.001999000499750125,
+    "n_clusters": 29,
+    "B": 2000,
+    "n_issues": 29,
+    "n_repos": 29
+   },
+   "submit": {
+    "estimate": 0.013610227550770737,
+    "lower": 0.007353477441003783,
+    "upper": 0.01983833706089235,
+    "p": 0.0009995002498750624,
+    "n_clusters": 1486,
+    "B": 2000,
+    "n_issues": 4087,
+    "n_repos": 1486
+   }
+  },
+  "fully_available": {
+   "estimate": -0.0022123893805309734,
+   "lower": -0.04042630440540302,
+   "upper": 0.03756877829902439,
+   "p": 0.9765117441279361,
+   "n_clusters": 150,
+   "B": 2000,
+   "n_issues": 226,
+   "n_repos": 150,
+   "label": "EXPLORATORY (D17; all eight attempts non-null)",
+   "power": {
+    "alpha": 0.05,
+    "power": 0.8,
+    "se": 0.019897070384875103,
+    "ci_half_width": 0.038997541352213706,
+    "mde": 0.055743338274019394,
+    "mde_pp": 5.574333827401939,
+    "pooled_lift": 0.00892467248908297,
+    "method": "MDE = (z_0.975 + z_0.80) * SE, SE = percentile-CI half-width / z_0.975; two-sided alpha 0.05, 80% power; normal approximation on the repo-clustered bootstrap scale"
+   }
+  }
+ }
+}

@@ -13,4 +13,4 @@
 | v1.2 mini/Q3.8 R | mini-swe-agent | Qwen3.8-27B | SWE-rebench V2 | 10,563 |
 | Nebius K=8 | OpenHands v0.54.0 | Qwen3-Coder-480B-A35B-Instruct | SWE-rebench | 4,580 |
 
-: Frozen arms and policy models. Issue counts are the K-sample frames after the 204 shared issues are excluded; no row is a local model. Source: `results/descriptive_tables.json` and the `RESULTS_2.md` policy table.
+: Frozen arms and models; counts exclude 204 shared issues. Six of eleven K=3 arms use 27B language-model policies; no local-execution claim. Source: `results/descriptive_tables.json`.

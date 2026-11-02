@@ -25,7 +25,7 @@ result), and the check that mitigates it or the fact that it does not.
    reported side by side (DEVIATIONS D6): (a) re-scoring the certified rule with `-1` as failure at
    the same τ raises held-out risk from 15.8%→**24.0%** and 16.4%→**27.1%**, i.e. both HOLDS verdicts
    stop holding at α=0.20; (b) running the **whole pipeline** under `-1`-as-failure (pool and labels
-   both change) certifies **0/11** configs at every α, versus 2/11 under drop-`-1`. The pre-registered
+   both change) certifies **0/11** configs at every α (0/12 arms including K=8), versus 2/11 under drop-`-1`. The pre-registered
    convention (drop `-1`) is one of two defensible choices; both are in the headline table and no
    robustness claim is made without them.
 
@@ -61,7 +61,7 @@ result), and the check that mitigates it or the fact that it does not.
 
 ## Multiple comparisons
 
-13. **11 configs × 3 α × 3 splits are reported without FWER control.** Each cell carries its own
+13. **90 K=3 cells per label convention (eight configs × 3 splits × 3 α; three Scale-SWE configs × 2 splits × 3 α, no temporal split) plus 9 K=8 cells per convention are reported without FWER control.** Each cell carries its own
     δ=0.05 calibration guarantee; a handful of BREAKS/HOLDS cells will look extreme by chance. The
     per-config verdict pattern is the evidence, not any single cell. No config or α is dropped.
 
@@ -99,7 +99,7 @@ result), and the check that mitigates it or the fact that it does not.
 ## Part C (B1–B4), added after that run
 
 23. **B2's analysis frame is 36% of the size its own prereg table implies.** PREREG-2 §4 cites 11,611
-    pairs / 943 issues; the frozen K=8 sample yields **4,226 / 754** (DEVIATIONS D9: the table counted
+    pairs / 943 issues; the frozen K=8 sample yields **4,226 / 754** (DEVIATIONS D9.1: the table counted
     the full pool and the `gen_tests_correct` column). The observed 95% CI half-width is 0.016 AUROC,
     so the test cannot resolve effects smaller than that; a true 0.52 would often fail to separate.
     Direction: understates a real signal rather than inventing one.
@@ -114,7 +114,7 @@ result), and the check that mitigates it or the fact that it does not.
     Δ near `K_max`. At K=3 the same mechanism moves Δ by ≈0.01pp because the saving is 0.11 attempts.
 26. **The kill test's submitted representative is not D1's written rule.** `build_units` breaks
     equal-size cluster ties by the smallest canonical string, not the smallest `trajectory_id`
-    (D9). The rules pick different representatives in 18.2–20.3% of K=3 issues and 8.4% at K=8, and
+    (D9.2). The rules pick different representatives in 18.2–20.3% of K=3 issues and 8.4% at K=8, and
     the arm-level resolve rate moves by −1.83 to +1.08pp. Every KILL_TEST.md number uses the
     implementation; B4 uses the documented rule, so its `f(K)` differs from the reported
     `resolved_rate`. The endpoint was not re-run and no kill-test number is restated. Direction: per
@@ -125,7 +125,7 @@ result), and the check that mitigates it or the fact that it does not.
     "difficulty is the better signal" without the evaluation cost would overstate the practical
     result.
 28. **The sign tests have almost no resolution.** With 11 configs the exact two-sided threshold is
-    10–1 (p = 0.0117); PREREG-2 §10 bullet 7 says 9–2, which actually gives p = 0.065 (D9). A 9–2 or
+    10–1 (p = 0.0117); PREREG-2 §10 bullet 7 says 9–2, which actually gives p = 0.065 (D9.3). A 9–2 or
     8–3 split is not evidence of anything, and the B1/B4 family tests sit in that region.
 
 ## Pipeline risks
@@ -165,7 +165,10 @@ result), and the check that mitigates it or the fact that it does not.
     a subset comparison, not a causal test.
 34. **The own-test comparison is selected.** Only 1,381 of 4,226 pairs have non-null own-test
     signals on both attempts; the 0.5112 estimate and its paired difference are on that subset,
-    not the full sample.
+    not the full sample. The report-only +0.892 pp selection lift is −0.22 pp on the 226 issues
+    where all eight attempts have a test result (95% CI −4.04 to +3.76 pp, p = 0.977; EXPLORATORY,
+    D17/D18). That interval cannot exclude the pooled lift and the minimum detectable effect is
+    about 5.6 pp at 80% power, so the availability question is open.
 35. **The pilot needed a second session.** The first GGUF pilot worker exposed one T4 and failed
     context creation; the restarted pilot (0.43 h) and the main run (4.75 h) used both cards. The
     failed session produced no scores; the sealed pilot hash covers only the successful run.

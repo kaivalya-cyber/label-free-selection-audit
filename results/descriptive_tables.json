@@ -4,7 +4,7 @@
  "convention": "primary: resolved=-1 dropped before sampling (PREREG-2 \u00a72)",
  "rules": {
   "primary": "DEVIATIONS D1: largest canonical cluster; equal-size ties by the smallest trajectory_id in the cluster; representative = that id.",
-  "sensitivity": "DEVIATIONS D9: the tie-break actually implemented in scripts/kill_test.py::build_units (smallest canonical string among the top clusters, then smallest id); this is also the rule behind kill_test.json's resolved_rate."
+  "sensitivity": "DEVIATIONS D9.2: the tie-break actually implemented in scripts/kill_test.py::build_units (smallest canonical string among the top clusters, then smallest id); this is also the rule behind kill_test.json's resolved_rate."
  },
  "arms": {
   "nebius_openhands": {

@@ -1,4 +1,6 @@
 .venv/
+.DS_Store
+.cloud-attachments/
 .cache/
 __pycache__/
 *.pyc

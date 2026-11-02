@@ -6,6 +6,9 @@
  "n_issues": 1128,
  "n_repos": 641,
  "n_distinct_attempts": 5466,
+ "posthoc_additions": [
+  "steps_oriented (D16)"
+ ],
  "primary": {
   "estimate": 0.5785612872692854,
   "lower": 0.5587164358839714,
@@ -98,6 +101,18 @@
    "n_issues": 1128,
    "n_repos": 641,
    "label": "EXPLORATORY (E2 analogue, null -> 0)"
+  },
+  "steps_oriented": {
+   "estimate": 0.547681022243256,
+   "lower": 0.5254253330663081,
+   "upper": 0.5686672794117646,
+   "p": 0.0009995002498750624,
+   "n_clusters": 641,
+   "B": 2000,
+   "n_pairs": 4226,
+   "n_issues": 1128,
+   "n_repos": 641,
+   "label": "EXPLORATORY (post-hoc orientation; fewer steps is positive)"
   }
  },
  "truncation": {
