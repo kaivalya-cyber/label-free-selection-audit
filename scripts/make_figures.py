@@ -80,35 +80,37 @@ def save(fig, out_dir: Path, stem: str, manifest: dict) -> None:
 def draw_box(ax, xy, width, height, title, body, color):
     box = FancyBboxPatch(
         xy, width, height,
-        boxstyle="round,pad=0.012,rounding_size=0.012",
+        boxstyle="round,pad=0.010,rounding_size=0.012",
         linewidth=0.8, edgecolor=color, facecolor="white", zorder=2,
     )
     ax.add_patch(box)
-    ax.text(xy[0] + 0.012, xy[1] + height - 0.035, title,
-            ha="left", va="top", fontsize=7.8, fontweight="bold", color=color, zorder=3)
-    ax.text(xy[0] + 0.012, xy[1] + height - 0.085, body,
-            ha="left", va="top", fontsize=5.9, color=C["ink"], linespacing=1.22, zorder=3)
+    ax.text(xy[0] + 0.010, xy[1] + height - 0.032, title,
+            ha="left", va="top", fontsize=7.6, fontweight="bold", color=color, zorder=3)
+    ax.text(xy[0] + 0.010, xy[1] + height - 0.080, body,
+            ha="left", va="top", fontsize=5.55, color=C["ink"], linespacing=1.18, zorder=3)
 
 
 def fig_design(out_dir: Path, manifest: dict) -> None:
-    fig, ax = plt.subplots(figsize=(7.1, 2.75))
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    fig, ax = plt.subplots(figsize=(7.3, 2.75))
+    ax.set_xlim(-0.012, 0.968)
+    ax.set_ylim(-0.01, 1.01)
     ax.axis("off")
 
+    width, step, left = 0.164, 0.196, 0.005
     boxes = [
-        (0.015, "Data", "public SWE\ntrajectories\nnebius + NVIDIA", C["ink"]),
-        (0.215, "Issue units", "issue x config\nK attempts", C["judge"]),
-        (0.415, "Signals", "labels, agreement\nown tests, exit\nsteps, judge", C["agreement"]),
-        (0.615, "Frozen tests", "B1-B5\nB2 AUROC\nkill test\nB3 cross-fit", C["oracle"]),
-        (0.815, "Decomposition", "within issue:\nselection / AUROC\nbetween issue:\nICC / certification", C["exit"]),
+        (left, "Data", "public SWE\ntrajectories\nNebius + NVIDIA", C["ink"]),
+        (left + step, "Issue units", "issue × config\nK attempts", C["judge"]),
+        (left + 2 * step, "Signals", "labels, agreement\nown tests, exit\nsteps, judge", C["agreement"]),
+        (left + 3 * step, "Frozen tests", "B1–B5\nB2 AUROC\nkill test\nB3 cross-fit", C["oracle"]),
+        (left + 4 * step, "Decomposition", "within issue:\nselection / AUROC\nbetween issue:\nICC / certification", C["exit"]),
     ]
     for x, title, body, color in boxes:
-        draw_box(ax, (x, 0.40), 0.17, 0.36, title, body, color)
-    for x in (0.185, 0.385, 0.585, 0.785):
+        draw_box(ax, (x, 0.40), width, 0.36, title, body, color)
+    for x in (left, left + step, left + 2 * step, left + 3 * step):
         ax.add_patch(FancyArrowPatch(
-            (x, 0.58), (x + 0.030, 0.58),
-            arrowstyle="-|>", mutation_scale=9, linewidth=0.9, color=C["ink"], zorder=4,
+            (x + width + 0.002, 0.58), (x + step - 0.002, 0.58),
+            arrowstyle="-|>", mutation_scale=7.0, linewidth=0.9,
+            shrinkA=0, shrinkB=0, color=C["ink"], zorder=4,
         ))
     ax.text(0.5, 0.93, "Frozen frames, pre-registered rules, no new outcomes",
             ha="center", va="center", fontsize=9, fontweight="bold", color=C["ink"])
@@ -160,7 +162,7 @@ def fig_selection_gap(desc: dict, meta: dict, out_dir: Path, manifest: dict) -> 
             plt.Line2D([], [], marker="o", linestyle="none", markerfacecolor="white",
                        markeredgecolor=C["pass"], label="pass@1"),
             plt.Line2D([], [], marker="D", linestyle="none", color=C["selected"],
-                       label="agreement-selected (D1)"),
+                       label="agreement-selected (plurality)"),
             plt.Line2D([], [], marker="^", linestyle="none", color=C["oracle"],
                        label="oracle pass@K"),
         ],
@@ -188,7 +190,7 @@ def fig_curves(desc: dict, meta: dict, out_dir: Path, manifest: dict) -> None:
     ax.set_xlim(0.8, 8.2)
     ax.set_xticks(range(1, 9))
     ax.set_xlabel("Attempts drawn, k")
-    ax.set_ylabel("f(k): D1 resolve rate (%)")
+    ax.set_ylabel("f(k): plurality-cluster resolve rate (%)")
     ax.set_ylim(31.5, 60.5)
     ax.grid(axis="y", color="#E8E8E8", linewidth=0.5)
     ax.set_axisbelow(True)
@@ -228,22 +230,28 @@ def fig_auroc(judge: dict, b2: dict, out_dir: Path, manifest: dict) -> None:
         ("Judge", judge["primary"], C["judge"], judge["primary"]["n_pairs"]),
         ("Exit reason", judge["comparisons"]["exit_reason"], C["exit"],
          judge["comparisons"]["exit_reason"]["n_pairs"]),
+        ("Steps (oriented)", judge["exploratory"]["steps_oriented"], C["steps"],
+         judge["exploratory"]["steps_oriented"]["n_pairs"]),
         ("Agreement", judge["comparisons"]["agreement"], C["agreement"],
          judge["comparisons"]["agreement"]["n_pairs"]),
         ("Own tests", judge["comparisons"]["own_test"], C["own"],
          judge["comparisons"]["own_test"]["n_pairs"]),
     ]
+    raw_steps = b2["comparisons"]["steps"]
+    steps = dict(raw_steps)
+    steps.update({"estimate": 1 - raw_steps["estimate"],
+                  "lower": 1 - raw_steps["upper"],
+                  "upper": 1 - raw_steps["lower"]})
     right = [
         ("Exit reason", b2["comparisons"]["exit_reason"], C["exit"],
          b2["comparisons"]["exit_reason"]["n_pairs"]),
+        ("Steps (oriented)", steps, C["steps"], steps["n_pairs"]),
         ("Agreement", b2["comparisons"]["agreement"], C["agreement"],
          b2["comparisons"]["agreement"]["n_pairs"]),
         ("Own tests", b2["primary"], C["own"], b2["primary"]["n_pairs"]),
-        ("Steps", b2["comparisons"]["steps"], C["steps"],
-         b2["comparisons"]["steps"]["n_pairs"]),
     ]
 
-    fig, axes = plt.subplots(1, 2, figsize=(7.3, 3.15), sharex=True)
+    fig, axes = plt.subplots(1, 2, figsize=(7.3, 3.45), sharex=True)
     for ax, rows, title in zip(axes, (left, right), ("Judge frame", "B2 frame")):
         ys = list(range(len(rows)))[::-1]
         for y, (name, v, color, n) in zip(ys, rows):
@@ -261,7 +269,7 @@ def fig_auroc(judge: dict, b2: dict, out_dir: Path, manifest: dict) -> None:
     axes[0].set_xlabel("Within-issue pairwise AUROC")
     axes[1].set_xlabel("Within-issue pairwise AUROC")
     axes[0].text(0.502, -0.45, "chance", fontsize=6.4, color=C["steps"])
-    fig.suptitle("Cheap signals barely separate attempts; the judge is modestly better",
+    fig.suptitle("Cheap signals are weak (AUROC 0.51–0.58); the judge is modestly better",
                  x=0.02, ha="left", fontsize=8.5, fontweight="bold")
     fig.subplots_adjust(left=0.15, right=0.985, top=0.84, bottom=0.20, wspace=0.80)
     save(fig, out_dir, "fig5_auroc", manifest)
@@ -330,13 +338,13 @@ def write_alt(out_dir: Path) -> None:
 
 **Figure 1 — Design.** Schematic of the audit: public SWE trajectory corpora feed issue-by-config units with K attempts; labels and five signals feed pre-registered tests; the analysis separates within-issue selection and AUROC from between-issue ICC and certification. Frozen frames, no new outcomes.
 
-**Figure 2 — Selection gap.** Dumbbell chart for 12 arms. For each arm, pass@1 is an open circle, the D1 agreement-selected rate is a blue diamond, and oracle pass@K is an orange triangle. The vertical distance from the selected rate to the oracle is the selection gap. Gaps are labelled in percentage points on the right.
+**Figure 2 — Selection gap.** Dumbbell chart for 12 arms. For each arm, pass@1 is an open circle, the plurality-cluster agreement-selected rate is a blue diamond, and oracle pass@K is an orange triangle. The vertical distance from the selected rate to the oracle is the selection gap. Gaps are labelled in percentage points on the right.
 
 **Figure 3 — Fixed-budget curves.** Line chart of f(k), the D1 resolve rate at budget k, from k=1 to 3 for 11 K=3 arms (grey, with Nebius K=3 in blue) and from k=1 to 8 for the Nebius K=8 arm (orange). The curves are nearly horizontal, with a maximum within-arm range of 1.07 percentage points.
 
 **Figure 4 — ICC forest.** Forest plot of the one-way random-effects ICC(1) of resolved by issue for 12 arms, with 95% repo-clustered bootstrap intervals. Estimates range from 0.646 to 0.864; the Nebius K=8 arm is 0.798.
 
-**Figure 5 — AUROC forest.** Two-panel forest plot of within-issue pairwise AUROC. Left panel uses the judge pair frame: judge 0.579, exit reason 0.558, agreement 0.512, own tests 0.511. Right panel uses the B2 frame: exit reason 0.576, agreement 0.506, own tests 0.513, steps 0.440. A dashed line marks chance at 0.5.
+**Figure 5 — AUROC forest.** Two-panel forest plot of within-issue pairwise AUROC. Left panel uses the judge pair frame: judge 0.579, exit reason 0.558, steps oriented so fewer is better 0.548 (raw 0.452), agreement 0.512, own tests 0.511. Right panel uses the B2 frame: exit reason 0.576, steps oriented so fewer is better 0.560 (raw 0.440), own tests 0.513, agreement 0.506. A dashed line marks chance at 0.5.
 
 **Figure 6 — Certification.** Grouped stacked bars at alpha 0.05, 0.10, and 0.20 for 11 K=3 configs. Solid bars show how many configs certify; hatched grey bars show the NO-COVERAGE remainder. Agreement certifies 0, 0, and 2 configs; cross-fit difficulty certifies 2, 10, and 11. The separate K=8 arm certifies under cross-fit at all three levels and under agreement at none.
 """
