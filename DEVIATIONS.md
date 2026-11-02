@@ -481,6 +481,6 @@ or verdict changed.
    pool over 1,160 issues from the 4,226-pair sample over 1,128. Values unchanged.
 6. **Terminology.** "audit pre-registration" is now PREREG-2 wherever it names the protocol, defined
    once in §3.3; Limitations says B5 was registered after the kill test, not after a "Part-A look".
-7. **Word budget.** After these additions, paid for from Related work and Implications: **2,276**
-   body-only, **2,685** body+captions+tables, **2,896** everything except references (target 2,900,
+7. **Word budget.** After these additions, paid for from Related work and Implications: **2,278**
+   body-only, **2,687** body+captions+tables, **2,898** everything except references (target 2,900,
    official limit 3,000).

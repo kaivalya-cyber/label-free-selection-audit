@@ -155,13 +155,13 @@ tables and references. Rule 3 is the binding limit.
 
 | Rule | Words |
 |---|---:|
-| 1. Body only (headings included) | 2,276 |
-| 2. Body + figure captions + table text | 2,685 |
-| 3. Everything except references (title block, abstract, body, captions, tables) | **2,896** |
+| 1. Body only (headings included) | 2,278 |
+| 2. Body + figure captions + table text | 2,687 |
+| 3. Everything except references (title block, abstract, body, captions, tables) | **2,898** |
 
-Components: title block 23; abstract 188; body 2,276; figure captions 157;
+Components: title block 23; abstract 188; body 2,278; figure captions 157;
 table text 252. Official limit 3,000 under rule 3; working target 2,900, so the
-headroom is 4 words under the target and 104 under the official limit. This
+headroom is 2 words under the target and 102 under the official limit. This
 revision adds the signal-scope paragraph, the selected-rate rule, the judge-frame
 arm and the MDE wording, paid for by trimming Related work and Implications
 (D20). References are excluded from all three counts.
@@ -217,14 +217,14 @@ arm and the MDE wording, paid for by trimming Related work and Implications
 | Fig. 6 | Certification counts at 0.05/0.10/0.20, agreement vs cross-fit, NO-COVERAGE hatched, K=8 note. |
 | Tables 1–3 | Rebuilt by `notebook_regenerate.py`; values match §1 and the paper's Markdown tables. Table 1 has B1's one Holm-significant negative arm and B3 "(not blind)"; Table 2 has the post-hoc oriented-steps row; Table 3 caption has the 27B-arm disclosure. |
 | Clean-room test | Fresh clone of the public repo (`build/pub_clone2`, commit 2524ce3, anonymous access) ran `notebook_regenerate.py` with no login, dataset download or model call: six PNGs and four table files byte-identical; the six PDFs differ only in metadata. |
-| Word count | `scripts/count_paper_words.py` exits 0 at **2,896/2,900** under the strictest rule (official limit 3,000). |
+| Word count | `scripts/count_paper_words.py` exits 0 at **2,898/2,900** under the strictest rule (official limit 3,000). |
 
 ## 6. Discrepancies and corrections
 
 1. **Prompt vs files: NF4.** The task text says the judge is "26B-A4B (NF4) only." D14 and `RESULTS_3.md` record that bitsandbytes NF4 leaves the 3-D MoE expert tensors unquantised and does not fit on 2×T4; the executed estimator is the official QAT **Q4_0 GGUF** via llama.cpp. The paper discloses this in §5 and does not call the result an NF4 run. **Files win.**
 2. **Ledger C67 mislabelled E2.** The ledger said "E2 +0.742pp (p = 0.106)". `results/b2_within_issue_auroc.json` gives E2 null→0 = +0.871pp (0.203–1.527, p = 0.015); +0.742pp is E2 null→0 **minus agreement**. C67 and the RESULTS_2 sentence were corrected; no result number changed.
 3. **Removed unsourced paper numbers.** The draft quoted median `p_yes` 0.817 (present only in WEAKNESSES.md) and 26.1% patch truncation (present in RESULTS_3 prose, not in a result JSON). Both were removed from `paper.md`; the truncation split and the claim that truncation affects a substantial minority remain, sourced to C83.
-4. **Word target.** The official limit is 3,000 words under rule 3; the working target is 2,900. The three reported counts are **2,276 body-only, 2,685 body+captions+tables and 2,896 everything except references** — 4 under the target and 104 under the official limit. Revision 4 added the power caveat and removed two duplicated sentences; revision 5 added the signal scope, the selected-rate rule and the MDE comparison, paid for from Related work and Implications. The earlier self-imposed 2,850 limit is retired (D19, D20).
+4. **Word target.** The official limit is 3,000 words under rule 3; the working target is 2,900. The three reported counts are **2,278 body-only, 2,687 body+captions+tables and 2,898 everything except references** — 2 under the target and 102 under the official limit. Revision 4 added the power caveat and removed two duplicated sentences; revision 5 added the signal scope, the selected-rate rule and the MDE comparison, paid for from Related work and Implications. The earlier self-imposed 2,850 limit is retired (D19, D20).
 5. **"Tight null" for own tests.** The orientation text calls the own-test result a "tight null"; the CI is 0.4973–0.5286, which includes 0.5 but is not tight. The paper prints the estimate, CI and NOT SIGNIFICANT verdict and does not use "tight null".
 6. **JUDGE median/truncation percentages.** The WEAKNESSES/RESULTS_3 prose still contains the removed values; they are descriptive and are not used in the paper. No frozen result was altered.
 7. **B4 wording corrected during audit.** The first draft attached the negative arm's interval [−0.124, −0.022] to a family-level "no detectable effect". That interval excludes zero (raw p = 0.009), so the sentence was wrong; it now reports the arm's raw p and Holm failure separately from the family sign test (p = 0.227). No number changed.
@@ -311,9 +311,9 @@ listed separately in §2.
 
 ## 9. Verification performed
 
-- `python scripts/build_paper.py` — exit 0; 9-page PDF, 664,873 bytes; 0 overfull boxes.
-- `python scripts/count_paper_words.py` — exit 0; 2,276 body-only, 2,685
-  body+captions+tables, **2,896/2,900** everything except references (official limit 3,000).
+- `python scripts/build_paper.py` — exit 0; 9-page PDF, 664,896 bytes; 0 overfull boxes.
+- `python scripts/count_paper_words.py` — exit 0; 2,278 body-only, 2,687
+  body+captions+tables, **2,898/2,900** everything except references (official limit 3,000).
 - `.venv/bin/python -m pytest tests -q` — 43 passed.
 - `python notebook_regenerate.py` — 6 figures + 3 tables written.
 - `python scripts/paper_addenda.py` — exit 0; 48,300 pool / 41,073 frame issues, 6 arms,

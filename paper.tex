@@ -473,13 +473,13 @@ NF4.
 
 The sample is 4,226 within-issue pairs over 1,128 issues and 641
 repositories, from the Nebius K=8 arm (12,917 mixed-label pairs over
-1,160 issues); the sealed first 200 are included. Pairs share an issue
-and have different labels, so difficulty cancels. Not B2's 4,226
-own-test pairs over 754 issues: the judge takes a seeded 4,226 of 12,917
-mixed-label pairs, 1,381 B2-eligible. N matches because the judge
-pre-registration fixed it to B2's count for comparable precision, not
-because samples coincide. AUROCs use \texttt{p\_yes}, ties 0.5, and a
-repo-clustered bootstrap (B = 2,000).
+1,160 issues, 1,128 sampled); the sealed first 200 are included. Pairs
+share an issue and have different labels, so difficulty cancels. Not
+B2's 4,226 own-test pairs over 754 issues: the judge takes a seeded
+4,226 of 12,917 mixed-label pairs, 1,381 B2-eligible. N matches because
+the judge pre-registration fixed it to B2's count for comparable
+precision, not because samples coincide. AUROCs use \texttt{p\_yes},
+ties 0.5, and a repo-clustered bootstrap (B = 2,000).
 
 The judge reaches \textbf{0.5786 (95\% CI 0.5587--0.5987, p \textless=
 0.001)}, SIGNIFICANT+. It is 2.1 points above exit reason (0.5576,
