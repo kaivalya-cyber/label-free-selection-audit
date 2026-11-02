@@ -12,8 +12,15 @@
 \usepackage{calc}
 \usepackage{etoolbox}
 \usepackage{xcolor}
+\usepackage{url}
+\AtBeginDocument{%
+  \let\oldurl\url
+  \renewcommand{\url}[1]{\mbox{\oldurl{#1}}}%
+}
+\renewcommand{\bibfont}{\small}
 \usepackage{titlesec}
 \AtBeginEnvironment{longtable}{\footnotesize}
+\AtBeginEnvironment{thebibliography}{\raggedright}
 \setlength{\LTcapwidth}{\linewidth}
 \setlength{\parskip}{0pt}
 \setlength{\parindent}{1.2em}
